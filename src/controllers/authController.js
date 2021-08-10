@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 // const client = new OAuth2Client("713987113089-v6kssliis8c1m004jdlbfumnd4b51chd.apps.googleusercontent.com")
 // const oAuth2Client = require('../config/googleapis')
 
-const AccountModel = require('../models/AccountModel')
+const AccountModel = require('../models/accountModel')
 // const cloudinary = require('../config/cloudinary')
 
 module.exports.loginController =  async (req, res) => {
