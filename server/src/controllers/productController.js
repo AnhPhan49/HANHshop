@@ -1,6 +1,8 @@
 const {validationResult} = require('express-validator')
 const cloudinary = require('../config/cloudinary')
 const productModel = require('../models/productModel')
+const inventoryModel = require('../models/inventoryModel')
+
 module.exports.createProduct = async (req, res) => {
     try {
         let result = validationResult(req)
@@ -92,10 +94,14 @@ module.exports.createProduct = async (req, res) => {
             image: productMedia,
             status: status,
         })
-        
         await newProduct.save()
-        
-        return res.status(200).json({message: "Tạo thành công"})
+
+        let newInventory = new inventoryModel({
+            product: newProduct._id
+        })
+        await newInventory.save()
+
+        return res.status(200).json({message: "Tạo thành công",data: newProduct})
     } catch (err) {
         return res.status(400).json({message: err.message})
     }
@@ -113,7 +119,47 @@ module.exports.updateProduct = async (req, res) => {
             }
             throw new Error (message)
         }
+
+
     } catch (err){
         return res.status(400).json({message: err.message})
     }
 }
+
+module.exports.search = async (req, res) =>{
+    try {
+        let search = req.query
+        let {page} = search
+        page= page - 1
+        if(page < 0) throw new Error("Page not found!!")
+        
+        delete search.page
+        if(Object.keys(search).includes('name'))
+            search.name = {"$regex": search.name, "$options":"i"}
+
+        let searchProducts = await productModel.find({...search})
+
+        if(searchProducts.length/10 < page){
+            return res.status(404).json({message: "Chưa có trang thông báo này"})
+        }
+        let productFilter = searchProducts.slice(1,10)
+
+        return res.status(200).json({message:"Success", data:{page: page + 1, total_page: Math.ceil(searchProducts.length/10),product:productFilter},})
+    } catch (err){
+        return res.status(400).json({message: err.message})
+    }
+}
+
+
+module.exports.deleteProduct = async (req, res) => {
+    try {
+        let {id} = req.params
+        if(!id) throw new Error("Vui lòng cung cấp id")
+        await productModel.findByIdAndUpdate(id, {delete: true})
+        return res.status(200).json({message: "Delete success"})
+    } catch (err){
+        return res.status(400).json({message: err.message})
+    }
+}
+
+
