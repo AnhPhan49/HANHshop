@@ -19,7 +19,7 @@ const AccountSchema = new Schema({
     role:{
         type:String,
         enum:["admin","manager","customer"],
-        defaut: "customer"
+        default: "customer"
     },
     tokenVerify:String,
     status: {

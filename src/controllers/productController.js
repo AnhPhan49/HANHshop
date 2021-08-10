@@ -1,7 +1,9 @@
+const mongoose = require('mongoose')
 const {validationResult} = require('express-validator')
 const cloudinary = require('../config/cloudinary')
 const productModel = require('../models/productModel')
 const inventoryModel = require('../models/inventoryModel')
+const categoryModel = require('../models/categoryModel')
 
 module.exports.createProduct = async (req, res) => {
     try {
@@ -23,7 +25,7 @@ module.exports.createProduct = async (req, res) => {
         let productMedia = []
         let price_after_sale = 0
 
-        let checkCateExist = await productModel.findById(category)
+        let checkCateExist = await categoryModel.findById(category)
         if (!checkCateExist) throw new Error("Đã có lỗi xảy ra với danh mục")
 
         if(status === "Sale" && (!sale_tag || sale_tag<=0 || sale_tag > 100)){
@@ -88,7 +90,6 @@ module.exports.createProduct = async (req, res) => {
             category: category,
             description: description,
             price: price,
-            available: available,
             sale_tag: sale_tag,
             price_after_sale: price_after_sale,
             image: productMedia,
