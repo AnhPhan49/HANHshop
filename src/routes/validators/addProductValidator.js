@@ -15,6 +15,6 @@ module.exports = [
     .notEmpty().withMessage('Vui lòng không để đơn giá trống'),
 
     check('description')
-    .exists().withMessage('Vui lòng cung cấp đơn giá')
-    .notEmpty().withMessage('Vui lòng không để đơn giá trống'),
+    .exists().withMessage('Vui lòng cung mô tả')
+    .notEmpty().withMessage('Vui lòng không để mô tả trống'),
 ]
