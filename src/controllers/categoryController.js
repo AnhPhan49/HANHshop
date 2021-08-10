@@ -1,7 +1,7 @@
 const {validationResult} = require('express-validator')
 const crypto = require('crypto')
 const mongoose = require('mongoose')
-const AccountModel = require('../models/AccountModel')
+const AccountModel = require('../models/accountModel')
 const categoryModel = require('../models/categoryModel')
 
 

@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const {validationResult} = require('express-validator')
 const mongoose = require('mongoose')
-const AccountModel = require('../models/AccountModel')
+const AccountModel = require('../models/accountModel')
 
 module.exports.current = async(req,res)=>{
     try{
