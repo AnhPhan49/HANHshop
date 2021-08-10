@@ -17,7 +17,7 @@ const productSchema = new Schema({
     },
     available: {
         type: Boolean,
-        defaut: false
+        default: "false"
     },
     image: [{
         url: String,
@@ -29,7 +29,7 @@ const productSchema = new Schema({
     },
     delete:{
         type: Boolean,
-        defaut: false
+        default: false
     },
     sale_tag: Number
 },{timestamps:true})
