@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
-    },
+    }
   }));
 
 const ProductEditModal = (props) => {
@@ -40,13 +40,13 @@ const ProductEditModal = (props) => {
 
     return(
         <div className='edit-product-modal'>
-            <h5>Edit Product</h5>
+            <h4>Edit Product</h4>
             <form>                   
                 <FormGroup>
                     <TextField id="standard-basic" label="ID" />
                 </FormGroup>
                 <FormGroup>
-                    <TextField id="standard-basic" label="Tên sản phẩm" />
+                    <TextField id="standard-basic" label="Tên sản phẩm"/>
                 </FormGroup>
                 <FormGroup>
                     <TextField id="standard-basic" label="Giá tiền" />
@@ -79,19 +79,20 @@ const ProductEditModal = (props) => {
                 </FormControl>
                 <FormControlLabel
                     className='mt-3'
+                    id='demo-simple-select-label'
                     control={
                     <Switch
                         checked={store}
                         onChange={handleChange}
-                        name="luukho"
+                        name=""
                         color="primary"
                     />
                     }
                     label="Lưu kho"
                 />
 
-                <FormGroup className='mt-2'>
-                    <Button variant="contained" color="primary">
+                <FormGroup className='mt-3'>
+                    <Button variant="contained" color="primary" id='demo-simple-select-label'>
                         Lưu
                     </Button>
                 </FormGroup>

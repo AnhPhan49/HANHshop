@@ -461,6 +461,7 @@ body {
 	color: rgb(82, 82, 82);
 	margin-top: auto;
 	margin-bottom: auto;
+	text-align: center;
 }
 
 .production-page .product-list {
@@ -498,6 +499,22 @@ body {
 	font-weight: 700;
 }
 
-.edit-product-modal {
-	
+.edit-product-modal #standard-basic, .category-edit-modal #standard-basic, .edit-product-modal #standard-basic::placeholder, .category-edit-modal #standard-basic::placeholder{
+	font-size: 1.5rem;	
+}
+
+.edit-product-modal #demo-simple-select-label,  .category-edit-modal #demo-simple-select-label{
+	font-size: 1.3rem;
+}
+
+.category-edit-modal {
+	width: 300px;
+}
+
+.float-button {
+	position:fixed !important;
+	width:70px;
+	height:70px;
+	bottom:40px;
+	right:40px;
 }
