@@ -1,4 +1,4 @@
-const AccountModel = require("../models/AccountModel") 
+const AccountModel = require("../models/accountModel") 
 
 module.exports = async(req,res,next) =>{
     let user = await AccountModel.findById(req.user.id)
