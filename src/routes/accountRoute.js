@@ -1,6 +1,6 @@
 const express = require('express')
 const accountRoute = express.Router()
-const registerValidator = require('./Validators/registerValidator')
+const registerValidator = require('./validators/registerValidator')
 const checkLogin = require('../midlewares/loginMidleware')
 
 const {
