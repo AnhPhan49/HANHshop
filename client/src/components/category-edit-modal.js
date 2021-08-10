@@ -9,20 +9,20 @@ const CategoryEditModal = (props) => {
     }
 
     return(
-        <div className=''>
-            <h5>Edit Category</h5>
+        <div className='category-edit-modal'>
+            <h4>Edit Category</h4>
             <form>
                 <FormGroup>
                     <TextField id="standard-basic" label="Tên danh mục" />
                 </FormGroup>
-                <FormGroup>
-                <FormControlLabel
+                <FormGroup className='mt-3'>
+                <FormControlLabel                    
                     control={<Switch checked={checked} onChange={handleSwitch} name="" />}
                     label="Trạng thái"
                 />
                 </FormGroup>
-                <FormGroup>
-                    <Button variant="contained" color="primary">
+                <FormGroup className='mt-3'>
+                    <Button variant="contained" color="primary" id='demo-simple-select-label'>
                         Lưu
                     </Button>
                 </FormGroup>
