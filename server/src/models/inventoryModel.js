@@ -6,11 +6,10 @@ const inventorySchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Product"
     },
-    total: Number,
-    producer:{
-        type: mongoose.Types.ObjectId,
-        ref: "Producer"
-    }
-})
+    total:{ 
+        type: Number,
+        default: 0
+    },
+},{timestamps:true})
 
 module.exports = mongoose.model('Inventory', inventorySchema)

@@ -27,6 +27,10 @@ const productSchema = new Schema({
         type: String,
         enum: ["Sale","Hot","Phổ biến","N/A"]
     },
+    delete:{
+        type: Boolean,
+        defaut: false
+    },
     sale_tag: Number
 },{timestamps:true})
 
