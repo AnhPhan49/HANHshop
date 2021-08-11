@@ -16,7 +16,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Hot',
-        store: true
+        store: true,
+        price: 300000
     },
     {
         id: 'LOL11',
@@ -24,7 +25,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Dog',
-        store: false
+        store: false,
+        price: 300000
     },
     {
         id: 'LOL11',
@@ -32,7 +34,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Dog',
-        store: false
+        store: false,
+        price: 300000
     },
 
     {
@@ -41,7 +44,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Dog',
-        store: false
+        store: false,
+        price: 300000
     },
     {
         id: 'LOL11',
@@ -49,7 +53,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Dog',
-        store: false
+        store: false,
+        price: 300000
     },
     {
         id: 'LOL11',
@@ -57,7 +62,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Dog',
-        store: false
+        store: false,
+        price: 300000
     },
     {
         id: 'LOL11',
@@ -65,7 +71,8 @@ var data = [
         img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
         category: 'Nồi niêu',
         status: 'Dog',
-        store: false
+        store: false,
+        price: 300000
     },
 ]
 
@@ -133,12 +140,15 @@ const ProductManagePage = (props) => {
                         Danh mục
                     </div>
                     <div className='col-1 text-center'>
+                        Giá
+                    </div>
+                    <div className='col-1 text-center'>
                         Trạng thái
                     </div>
                     <div className='col-1 text-center'>
                         Lưu kho
                     </div>
-                    <div className='col-3 text-center'>
+                    <div className='col-2 text-center'>
                         Tùy chọn
                     </div>
                 </div>
@@ -159,6 +169,9 @@ const ProductManagePage = (props) => {
                                 {item.category}
                             </div>
                             <div className='col-1 product-item'>
+                                {item.price}
+                            </div>
+                            <div className='col-1 product-item'>
                                 {
                                     item.status
                                 }
@@ -172,7 +185,7 @@ const ProductManagePage = (props) => {
                                     )
                                 }
                             </div>
-                            <div className='col-3 product-item'>
+                            <div className='col-2 product-item'>
                             <IconButton color="primary" onClick={handleOpen}>
                                 <FaEdit size='20px'></FaEdit>
                             </IconButton>

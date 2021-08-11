@@ -470,7 +470,7 @@ body {
 }
 
 .production-page .product-list .product-row img {
-	width: 36%;
+	width: 50%;
 	height: 50px;
 	border-radius: 8px;	
 }
@@ -486,7 +486,7 @@ body {
 }
 
 .red-dot {
-	background-color: rgb(216, 0, 0);
+	background-color: rgb(150, 150, 150);
 	width: 1.8rem;
 	height: 1.8rem;
 	border: 2px solid whitesmoke;
