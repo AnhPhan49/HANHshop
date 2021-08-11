@@ -59,7 +59,7 @@ module.exports.updateCategory = async (req, res) => {
             active: active
         },{new: true})
         console.log(newCate)
-        return res.status(200).json({message: "Cập nhật thành công"})
+        return res.status(200).json({message: "Cập nhật thành công", data: newCate})
     } catch (err) {
         return res.status(400).json({message: err.message})
     }
