@@ -12,10 +12,7 @@ const historyInventorySchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Account"
     },
-    producer: {
-        type: mongoose.Types.ObjectId,
-        ref: "Producer"
-    }
+    producer: String
 },{timestamps:true})
 
 module.exports = mongoose.model('HistoryInventory', historyInventorySchema)

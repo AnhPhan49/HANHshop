@@ -4,6 +4,7 @@ const cloudinary = require('../config/cloudinary')
 const productModel = require('../models/productModel')
 const inventoryModel = require('../models/inventoryModel')
 const categoryModel = require('../models/categoryModel')
+const historyInventoryModel = require('../models/historyInventoryModel')
 
 module.exports.createProduct = async (req, res) => {
     try {
@@ -138,29 +139,38 @@ module.exports.search = async (req, res) =>{
         if(Object.keys(search).includes('name'))
             search.name = {"$regex": search.name, "$options":"i"}
 
-        let searchProducts = await productModel.find({...search})
+        let searchProducts = await productModel.find({...search}).sort({'createdAt': 'desc'}).populate("category","_id name")
 
         if(searchProducts.length/10 < page){
             return res.status(404).json({message: "Chưa có trang thông báo này"})
         }
-        let productFilter = searchProducts.slice(1,10)
+        let productFilter = searchProducts.slice(page,page+10)
 
-        return res.status(200).json({message:"Success", data:{page: page + 1, total_page: Math.ceil(searchProducts.length/10),product:productFilter},})
+        return res.status(200).json({message:"Success", data: {page: page + 1, total_page: Math.ceil(searchProducts.length/10), product: productFilter}})
     } catch (err){
         return res.status(400).json({message: err.message})
     }
 }
-
 
 module.exports.deleteProduct = async (req, res) => {
     try {
         let {id} = req.params
         if(!id) throw new Error("Vui lòng cung cấp id")
-        await productModel.findByIdAndUpdate(id, {delete: true})
+        let checkExist = await productModel.findById(id)
+
+        if(!checkExist) throw new Error("Không tồn tại mã sản phẩm")
+        let invenDel =  await inventoryModel.findOne({product: checkExist._id})
+
+        await historyInventoryModel.deleteMany({inventory: invenDel._id})
+        await inventoryModel.findByIdAndDelete({product: checkExist._id})
+        await productModel.findByIdAndDelete(id)
         return res.status(200).json({message: "Delete success"})
     } catch (err){
         return res.status(400).json({message: err.message})
     }
 }
+
+
+
 
 
