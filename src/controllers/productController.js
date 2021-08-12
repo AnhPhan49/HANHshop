@@ -139,7 +139,7 @@ module.exports.search = async (req, res) =>{
         if(Object.keys(search).includes('name'))
             search.name = {"$regex": search.name, "$options":"i"}
 
-        let searchProducts = await productModel.find({...search}).sort({'createdAt': 'desc'}).populate("category")
+        let searchProducts = await productModel.find({...search}).sort({'createdAt': 'desc'}).populate("category","_id name")
 
         if(searchProducts.length/10 < page){
             return res.status(404).json({message: "Chưa có trang thông báo này"})
