@@ -35,12 +35,9 @@ module.exports.createProduct = async (req, res) => {
             price_after_sale = price*(100-sale_tag)/100
         } else sale_tag = 0
 
-
         if(file){
-            console.log(true)
             if (!file.length) {
                 let {type} = file
-                console.log(type)
                 if (type.split("/")[0] === "image") {
                     const mediaCloud = await cloudinary.uploader.upload(file.path,{folder:'products', resource_type: type.split("/")[0]})
                     productMedia.push({
@@ -51,39 +48,31 @@ module.exports.createProduct = async (req, res) => {
                     throw new Error ("Vui lòng chỉ đăng tải ảnh sản phẩm")
                 }
             } else {
-                
                 for (const element of file) {
                     let {type} = element
-
                     if (type.split("/")[0] === "image") {
                         promiseArr.push(cloudinary.uploader.upload(element.path,{folder:'products',  resource_type: type.split("/")[0]}).catch(()=>{}))
                     } else {
                         throw new Error ("Vui lòng chỉ đăng tải ảnh sản phẩm")
                     }
                 }
-                let uploadInf = await Promise.all(promiseArr)
-                
+                let uploadInf = await Promise.all(promiseArr) 
                 for (let i = 0; i < uploadInf.length; i++) {
                     if (uploadInf[i] === undefined) {
-                        
                         listError.push(file[i].name)
                         productMedia.push({
                             id_image: mediaCloud.public_id,
                             url: mediaCloud.secure_url,
                         })
-                    
                     }else{
-
                         let urlCloud =uploadInf[i].secure_url
-                        
                         productMedia.push({
-                            id_image: mediaCloud.public_id,
+                            id_image: uploadInf[i].public_id,
                             url: urlCloud,
                         })
                     }
                 }
             }
-
         }
 
         let newProduct = new productModel({

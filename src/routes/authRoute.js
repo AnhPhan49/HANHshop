@@ -1,7 +1,7 @@
 const express = require('express')
 const authRoute = express.Router()
 const loginValidator = require('./validators/loginValidator')
-// const registerValidator = require('./validators/registerValidator')
+const registerValidator = require('./validators/registerValidator')
 
 const {
     loginController, 
@@ -14,6 +14,6 @@ const {
 
 authRoute.route('/login').post(loginValidator,loginController)
 
-// authRoute.route('/register').post(registerValidator,registerController)
+authRoute.route('/register').post(registerValidator,registerController)
 
 module.exports = authRoute
