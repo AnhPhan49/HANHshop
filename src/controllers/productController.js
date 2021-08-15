@@ -133,7 +133,7 @@ module.exports.search = async (req, res) =>{
         if(searchProducts.length/10 < page){
             return res.status(404).json({message: "Chưa có trang thông báo này"})
         }
-        let productFilter = searchProducts.slice(page,page+10)
+        let productFilter = searchProducts.slice(page*10, page+10)
 
         return res.status(200).json({message:"Success", data: {page: page + 1, total_page: Math.ceil(searchProducts.length/10), product: productFilter}})
     } catch (err){

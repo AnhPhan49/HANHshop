@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt')
 const {validationResult} = require('express-validator')
 const mongoose = require('mongoose')
-const AccountModel = require('../models/accountModel')
+const accountModel = require('../models/accountModel')
 
 module.exports.current = async(req,res)=>{
     try{
-        let data = await AccountModel.findById(req.user.id, 'email firstname lastname avatar type_account')
+        let data = await accountModel.findById(req.user.id, 'email firstname lastname avatar type_account')
     
         return res.status(200).json({
             message: 'Get login session data successfully',
@@ -32,14 +32,14 @@ module.exports.createManager = async(req, res) =>{
         let {email, firstname, lastname, password} = req.body
         let fullname = firstname + " " + lastname
         
-        let checkExist = await AccountModel.findOne({email: email, type_account: "email"})
+        let checkExist = await accountModel.findOne({email: email, type_account: "email"})
 
         if (checkExist) {
             throw new Error ('Email manager này đã được sử dụng')
         }
 
         let password_hash = await bcrypt.hash(password,10)
-        let account = await new AccountModel({
+        let account = await new accountModel({
             email: email,
             fullname: fullname,
             firstname: firstname,
@@ -52,6 +52,34 @@ module.exports.createManager = async(req, res) =>{
         await account.save()
         return res.status(200).json({message: "Tạo tài khoản thành công"})   
     } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+}
+
+module.exports.listAccount = async(req, res) =>{
+    try{
+        let {type} = req.params
+        let listAccount = undefined
+        if(type !== "manager" && type !== "customer") throw new Error("Wrong param!!!")
+        if (type === "manager")
+            listAccount = await accountModel.find({role: type},"-password -tokenVerify -cart -status -role")
+        else
+            listAccount = await accountModel.find({role: type},"-password -tokenVerify -cart -status -role")
+        return res.status(200).json({message: "Success", data: listAccount})
+    } catch (err){
+        return res.status(400).json({message: err.message})
+    }
+}
+
+module.exports.blockAccount = async(req, res) =>{
+    try{
+        let {id} = req.params
+        let updateAccount = await accountModel.findById(id)
+        let test = !false
+        console.log(test)
+        // updateAccount.block =
+        return res.status(200).json({message: "Success"})
+    }catch (err) {
         return res.status(400).json({message: err.message})
     }
 }
