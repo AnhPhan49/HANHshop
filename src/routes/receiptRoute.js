@@ -7,8 +7,8 @@ const {
     
 } = require('../controllers/accountController')
 
-receiptRoute.route('/create-manager').post(checkLogin, checkAdmin, registerValidator,createManager)
+// receiptRoute.route('/create-manager').post(checkLogin, checkAdmin, registerValidator,createManager)
 
-receiptRoute.route('/list/:type').get(checkLogin, checkAdmin, listAccount)
+// receiptRoute.route('/list/:type').get(checkLogin, checkAdmin, listAccount)
 
 module.exports = receiptRoute
