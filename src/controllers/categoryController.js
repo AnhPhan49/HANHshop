@@ -1,9 +1,6 @@
 const {validationResult} = require('express-validator')
-const crypto = require('crypto')
-const mongoose = require('mongoose')
 const AccountModel = require('../models/accountModel')
 const categoryModel = require('../models/categoryModel')
-
 
 module.exports.createCategory = async (req, res) => {
     try {
@@ -58,7 +55,7 @@ module.exports.updateCategory = async (req, res) => {
             name: name,
             active: active
         },{new: true})
-        console.log(newCate)
+
         return res.status(200).json({message: "Cập nhật thành công", data: newCate})
     } catch (err) {
         return res.status(400).json({message: err.message})
