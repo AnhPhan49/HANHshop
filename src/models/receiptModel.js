@@ -23,7 +23,7 @@ const receiptSchema = new Schema({
         description: String,
         reason: {
             type: String,
-            enum: ["Đang chờ duyệt","Đang vận chuyển","Hủy đơn từ khách"]
+            enum: ["Đang chờ duyệt","Đang vận chuyển","Hủy đơn từ khách","Hủy đơn từ shop"]
         }
     },
     total_price: Number

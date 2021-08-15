@@ -4,6 +4,7 @@ const {validationResult} = require('express-validator')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
 const mongoose = require('mongoose')
+const cartModel =require('../models/cartModel')
 // const {OAuth2Client} =  require('google-auth-library')
 // const client = new OAuth2Client("713987113089-v6kssliis8c1m004jdlbfumnd4b51chd.apps.googleusercontent.com")
 // const oAuth2Client = require('../config/googleapis')
@@ -85,7 +86,7 @@ module.exports.registerController = async (req, res) =>{
         }
 
         let password_hash = await bcrypt.hash(password,10)
-        let account = await new AccountModel({
+        let account = new AccountModel({
             email: email,
             fullname: fullname,
             firstname: firstname,
@@ -93,9 +94,14 @@ module.exports.registerController = async (req, res) =>{
             type_account: "email",
             password: password_hash,
             tokenVerify: token,
+            status: true
         })
         await account.save()
     
+        let newCart = new cartModel({
+            customer: account._id,
+        })
+        newCart.save()
         // const accessToken = await oAuth2Client.getAccessToken()
 
         // var transporter = nodemailer.createTransport({
