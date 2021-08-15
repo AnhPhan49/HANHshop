@@ -68,7 +68,7 @@ module.exports.updateCategory = async (req, res) => {
 module.exports.listCategoryAdmin = async (req, res) =>{
     try{
         let listCate = await categoryModel.find()
-        return res.status(200).json({message: "Lấy dữ liệu thành công", data: listCate})
+        return res.status(200).json({message: "Lấy dữ liệu thành công", data: listCate, total: listCate.length})
     }catch (err) {
         return res.status(400).json({message: err.message})
     }
