@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {
     CssBaseline,
     AppBar,
@@ -15,9 +15,13 @@ import {
     ListItemText
 } from '@material-ui/core';
 import {GrFormNext, GrFormPrevious} from 'react-icons/gr'
-import {RiStackFill, RiShoppingCart2Fill, RiMoneyDollarCircleFill, RiTruckFill} from 'react-icons/ri'
-import {FaUsers} from 'react-icons/fa'
+import {RiStackFill, RiShoppingCart2Fill, RiLogoutBoxFill} from 'react-icons/ri'
+import {FaUsers, FaStore} from 'react-icons/fa'
 import {HiMenu} from 'react-icons/hi'
+import { IoReceiptSharp } from "react-icons/io5";
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {userlogoutsuccess} from '../reducers/userReducer'
 import clsx from 'clsx';
 
 import CategoryManagePage from './category-manage-page'
@@ -84,33 +88,41 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(1),
   },
+  sidebarText: {
+    fontWeight: 700,
+    color: 'gray',
+  }
 }));
-
-var sidebar = [
-    {
-        title: <h5>Danh mục</h5>,
-        icon: <RiStackFill size='24px'></RiStackFill>
-    }, {
-        title:  <h5>Sản phẩm</h5>,
-        icon: <RiShoppingCart2Fill size='24px'></RiShoppingCart2Fill>
-    }, {
-        title: <h5>Ưu đãi</h5>,
-        icon: <RiMoneyDollarCircleFill size='24px'></RiMoneyDollarCircleFill>
-    }, {
-        title: <h5>Nhà cung cấp</h5>,
-        icon: <RiTruckFill size='24px'></RiTruckFill>
-    }, {
-        title: <h5>Tài khoản</h5>,
-        icon: <FaUsers size='24px'></FaUsers>
-    }
-    
-]
 
 const AdminPage = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [view, setView] = useState(0);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    var sidebar = [
+      {
+        title: <h5 className={classes.sidebarText}>Tài khoản</h5>,
+        icon: <FaUsers size='24px'></FaUsers>
+    }, {
+        title: <h5 className={classes.sidebarText}>Danh mục</h5>,
+        icon: <RiStackFill size='24px'></RiStackFill>
+    }, {
+        title: <h5 className={classes.sidebarText}>Sản phẩm</h5>,
+        icon: <RiShoppingCart2Fill size='24px'></RiShoppingCart2Fill>
+    }, {
+        title: <h5 className={classes.sidebarText}>Quản lý kho</h5>,
+        icon: <FaStore size='24px'></FaStore>
+    }, {
+        title: <h5 className={classes.sidebarText}>Xác nhận đơn hàng</h5>,
+        icon: <IoReceiptSharp size='24px'></IoReceiptSharp>
+    }, {
+      title: <h5 className={classes.sidebarText}>Đăng xuất</h5>,
+        icon: <RiLogoutBoxFill size='24px'></RiLogoutBoxFill>
+    }
+  ]
 
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -126,10 +138,15 @@ const AdminPage = (props) => {
 
     const renderSwitch = (param) => {
       switch(param) {
-        case 0:
-          return <CategoryManagePage></CategoryManagePage>;
         case 1:
+          return <CategoryManagePage></CategoryManagePage>;
+        case 2:
           return <ProductManagePage></ProductManagePage>;
+        case 5:
+          localStorage.removeItem('token')
+          dispatch(userlogoutsuccess())
+          return history.push('/login')
+        default:
       }
     }
 
@@ -173,9 +190,9 @@ const AdminPage = (props) => {
                 }}
             >
                 <div className={classes.toolbar}>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'rtl' ? <GrFormNext size='24px'/> : <GrFormPrevious size='24px'/>}
-                </IconButton>
+                  <IconButton onClick={handleDrawerClose}>
+                      {theme.direction === 'rtl' ? <GrFormNext size='26px'/> : <GrFormPrevious size='26px'/>}
+                  </IconButton>
                 </div>
                 <Divider />
                     <List>

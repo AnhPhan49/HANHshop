@@ -1,123 +1,91 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {IconButton} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import ProductEditModal from '../components/product-edit-modal'
-import { IoIosSave } from "react-icons/io";
 import { IoTrashBin, IoAddCircle } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
+import { MdBrokenImage } from "react-icons/md";
 
-var data = [
-    {
-        id: 'AO10',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Hot',
-        store: true
-    },
-    {
-        id: 'LOL11',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Dog',
-        store: false
-    },
-    {
-        id: 'LOL11',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Dog',
-        store: false
-    },
-
-    {
-        id: 'LOL11',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Dog',
-        store: false
-    },
-    {
-        id: 'LOL11',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Dog',
-        store: false
-    },
-    {
-        id: 'LOL11',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Dog',
-        store: false
-    },
-    {
-        id: 'LOL11',
-        name: 'Nồi lẩu thập cẩm dùng năng lượng mặt trăng',
-        img: 'https://massageishealthy.com/wp-content/uploads/2019/05/cach-nau-lau-thap-cam-hai-san-chua-cay-lau-thap-cam-gom-nhung-gi-7.jpg',
-        category: 'Nồi niêu',
-        status: 'Dog',
-        store: false
-    },
-]
-
-const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',      
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,      
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(5, 5, 5),
-      borderRadius:'10px'
-    },
-  }));
+import Pagination from '@material-ui/lab/Pagination';
+import AdminApi from '../apis/adminApis'
+import ReactBnbGallery from 'react-bnb-gallery';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import ProductModal from '../components/product-modal'
 
 const ProductManagePage = (props) => {
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
-  
-    const handleOpen = () => {
-      setOpen(true);
+    const childRef = useRef();  
+    const [loading, setLoader] = useState(true)    
+    const [isOpen, setIsOpen] = useState(false)
+    const [photoData, setPhotoData] = useState([])   
+    const [totalPage, setTotalPage] = useState(1)       
+    const [productList, setProductList] = useState([])
+
+    const [editProductObj, setEditProductObj] = useState()
+    const [modalTitle, setModalTitle] = useState()    
+
+    useEffect(() => {
+        getProductList(1)
+    }, [])
+
+    const getProductList = async (page) => {
+        try{
+            setLoader(true)
+            const res = await AdminApi.getProductList(page);
+            if(res.status === 200) {                
+                formatCurrency(res.data.product)                 
+                setTotalPage(res.data.total_page)
+                setLoader(false)
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+
+    const handleOpenEditModal = (item) => {
+        setModalTitle('Edit product')
+        setEditProductObj(item)
+        childRef.current.handleOpenModal()
     };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+
+    const formatCurrency = (data) => {
+        data.forEach((item, index) => {
+            data[index].price = item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        })
+        setProductList(data) 
+    }
+
+    const pageChange = (event, page) => {
+        getProductList(page)
+    }
+
+    const handleOpenAddModal = () => {
+        setModalTitle('Add product')
+        setEditProductObj('')
+        childRef.current.handleOpenModal()
+    }
+
+    const handleCloseModalAfterSave = () => {        
+        getProductList();
+    }
+
+    const openWidePhoto = (photo) => {
+        let array = []
+        photo.forEach((item) => {array.push(item.url)})
+        setIsOpen(true)
+        setPhotoData(array)
+    }
 
     return(
         <div className='production-page'>
-            <IconButton className='float-button' color="primary" onClick={handleOpen}>
+            <IconButton className='float-button' color="primary" onClick={handleOpenAddModal}>
                 <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
             </IconButton>
-            <Modal                
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                <div className={classes.paper}>
-                    <ProductEditModal></ProductEditModal>
-                </div>
-                </Fade>
-            </Modal>
+            <ReactBnbGallery
+                opacity={0.8}
+                show={isOpen}
+                photos={photoData}
+                onClose={() => setIsOpen(false)}
+            />
+            <ProductModal ref={childRef} title={modalTitle} modalEditFilter={editProductObj} reloadNewData={handleCloseModalAfterSave}></ProductModal>                
             <h4>Sản phẩm</h4>        
                 <div className='row m-0 title'>
                     <div className='col-1 text-center'>
@@ -126,11 +94,14 @@ const ProductManagePage = (props) => {
                     <div className='col-2 text-center'>
                         Sản phẩm
                     </div>
-                    <div className='col-2 text-center'>
+                    <div className='col-1 text-center'>
                         Ảnh
                     </div>
                     <div className='col-2 text-center'>
                         Danh mục
+                    </div>
+                    <div className='col-2 text-center'>
+                        Giá
                     </div>
                     <div className='col-1 text-center'>
                         Trạng thái
@@ -138,51 +109,75 @@ const ProductManagePage = (props) => {
                     <div className='col-1 text-center'>
                         Lưu kho
                     </div>
-                    <div className='col-3 text-center'>
+                    <div className='col-2 text-center'>
                         Tùy chọn
                     </div>
                 </div>
                 <div className='product-list'>
                     {
-                        data.map((item, index) => 
-                        <div className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item.id}>
+                        (loading)?(
+                            <LinearProgress></LinearProgress>
+                        ): (
+                            <></>
+                        )
+                    }
+                    {
+                        productList.map((item, index) => 
+                        <div className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item._id}>
                             <div className='col-1 product-item'>
-                                {item.id}
+                                {index + 1}
                             </div>
                             <div className='col-2 product-item'>
                                 {item.name}
                             </div>
-                            <div className='col-2 product-item'>
-                                <img src={item.img} alt=''></img>
+                            <div className='col-1 product-item'>
+                                {
+                                    (item.image[0])?(
+                                        <div className='img-wrapper' onClick={() => openWidePhoto(item.image)}>
+                                            <img src={item.image[0].url} alt=''></img>
+                                        </div>   
+                                    ):(
+                                        <div className='img-broke-wrapper'>
+                                            <MdBrokenImage className='mt-3' size='22px' color='white'></MdBrokenImage>
+                                        </div>
+                                    )
+                                }
+                                                             
                             </div>
                             <div className='col-2 product-item'>
-                                {item.category}
+                                {item.category.name}
+                            </div>
+                            <div className='col-2 product-item'>
+                                {item.price}
                             </div>
                             <div className='col-1 product-item'>
                                 {
-                                    item.status
+                                    item.sale_tag > 0?`${item.status} (-${item.sale_tag}%)`: item.status
                                 }
                             </div>
                             <div className='col-1 product-item'>
                             {
-                                    (item.store)?(
+                                    (item.available)?(
                                         <div className='green-dot'></div>
                                     ):(
                                         <div className='red-dot'></div>
                                     )
                                 }
                             </div>
-                            <div className='col-3 product-item'>
-                            <IconButton color="primary" onClick={handleOpen}>
-                                <FaEdit size='20px'></FaEdit>
-                            </IconButton>
-                            <IconButton className='text-danger' color="secondary" aria-label="delete">
-                                <IoTrashBin size='20px'></IoTrashBin>
-                            </IconButton>
+                            <div className='col-2 product-item'>
+                                <IconButton color="primary" onClick={() => handleOpenEditModal(item)}>
+                                    <FaEdit size='20px'></FaEdit>
+                                </IconButton>
+                                <IconButton className='text-danger' color="secondary" aria-label="delete">
+                                    <IoTrashBin size='20px'></IoTrashBin>
+                                </IconButton>
                             </div>
                         </div>)
                     }
-                </div>            
+                </div> 
+                <div className='mt-4 paging'>
+                    <Pagination count={totalPage} onChange={pageChange} variant="outlined" shape="rounded" />
+                </div>          
         </div>
     )
 }

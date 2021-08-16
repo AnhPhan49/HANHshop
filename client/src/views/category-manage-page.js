@@ -1,78 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import IconButton from '@material-ui/core/IconButton';
-import { IoIosSave } from "react-icons/io";
-import { IoTrashBin, IoAddCircle } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-import CategoryEditModal from '../components/category-edit-modal'
+import AdminApi from '../apis/adminApis'
 
-var data = [
-    {
-        name: 'Áo quần',
-        create: '08/08/2021',
-        status: true,
-        id: 1
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    {
-        name: 'Đồ gia dụng',
-        create: '06/27/2021',
-        status: false,
-        id: 2
-    },
-    
-]
+import CategoryEditModal from '../components/category-modal'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -91,19 +29,61 @@ const useStyles = makeStyles((theme) => ({
 const CategoryManagePage = (props) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const [loading, setLoader] = useState(true)
+    const [catelist, setCateList] = useState([])
+    const [modalTitle, setModalTitle] = useState()
+    const [editCateObj, setEditCateObj] = useState()   
 
-    const handleOpen = () => {
+    useEffect(() => {        
+        fetchCateList()
+    }, [])
+
+    async function fetchCateList() {
+        try{
+            setLoader(true)
+            const res = await AdminApi.getCategoryList();
+            if(res.status === 200) {                
+                convertTime(res.data)
+                setLoader(false)
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }            
+    }
+
+    const handleEditOpen = (item) => {
+        setModalTitle('Edit category')
+        setEditCateObj(item)
         setOpen(true);
-      };
+    };
+
+    const handleAddOpen = (item) => {
+        setModalTitle('Add category')
+        setEditCateObj('')
+        setOpen(true);
+    }
     
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
-      };
-  
+    };
+
+    const handleSaveClose = () => {
+        setOpen(false);
+        fetchCateList()
+    }
+
+    const convertTime = (data) => {
+        data.forEach((item, index) => {
+            let date = new Date(item.createdAt)
+            data[index].createdAt = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();            
+        })
+        setCateList(data)
+    }
 
     return(
-        <div className='category-page'>
-            <IconButton className='float-button' color="primary" onClick={handleOpen}>
+        <div className='category-page'>            
+            <IconButton className='float-button' color="primary" onClick={handleAddOpen}>
                 <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
             </IconButton>
             <Modal
@@ -115,19 +95,19 @@ const CategoryManagePage = (props) => {
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{
-                timeout: 500,
+                    timeout: 500,
                 }}
             >
                 <Fade in={open}>
                 <div className={classes.paper}>
-                    <CategoryEditModal></CategoryEditModal>
+                    <CategoryEditModal title={modalTitle} modalEditFilter={editCateObj} closeModalHandler={handleSaveClose}></CategoryEditModal>
                 </div>
                 </Fade>
             </Modal>
             <h4>Danh mục</h4>
             <div className='row m-0 title'>
                 <div className='col-1 text-center'>
-                    STT
+                    STT 
                 </div>
                 <div className='col-3 text-center'>
                     Danh mục
@@ -141,40 +121,45 @@ const CategoryManagePage = (props) => {
                 <div className='col-3 text-center'>
                     Tùy chọn
                 </div>
-            </div>
-            <div className='category-list'>
-            {
-                data.map((item, index) => 
-                <div className='row m-0 category-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item.id}>
-                    <div className='col-1 category-item text-center'>
-                        {index + 1}
-                    </div>
-                    <div className='col-3 category-item text-center'>
-                        {item.name}
-                    </div>
-                    <div className='col-3 category-item text-center'>
-                        {item.create}
-                    </div>
-                    <div className='col-2 category-item text-center'>
+                </div>
+                    <div className='category-list'>
                         {
-                            (item.status)?(
-                                <div className='green-dot'></div>
-                            ):(
-                                <div className='red-dot'></div>
+                            (loading)?(
+                                <LinearProgress></LinearProgress>
+                            ): (
+                                <></>
                             )
                         }
-                    </div>
-                    <div className='col-3 category-item'>
-                        <IconButton color="primary" onClick={handleOpen}>
-                            <FaEdit size='20px'></FaEdit>
-                        </IconButton>
-                        <IconButton className='text-danger' color="secondary" aria-label="delete">
-                            <IoTrashBin size='20px'></IoTrashBin>
-                        </IconButton>
-                    </div>
-                </div>)
-            }
-            </div>      
+                    {
+                        catelist.map((item, index) => 
+                        <div className='row m-0 category-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item._id}>
+                            <div className='col-1 category-item text-center'>
+                                {index + 1}
+                            </div>
+                            <div className='col-3 category-item text-center'>
+                                {item.name}
+                            </div>
+                            <div className='col-3 category-item text-center'>
+                                {item.createdAt}
+                            </div>
+                            <div className='col-2 category-item text-center'>
+                                {
+                                    (item.active)?(
+                                        <div className='green-dot'></div>
+                                    ):(
+                                        <div className='red-dot'></div>
+                                    )
+                                }
+                            </div>
+                            <div className='col-3 category-item'>
+                                <IconButton color="primary" onClick={() => handleEditOpen(item)}>
+                                    <FaEdit size='20px'></FaEdit>
+                                </IconButton>
+                            </div>
+                        </div>)
+                    }
+                </div>
+                  
         </div>
     )
 }

@@ -450,6 +450,17 @@ body {
 	padding-right: 2%;	
 }
 
+.category-page .sort-icon{
+	margin: 2px
+}
+
+.category-page .sort-icon:hover {
+	cursor: pointer;
+	border-radius: 50px;
+	background-color: rgb(238, 238, 238);
+	
+}
+
 .category-page .category-list .category-row, .production-page .product-list .product-row {
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -470,9 +481,7 @@ body {
 }
 
 .production-page .product-list .product-row img {
-	width: 36%;
 	height: 50px;
-	border-radius: 8px;	
 }
 
 .green-dot{
@@ -486,7 +495,7 @@ body {
 }
 
 .red-dot {
-	background-color: rgb(216, 0, 0);
+	background-color: rgb(150, 150, 150);
 	width: 1.8rem;
 	height: 1.8rem;
 	border: 2px solid whitesmoke;
@@ -495,19 +504,43 @@ body {
 	margin-right: auto;
 }
 
-.edit-product-modal h5 {
+.product-modal h5 {
 	font-weight: 700;
 }
 
-.edit-product-modal #standard-basic, .category-edit-modal #standard-basic, .edit-product-modal #standard-basic::placeholder, .category-edit-modal #standard-basic::placeholder{
-	font-size: 1.5rem;	
+#standard-basic, #demo-simple-select-label {
+	font-size: 1.5rem;
 }
 
-.edit-product-modal #demo-simple-select-label,  .category-edit-modal #demo-simple-select-label{
-	font-size: 1.3rem;
+#material-button-label {
+	font-size: 1.2rem;
 }
 
-.category-edit-modal {
+.modal-image-frame {		
+	border-radius: 8px;
+	height: 180px;
+	border: 2px dashed lightgray;
+	text-align: center;
+}
+
+.modal-image-frame .upload-template {
+	font-size: 1.8rem;
+	font-weight: 700;
+	margin-top: 14px;	
+	color: lightgray;
+}
+
+.modal-image-frame #material-button-label {
+	font-size: 1.6rem;
+	font-weight: 700;
+	text-transform: none;
+}
+
+.modal-image-frame #material-button-label span {
+	margin-left: 4px;
+}
+
+.category-modal {
 	width: 300px;
 }
 
@@ -517,4 +550,26 @@ body {
 	height:70px;
 	bottom:40px;
 	right:40px;
+}
+
+.production-page .paging {	
+	float: right;
+	margin-right: 2%;
+}
+
+
+.production-page .product-list .product-row .img-wrapper {
+	background-color: rgb(0, 0, 0);
+	border-radius: 4px;
+}
+
+.production-page .product-list .product-row .img-broke-wrapper {
+	background-color: gray;
+	border-radius: 4px;
+	height: 45px;	
+}
+
+.production-page .product-list .product-row .img-wrapper:hover {
+	cursor: pointer;
+	opacity: 0.8;
 }
