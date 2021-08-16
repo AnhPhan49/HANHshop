@@ -50,10 +50,10 @@ module.exports.search = async (req, res) =>{
 
         let searchProducts = await productModel.find({...search},'_id').sort({'createdAt': 'desc'})
 
-        if(searchProducts.length/10 < page){
+        if(searchProducts.length/10 < page + 1){
             return res.status(404).json({message: "Chưa có trang thông báo này"})
         }
-        let productFilter = searchProducts.slice(page, page + 10)
+        let productFilter = searchProducts.slice(page*10, page*10 + 10)
 
         let reformattedArray = []
         productFilter.map(obj => {
