@@ -1,6 +1,6 @@
 import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'react-bnb-gallery/dist/style.css'
 import {
   BrowserRouter as Router,
   Switch,

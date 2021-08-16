@@ -1,9 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import { TextField, Button, FormGroup, Switch, FormControlLabel } from '@material-ui/core'
+import { TextField, Button, FormGroup, Switch, FormControlLabel, makeStyles } from '@material-ui/core'
 import AdminApi from '../apis/adminApis'
 import alert from '../utils/alert'
 
-const CategoryEditModal = (props) => {        
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+const useStyles = makeStyles((theme) => ({
+    labelRoot: {
+        fontSize: '1.5rem',
+    },
+  }));
+
+const CategoryEditModal = (props) => {  
+    const classes = useStyles();        
     const [editName, setEditName] = useState()
     const [checked, setChecked] = useState(false)
     
@@ -22,8 +31,8 @@ const CategoryEditModal = (props) => {
         try{
             e.preventDefault();
             let formData = {
-               "name":editName,
-                "active":checked
+                "name": editName,
+                "active": checked
             }
             let res = null
             if (props.modalEditFilter) {
@@ -31,9 +40,9 @@ const CategoryEditModal = (props) => {
             } else {
                 res = await AdminApi.addCategory(formData);
             }            
-            if(res.status === 200) {                
+            if(res.status === 200) {              
                 alert({icon : 'success',title : 'Success', msg : res.message})                    
-            }                
+            } 
         }
         catch(e) {
             console.log(e)
@@ -43,20 +52,30 @@ const CategoryEditModal = (props) => {
     }
 
     return(
-        <div className='category-edit-modal'>
+        <div className='category-modal'>
             <h4>{props.title}</h4>
             <form onSubmit={onSubmit}>
                 <FormGroup>
-                    <TextField id="standard-basic" label="Tên danh mục" value={editName} onChange={(e) => setEditName(e.target.value)} required/>
+                    <TextField
+                        id="standard-basic"
+                        label="Tên danh mục"
+                        value={editName}
+                        InputLabelProps={{
+                            classes: {
+                              root: classes.labelRoot,                              
+                            }
+                        }}
+                        onChange={(e) => setEditName(e.target.value)}
+                        required/>
                 </FormGroup>
                 <FormGroup className='mt-3'>
                 <FormControlLabel                    
                     control={<Switch checked={checked} onChange={handleSwitch} />}
-                    label="Trạng thái"
+                    label={<span style={{ fontSize: '1.5rem' }}>Trạng thái</span>}
                 />
                 </FormGroup>
                 <FormGroup className='mt-3'>
-                    <Button variant="contained" color="primary" id='demo-simple-select-label' type='submit'>
+                    <Button variant="contained" color="primary" id='material-button-label' type='submit'>
                         Lưu
                     </Button>
                 </FormGroup>

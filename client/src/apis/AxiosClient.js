@@ -10,7 +10,7 @@ const axiosClient = axios.create({
 //handle access token
 axiosClient.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
-    config.baseURL = 'http://localhost:5000'
+    config.baseURL = 'https://hanh-shop.herokuapp.com'
     if(token)        
         config.headers.Authorization = `Bearer ${token}`
     return config

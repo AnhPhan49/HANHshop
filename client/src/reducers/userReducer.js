@@ -11,8 +11,11 @@ export const userSlice = createSlice({
         userloginsuccess: (state) => {
           state.loggedIn = true
         },
+        userlogoutsuccess: (state) => {
+          state.loggedIn = false
+        },
       },
 })
 
-export const {userloginsuccess} = userSlice.actions
+export const {userloginsuccess, userlogoutsuccess} = userSlice.actions
 export default userSlice.reducer

@@ -1,19 +1,25 @@
 import React from 'react'
-import { FormControl, InputLabel, Input, FormGroup, Button } from '@material-ui/core';
+import { FormControl, InputLabel, TextField, FormGroup, Button, makeStyles } from '@material-ui/core';
 import AuthApis from '../apis/authApis'
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {userloginsuccess} from '../reducers/userReducer'
 
+const useStyles = makeStyles((theme) => ({
+    labelRoot: {
+        fontSize: '1.5rem',
+    },
+}))
 const Login = (props) => {
     const { register, handleSubmit } = useForm();
+    const classes = useStyles()
     const history = useHistory()
     const dispatch = useDispatch();
     const onSubmit = async (data) => {
         try{
             const res = await AuthApis.login(data);                  
-            if(res.status === 200) {                
+            if(res.status === 200) {             
                 localStorage.setItem("token", res.data)
                 AuthApis.setHeaderAxios(res.data)
                 dispatch(userloginsuccess())
@@ -34,15 +40,33 @@ const Login = (props) => {
                     <h3>Login</h3>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <FormGroup>
-                            <FormControl>
-                                <InputLabel htmlFor="my-input" required>Email address</InputLabel>
-                                <Input {...register("email")} type='email'/>                                
+                            <FormControl>                            
+                                <TextField
+                                    {...register("email")}                                     
+                                    InputLabelProps={{
+                                        classes: {
+                                            root: classes.labelRoot
+                                        }
+                                    }}
+                                    type='email'
+                                    required
+                                    id="standard-basic"
+                                    label="Email address" />
                             </FormControl>
                         </FormGroup>
                         <FormGroup>
-                            <FormControl>
-                                <InputLabel htmlFor="my-input" required>Password</InputLabel>
-                                <Input {...register("password")} type='password'/>                        
+                            <FormControl>                                
+                                <TextField
+                                    {...register("password")}                                    
+                                    InputLabelProps={{
+                                        classes: {
+                                            root: classes.labelRoot
+                                        }
+                                    }}
+                                    type='password'
+                                    required
+                                    id="standard-basic"
+                                    label="Password" />                                                        
                             </FormControl>
                         </FormGroup>                            
                         <FormGroup className='mt-5'>
