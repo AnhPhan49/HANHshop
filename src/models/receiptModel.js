@@ -21,9 +21,9 @@ const receiptSchema = new Schema({
     }],
     status: {
         description: String,
-        reason: {
+        present: {
             type: String,
-            enum: ["Đang chờ duyệt","Đang vận chuyển","Hủy đơn từ khách","Hủy đơn từ shop"]
+            enum: ["Đang chờ duyệt", "Đang vận chuyển", "Hủy đơn từ khách", "Hủy đơn từ shop"]
         }
     },
     total_price: Number

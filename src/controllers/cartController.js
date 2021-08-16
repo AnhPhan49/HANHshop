@@ -3,11 +3,20 @@ const inventoryModel = require('../models/inventoryModel')
 
 module.exports.addProduct = async (req, res) =>{
     try{
-        let {id} = req.body
+        let {id, count} = req.body
         if (!id) throw new Error("Missing id product.")
-        let {total} = await inventoryModel.findOne({product: id})
+        if (!count || count < 0) throw new Error("Something wrong with counter product") 
+        let {total, product} = await inventoryModel.findOne({product: id}).populate('product')
         if (total < count) throw new Error("Không đủ sản phẩm, xin quý khách hãy giảm số lượng")
-        let updateCart = await cartModel.findOneAndUpdate({customer: req.user.id},{$push: {product:id}})
+        let updateCart = await cartModel.findOne({customer: req.user.id})
+        updateCart.total_price = updateCart.total_price + product.price*count
+        let dataProduct = {
+            id: id,
+            total: count,
+            total_price: product.price*count
+        }
+        updateCart.product.push(dataProduct)
+        updateCart.save()
         return res.status(200).json({message: 'Success', data: updateCart})
     }catch(err){
         return res.status(400).json({message: err.message})
@@ -19,6 +28,8 @@ module.exports.removeProduct = async (req, res) =>{
         let {id, count} = req.body
         if (!id) throw new Error("Missing id product.")
         let updateCart = await cartModel.findOneAndUpdate({customer: req.user.id},{$pull: {product:id}})            
+        
+        
         return res.status(200).json({message: 'Success', data: updateCart})
     }catch(err){
         return res.status(400).json({message: err.message})

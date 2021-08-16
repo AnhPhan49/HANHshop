@@ -9,8 +9,8 @@ const {
 
 cartRoute.route('/get').get(checkLogin, getCart)
 
-cartRoute.route('/add/:id').put(checkLogin, addProduct)
+cartRoute.route('/add').put(checkLogin, addProduct)
 
-cartRoute.route('/remove/:id').put(checkLogin, removeProduct)
+cartRoute.route('/remove').put(checkLogin, removeProduct)
 
 module.exports = cartRoute
