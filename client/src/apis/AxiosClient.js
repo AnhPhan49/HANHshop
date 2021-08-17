@@ -3,7 +3,9 @@ import alert from '../utils/alert'
 
 const axiosClient = axios.create({
     headers: {
-        headers: {'content-type': 'application/json'},
+        headers: {
+            'content-type': 'application/json',
+            "Content-Type": "multipart/form-data"},
     }
 })
 

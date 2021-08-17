@@ -14,8 +14,9 @@ const ProductManagePage = (props) => {
     const childRef = useRef();  
     const [loading, setLoader] = useState(true)    
     const [isOpen, setIsOpen] = useState(false)
-    const [photoData, setPhotoData] = useState([])   
-    const [totalPage, setTotalPage] = useState(1)       
+    const [photoData, setPhotoData] = useState([])
+    const [page, setPage] = useState(1)  
+    const [totalPage, setTotalPage] = useState(1)
     const [productList, setProductList] = useState([])
 
     const [editProductObj, setEditProductObj] = useState()
@@ -54,6 +55,7 @@ const ProductManagePage = (props) => {
     }
 
     const pageChange = (event, page) => {
+        setPage(page)
         getProductList(page)
     }
 
@@ -63,8 +65,9 @@ const ProductManagePage = (props) => {
         childRef.current.handleOpenModal()
     }
 
-    const handleCloseModalAfterSave = () => {        
-        getProductList();
+    const handleCloseModalAfterSave = () => {
+        setPage(1)
+        getProductList(1);
     }
 
     const openWidePhoto = (photo) => {
@@ -72,6 +75,19 @@ const ProductManagePage = (props) => {
         photo.forEach((item) => {array.push(item.url)})
         setIsOpen(true)
         setPhotoData(array)
+    }
+
+    const handleDelete = async (id) => {
+        try{       
+            const res = await AdminApi.deleteProduct(id);
+            if(res.status === 200) {
+                setPage(1)
+                getProductList(1)
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }
     }
 
     return(
@@ -168,7 +184,7 @@ const ProductManagePage = (props) => {
                                 <IconButton color="primary" onClick={() => handleOpenEditModal(item)}>
                                     <FaEdit size='20px'></FaEdit>
                                 </IconButton>
-                                <IconButton className='text-danger' color="secondary" aria-label="delete">
+                                <IconButton className='text-danger' color="secondary" aria-label="delete" onClick={() => handleDelete(item._id)}>
                                     <IoTrashBin size='20px'></IoTrashBin>
                                 </IconButton>
                             </div>
@@ -176,7 +192,7 @@ const ProductManagePage = (props) => {
                     }
                 </div> 
                 <div className='mt-4 paging'>
-                    <Pagination count={totalPage} onChange={pageChange} variant="outlined" shape="rounded" />
+                    <Pagination count={totalPage} value={page} onChange={pageChange} variant="outlined" shape="rounded" />
                 </div>          
         </div>
     )
