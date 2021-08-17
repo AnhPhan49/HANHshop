@@ -523,6 +523,10 @@ body {
 	text-align: center;
 }
 
+.modal-image-frame img {
+	width: 200px;
+}
+
 .modal-image-frame .upload-template {
 	font-size: 1.8rem;
 	font-weight: 700;
@@ -572,4 +576,9 @@ body {
 .production-page .product-list .product-row .img-wrapper:hover {
 	cursor: pointer;
 	opacity: 0.8;
+}
+
+.ckeditor {
+	font-size: 1.6rem;
+	width: 100%;
 }
