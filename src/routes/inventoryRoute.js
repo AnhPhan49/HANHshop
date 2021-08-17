@@ -8,6 +8,6 @@ const {
 
 inventoryRoute.route('/search').get(search)
 
-inventoryRoute.route('/update/:id').put(updateInventory)
+inventoryRoute.route('/update/:id').put(checkLogin, updateInventory)
 
 module.exports = inventoryRoute
