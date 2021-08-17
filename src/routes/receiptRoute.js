@@ -4,10 +4,10 @@ const checkLogin = require('../midlewares/loginMidleware')
 const checkAdmin = require('../midlewares/AdminMidleware')
 
 const {
-    
-} = require('../controllers/accountController')
+    createReceipt
+} = require('../controllers/receiptController')
 
-// receiptRoute.route('/create-manager').post(checkLogin, checkAdmin, registerValidator,createManager)
+receiptRoute.route('/create/:id').post(checkLogin, createReceipt)
 
 // receiptRoute.route('/list/:type').get(checkLogin, checkAdmin, listAccount)
 

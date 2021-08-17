@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
+const counterModel = require('./counterModel')
 const receiptSchema = new Schema({
     id_receipt: String,
     customer: {
@@ -19,14 +19,26 @@ const receiptSchema = new Schema({
         total: Number,
         total_price: Number
     }],
+    address: String,
     status: {
         description: String,
         present: {
             type: String,
-            enum: ["Đang chờ duyệt", "Đang vận chuyển", "Hủy đơn từ khách", "Hủy đơn từ shop"]
+            enum: ["Đang chờ duyệt", "Đang vận chuyển", "Hủy đơn từ khách", "Hủy đơn từ shop"],
+            default: "Đang chờ duyệt"
         }
     },
     total_price: Number
 },{timestamps:true})
+
+receiptSchema.pre('save', function(next) {
+    var doc = this
+    counterModel.findByIdAndUpdate(mongoose.Types.ObjectId('611a861dd4a1300f856d6566'), {$inc: { seq: 1} }, function(error, counter)   {
+        if(error)
+            return next(error);
+        doc.id_receipt = `HD${counter.seq}`
+        next()
+    })
+})
 
 module.exports = mongoose.model('Receipt', receiptSchema)

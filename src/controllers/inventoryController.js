@@ -31,7 +31,7 @@ module.exports.updateInventory = async (req, res) =>{
         })
         newHistory.save()
         
-        return res.status(200).json({message:"Cập nhật thành công", data: totalRemain})
+        return res.status(200).json({message:"Cập nhật thành công", data: updateInven})
     } catch (err) {
         return res.status(400).json({message: err.message})
     }
