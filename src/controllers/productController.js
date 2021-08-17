@@ -127,10 +127,10 @@ module.exports.search = async (req, res) =>{
         delete search.page
         if(Object.keys(search).includes('name'))
             search.name = {"$regex": search.name, "$options":"i"}
-
+        console.log()
         let searchProducts = await productModel.find({...search}).sort({'createdAt': 'desc'}).populate("category","_id name")
 
-        if(searchProducts.length/10 < page+1){
+        if(Math.ceil(searchProducts.length/10) < page + 1){
             return res.status(404).json({message: "Chưa có trang thông báo này"})
         }
         let productFilter = searchProducts.slice(page*10, page*10+10)
