@@ -419,11 +419,12 @@ body {
 	padding-bottom: 10px;	
 }
 
-.category-page h4, .production-page h4 {
+.category-page h4, .production-page .search-section {
 	margin-left: 2%;
 	margin-right: 2%;
 	padding-top: 16px;
-	padding-bottom: 16px;
+	padding-bottom: 8px;
+	margin-bottom: 0;
 	border-bottom: 1px solid lightgray;
 }
 
@@ -434,7 +435,9 @@ body {
 .category-page .title, .production-page .title {
 	padding-left: 2%;
 	padding-right: 2%;
-	margin-left: 2%;	
+	margin-left: 2%;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .category-page .title div, .production-page .title div{
@@ -578,7 +581,24 @@ body {
 	opacity: 0.8;
 }
 
-.ckeditor {
-	font-size: 1.6rem;
+.ckeditor, .production-page .search-section .searchInput {
+	font-size: 1.5rem;
 	width: 100%;
+}
+
+.production-page h4 {
+	margin-left: 2%;
+	margin-right: 2%;	
+}
+
+.production-page .search-section .btn {
+	font-size: 1.2rem;
+	margin-top: 24px;
+}
+
+.production-page .search-section .category-select-box {
+	font-size: 1.5rem;
+	margin: 5px;
+	padding: 4px;
+	width: 80%;
 }

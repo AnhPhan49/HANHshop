@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     switchControl: {
         marginTop: 6,        
     },
-    modal: {   
+    modal: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',      
@@ -153,13 +153,14 @@ const ProductModal = forwardRef((props, ref) => {
         setPrice('')
         setSaleTag('')
         setDesc('')
+        setCategory('')
         setStatus('N/A')
         setOpen(false)
     }
 
     const handleSubmitForm = async (e) => {
         e.preventDefault();
-        
+        setSubmitButtonState(true)
         try {
             const formData = new FormData();
 
@@ -189,7 +190,7 @@ const ProductModal = forwardRef((props, ref) => {
         } catch(e) {
             console.log(e)
         }
-        
+        setSubmitButtonState(false)
         handleCloseModal()
         props.reloadNewData()
     }
