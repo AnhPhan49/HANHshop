@@ -31,11 +31,17 @@ const AdminApi = {
         const url = '/api/product/create'
         return axiosClient.post(url, data)
     },
-    searchProductByCategory (page, categoryId) {
-
+    searchProductByCategory(page, categoryId) {
+        const url = `/api/product/search?page=${page}&category=${categoryId}`
+        return axiosClient.get(url)
     },
-    searchProductByProductName(page, productName) {
-
+    searchProductByProduct(page, product) {
+        const url = `/api/product/search?page=${page}&name=${product}`
+        return axiosClient.get(url)
+    },
+    searchProductByCategoryAndProduct(page, categoryId, product) {
+        const url = `/api/product/search?page=${page}&name=${product}&category=${categoryId}`
+        return axiosClient.get(url)
     },
     deleteProduct(id) {
         const url = `/api/product/delete/${id}`
