@@ -8,19 +8,20 @@ var multipartMiddleware = multipart();
 
 const {
     createProduct,
+    updateProduct,
     search,
-    deleteProduct
+    deleteProduct,
+    getProduct
 } = require('../controllers/productController')
 
 productRoute.route('/create').post(checkLogin, multipartMiddleware, addProductValidator, createProduct)
 
-// productRoute.route('/update/:id').put(checkLogin,addProductValidator, updateCategory)
-
-// productRoute.route('/admin/list').get(checkLogin, listCategoryAdmin)
+productRoute.route('/update/:id').put(checkLogin, multipartMiddleware, addProductValidator, updateProduct)
 
 productRoute.route('/search').get(search)
 
 productRoute.route('/delete/:id').delete(checkLogin, checkAdmin, deleteProduct)
-// // productRoute.route('/delete/:id').delete(checkLogin, deleteCategory)
+
+productRoute.route('/get/:id').get(checkLogin, getProduct)
 
 module.exports = productRoute

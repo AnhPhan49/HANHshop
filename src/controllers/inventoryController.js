@@ -44,19 +44,14 @@ module.exports.search = async (req, res) =>{
         let {page} = search
         page= page - 1
         if(page < 0) throw new Error("Page not found!!")
-        
         delete search.page
-        console.log({...search}) 
         if(Object.keys(search).includes('name'))
             search.name = {"$regex": search.name, "$options":"i"}
-        let test = await productModel.find()
         let searchProducts = await productModel.find({...search},'_id').sort({'createdAt': 'desc'})
-        
         if(Math.ceil(searchProducts.length/10) < page + 1){
             return res.status(404).json({message: "Chưa có trang thông báo này"})
         }
         let productFilter = searchProducts.slice(page*10, page*10 + 10)
-
         let reformattedArray = []
         productFilter.map(obj => {
             reformattedArray.push(obj._id)
