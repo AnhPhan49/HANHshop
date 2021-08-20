@@ -199,7 +199,7 @@ module.exports.search = async (req, res) =>{
         let {page} = search
         page= page - 1
         if(page < 0) throw new Error("Page not found!!")
-        
+        delete search.id_product
         delete search.page
         if(Object.keys(search).includes('name')){
             search["$or"] = [{name: {"$regex": search.name, "$options":"i"}}, {id_product: search.name}]
@@ -208,7 +208,7 @@ module.exports.search = async (req, res) =>{
 
         let searchProducts = await productModel.find({...search}).sort({'createdAt': 'desc'}).populate("category","_id name")
         if(Math.ceil(searchProducts.length/10) < page + 1){
-            return res.status(404).json({message: "Chưa có trang thông báo này"})
+            return res.status(201).json({message: "Chưa có trang thông báo này"})
         }
         let productFilter = searchProducts.slice(page*10, page*10+10)
         return res.status(200).json({message:"Success", data: {page: page + 1, total_page: Math.ceil(searchProducts.length/10), product: productFilter}})
