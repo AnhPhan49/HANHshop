@@ -13,6 +13,16 @@ const AdminApi = {
         const url = '/api/category/create';
         return axiosClient.post(url, data)
     },
+    // Inventory
+    getInventoryList(page){
+       const url=`/api/inventory/search?page=${page}`
+       return axiosClient.get(url)
+    },
+    updateInventory(id, data) {
+        const url = `/api/inventory/update/${id}`;
+        return axiosClient.put(url, data)
+    },
+    // End_Inventory
     getProductList(page) {
         const url = `/api/product/search?page=${page}`
         return axiosClient.get(url)

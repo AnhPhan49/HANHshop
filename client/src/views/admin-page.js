@@ -26,6 +26,7 @@ import clsx from 'clsx';
 
 import CategoryManagePage from './category-manage-page'
 import ProductManagePage from './product-manage-page'
+import InventoryManagePage from './inventory-manage-page'
 
 const drawerWidth = 240;
 
@@ -142,6 +143,8 @@ const AdminPage = (props) => {
           return <CategoryManagePage></CategoryManagePage>;
         case 2:
           return <ProductManagePage></ProductManagePage>;
+        case 3:
+          return <InventoryManagePage></InventoryManagePage>
         case 5:
           localStorage.removeItem('token')
           dispatch(userlogoutsuccess())

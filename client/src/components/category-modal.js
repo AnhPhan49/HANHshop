@@ -26,7 +26,7 @@ const CategoryEditModal = (props) => {
     const handleSwitch = () => {
         setChecked(!checked)
     }
-
+ 
     const onSubmit = async (e) => {        
         try{
             e.preventDefault();
@@ -34,6 +34,7 @@ const CategoryEditModal = (props) => {
                 "name": editName,
                 "active": checked
             }
+            console.log(formData)
             let res = null
             if (props.modalEditFilter) {
                 res = await AdminApi.updateCategory(props.modalEditFilter._id, formData);
@@ -50,7 +51,7 @@ const CategoryEditModal = (props) => {
         props.closeModalHandler()
         return 
     }
-
+    
     return(
         <div className='category-modal'>
             <h4>{props.title}</h4>
