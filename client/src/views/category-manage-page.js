@@ -59,19 +59,19 @@ const CategoryManagePage = (props) => {
     };
 
     const handleAddOpen = (item) => {
-        setModalTitle('Add category')
-        setEditCateObj('')
+        setModalTitle('Add category');
+        setEditCateObj('');
         setOpen(true);
     }
-    
+    const handleSaveClose = () => {
+        setOpen(false);
+        fetchCateList();
+    }
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleSaveClose = () => {
-        setOpen(false);
-        fetchCateList()
-    }
+
 
     const convertTime = (data) => {
         data.forEach((item, index) => {

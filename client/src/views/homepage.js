@@ -6,7 +6,7 @@ import SaleItemCard from '../components/sale-item-card'
 import CategoryCard from '../components/category-card'
 import Carousel from 'react-material-ui-carousel'
 import {FcNext, FcPrevious} from 'react-icons/fc'
-
+import Footer from '../components/Footer'
 var items = [
     {
         name: "Chào mừng tới HANH Shop",
@@ -171,43 +171,7 @@ const Homepage = (props) => {
                 </div>              
             </div>
             <footer>
-                <div className='row footer-session'>
-                    <div className='col-lg-3 col-md-4'>
-                        <div className='title'>Địa chỉ</div>
-                        <div className='title'>Số điện thoại</div>
-                        <div className='title'>Email</div>
-                    </div>
-                    <div className='col-lg-3 col-md-4'>
-                        <div className='title'>
-                            Thông tin
-                        </div>
-                        <div className='item'>
-                            Về chúng tôi
-                        </div>
-                        <div className='item'>
-                            Thanh toán
-                        </div>
-                        <div className='item'>
-                            Liên hệ
-                        </div>
-                    </div>
-                    <div className='col-lg-3 col-md-4'>
-                        <div className='title'>
-                            Liên hệ
-                        </div>
-                        <div className='item'>
-                            Tài khoản của tôi
-                        </div>
-                    </div>
-                    <div className='col-lg-3 col-md-0'>
-                        <div className='title'>
-                            Cập nhật thông tin
-                        </div>
-                        <div className='item'>
-                            Để lại địa chỉ Email của bạn
-                        </div>
-                    </div>
-                </div>
+             <Footer/>
             </footer>
         </div>
     )
