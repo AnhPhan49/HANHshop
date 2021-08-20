@@ -222,12 +222,12 @@ module.exports.deleteProduct = async (req, res) => {
         let {id} = req.params
         if(!id) throw new Error("Vui lòng cung cấp id")
         let checkExist = await productModel.findById(id)
-
+        
         if(!checkExist) throw new Error("Không tồn tại mã sản phẩm")
-        let invenDel =  await inventoryModel.findOne({product: checkExist._id})
+        let invenDel =  await inventoryModel.findOne({product: mongoose.Types.ObjectId(checkExist._id)})
 
-        await historyInventoryModel.deleteMany({inventory: invenDel._id})
-        await inventoryModel.findByIdAndDelete({product: checkExist._id})
+        await historyInventoryModel.deleteMany({inventory: mongoose.Types.ObjectId(invenDel._id)})
+        await inventoryModel.findOneAndDelete({product: mongoose.Types.ObjectId(checkExist._id)})
         await productModel.findByIdAndDelete(id)
         return res.status(200).json({message: "Delete success"})
     } catch (err){
