@@ -11,10 +11,9 @@ const NavBar = (props) => {
     return(
         <div className='nav-item'>
             <nav className='nav-menu'>
-                <ul>
+                <ul className='nav-container'>
                     <li>
-                    <NavLink to="/">Trang Chủ</NavLink>                                 
-                        
+                    <NavLink to="/">Trang Chủ</NavLink>                       
                     </li>
                     <li>
                     <NavLink to="/product">Danh Sách Sản Phẩm</NavLink>

@@ -79,10 +79,6 @@ const ProductManagePage = (props) => {
 console.log(status);
     return(
         <div className='production-page'>
-            {/* <IconButton className='float-button' color="primary" onClick={handleOpenAddModal}>
-                <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
-               
-            </IconButton> */}
             <ReactBnbGallery
                 opacity={0.8}
                 show={isOpen}
@@ -92,7 +88,7 @@ console.log(status);
             <InventoryModal ref={childRef} status={status} title={modalTitle} modalEditFilter={editObj} reloadNewData={handleCloseModalAfterSave}></InventoryModal>                
             <h4>Kho Hàng</h4>        
                 <div className='row m-0 title'>
-                    <div className='col-1 text-center'>
+                    <div className='col-2 text-center'>
                         ID
                     </div>
                     <div className='col-2 text-center'>
@@ -102,10 +98,10 @@ console.log(status);
                         Miêu tả
                     </div>
                     <div className='col-2 text-center'>
-                        Gía
+                        Giá
                     </div>
                     <div className='col-2 text-center'>
-                        Số Lượng
+                        Số lượng
                     </div>
                    
                     <div className='col-2 text-center'>
@@ -123,7 +119,7 @@ console.log(status);
                     {
                         inventoryList.map((item, index) => 
                         <div className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item._id}>
-                            <div className='col-1 product-item'>
+                            <div className='col-2 product-item'>
                                 {index + 1}
                             </div>
                             <div className='col-2 product-item'>

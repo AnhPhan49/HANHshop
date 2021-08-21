@@ -32,9 +32,7 @@ const Login = (props) => {
     }
 
     return(
-        <div className='login'>
-            <div className='header'>
-            </div>
+        <div >        
             <div>
                 <div className='m-5 col-4'>
                     <h3>Login</h3>
@@ -42,13 +40,12 @@ const Login = (props) => {
                         <FormGroup>
                             <FormControl>                            
                                 <TextField
-                                    {...register("email")}                                     
+                                    {...register("phone")}                                     
                                     InputLabelProps={{
                                         classes: {
                                             root: classes.labelRoot
                                         }
-                                    }}
-                                    type='email'
+                                    }}                                    
                                     required
                                     id="standard-basic"
                                     label="Email address" />

@@ -31,16 +31,34 @@ const AdminApi = {
         const url = '/api/product/create'
         return axiosClient.post(url, data)
     },
-    searchProductByCategory (page, categoryId) {
-
+    searchProductByCategory(page, categoryId) {
+        const url = `/api/product/search?page=${page}&category=${categoryId}`
+        return axiosClient.get(url)
     },
-    searchProductByProductName(page, productName) {
-
+    searchProductByProduct(page, product) {
+        const url = `/api/product/search?page=${page}&name=${product}`
+        return axiosClient.get(url)
     },
-    deleteProduct(id) {
-        const url = `/api/product/delete/${id}`
+    searchProductByCategoryAndProduct(page, categoryId, product) {
+        const url = `/api/product/search?page=${page}&name=${product}&category=${categoryId}`
+        return axiosClient.get(url)
+    },
+    updateProduct(productId, data) {
+        const url = `/api/product/update/${productId}`
+        return axiosClient.put(url, data)
+    },
+    deleteProduct(productId) {
+        const url = `/api/product/delete/${productId}`
         return axiosClient.delete(url)
-    },    
+    },
+    getManagerAccountList() {
+        const url = '/api/user/list/manager'
+        return axiosClient.get(url)
+    },
+    getCustomerAccountList() {
+        const url = '/api/user/list/customer'
+        return axiosClient.get(url)
+    }
 }
 
 export default AdminApi

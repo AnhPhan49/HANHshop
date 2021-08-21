@@ -58,8 +58,7 @@ const Product = (props) => {
         <div className="header_slide">
         <div className="header_bottom_left">				
           <div className="categories">
-            <ul>
-          
+            <ul>          
               <li><a href="#">Mobile Phones</a></li>
               <li><a href="#">Desktop</a></li>
               <li><a href="#">Laptop</a></li>

@@ -60,7 +60,7 @@ const CategoryManagePage = (props) => {
 
     const handleAddOpen = (item) => {
         setModalTitle('Add category');
-        setEditCateObj('');
+        setEditCateObj(null);
         setOpen(true);
     }
     const handleSaveClose = () => {

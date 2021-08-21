@@ -17,8 +17,6 @@ import Detail from '../Product/Detail'
 class Url extends Component {
     render() {
         return (
-            
-        
             <div>
                 <Route exact path="/"  component={Homepage}/>
                 <Route exact path="/product"  component={Product}/>

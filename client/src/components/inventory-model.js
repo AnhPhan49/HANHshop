@@ -146,7 +146,7 @@ const ProductModal = forwardRef((props, ref) => {
             </div>
         </Fade>)
       }
-      else if(props.status==false){
+      else if(props.status===false){
           return(
             <Fade in={open}>
             <div className={classes.paper}>                        
@@ -250,10 +250,7 @@ const ProductModal = forwardRef((props, ref) => {
              e.preventDefault();
             
                  let formData = {
-                 
-                     "count":Number(editNumber)*-1
-                  
-                     
+                    "count":Number(editNumber)*-1
                  }
                  console.log(formData)
              

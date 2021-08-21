@@ -3,7 +3,9 @@ import alert from '../utils/alert'
 
 const axiosClient = axios.create({
     headers: {
-        headers: {'content-type': 'application/json'},
+        headers: {
+            'content-type': 'application/json',
+            "Content-Type": "multipart/form-data"},
     }
 })
 
@@ -45,6 +47,9 @@ axiosClient.interceptors.response.use((res) => {
             break
         case 404:
             alert({icon : 'error',title : 'Error',message: '404 Not Found' })
+            break
+        case 405:
+            alert({icon : 'error',title : 'Error',message: 'Bạn không thể thao tác vào mục này' })
             break
         case 500:
             alert({icon : 'error',title : 'Error',message: '404 Not Found' })
