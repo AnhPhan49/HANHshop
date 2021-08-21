@@ -415,7 +415,7 @@ body {
 	cursor: pointer;
 }
 
-.category-page, .production-page, .account-page {
+.category-page, .production-page {
 	background-color: white;
 	padding-top: 10px;
 	padding-bottom: 10px;	

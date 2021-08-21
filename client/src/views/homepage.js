@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react'
-import Header from '../components/Header/header'
-import NavBar from '../components/Nav/navbar'
-import BannerItem from '../components/banner-item'
+
+import BannerItem from '../components/Banner/banner-item'
 import SaleItemCard from '../components/sale-item-card'
 import CategoryCard from '../components/category-card'
 import Carousel from 'react-material-ui-carousel'
 import {FcNext, FcPrevious} from 'react-icons/fc'
-import Footer from '../components/Footer/Footer'
+
 var items = [
     {
         name: "Chào mừng tới HANH Shop",
@@ -122,8 +121,7 @@ var category = [
 
 const Homepage = (props) => {
     return(
-        <div className='homepage'>
-            
+        <div className='homepage'>        
             <Carousel
                 NextIcon={<FcNext className='arrow-icon'/>}
                 PrevIcon={<FcPrevious className='arrow-icon'/>}>
@@ -168,8 +166,7 @@ const Homepage = (props) => {
                         }
                     </div>
                 </div>              
-            </div>
-          
+            </div>            
         </div>
     )
 }

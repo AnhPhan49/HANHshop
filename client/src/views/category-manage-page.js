@@ -9,8 +9,7 @@ import { FaEdit } from "react-icons/fa";
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import AdminApi from '../apis/adminApis'
-
-import CategoryEditModal from '../components/category-modal'
+import CategoryEditModal from '../components/CategoryManagement/category-modal'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
