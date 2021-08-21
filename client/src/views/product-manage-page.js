@@ -1,43 +1,64 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {IconButton} from '@material-ui/core'
+import { IconButton, InputAdornment, InputLabel, Input, Button, Select, MenuItem } from '@material-ui/core'
 import { IoTrashBin, IoAddCircle } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import { MdBrokenImage } from "react-icons/md";
+import { BiSearch } from "react-icons/bi";
 
 import Pagination from '@material-ui/lab/Pagination';
 import AdminApi from '../apis/adminApis'
 import ReactBnbGallery from 'react-bnb-gallery';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ProductModal from '../components/product-modal'
+import alert from '../utils/alert';
 
 const ProductManagePage = (props) => {
     const childRef = useRef();  
     const [loading, setLoader] = useState(true)    
     const [isOpen, setIsOpen] = useState(false)
-    const [photoData, setPhotoData] = useState([])   
-    const [totalPage, setTotalPage] = useState(1)       
+    const [photoData, setPhotoData] = useState([])
+    const [page, setPage] = useState(1)
+    const [totalPage, setTotalPage] = useState(1)
     const [productList, setProductList] = useState([])
+
+    const [searchProductInput, setSearchProductInput] = useState()
+    const [categoryList, setCategoryList] = useState([{_id: 'n/a', name: 'N/A'}])
+    const [category, setCategory] = useState('n/a')
+
+    const [searchTemplate, setSearchTemplate] = useState({product: '', categoryId: ''})
 
     const [editProductObj, setEditProductObj] = useState()
     const [modalTitle, setModalTitle] = useState()    
 
     useEffect(() => {
         getProductList(1)
+        getCategory()
     }, [])
+
+    const getCategory = async () => {
+        try {
+            const res = await AdminApi.getCategoryList()
+            if(res.status === 200) {
+                setCategoryList(categoryList.concat(res.data))
+            }
+        } catch(e) {
+            console.log(e)
+        }
+    }
 
     const getProductList = async (page) => {
         try{
             setLoader(true)
             const res = await AdminApi.getProductList(page);
-            if(res.status === 200) {                
-                formatCurrency(res.data.product)                 
-                setTotalPage(res.data.total_page)
-                setLoader(false)
+            if(res.status === 200) {
+                formatCurrency(res.data.product)
+                setTotalPage(res.data.total_page)                
             }
         }
         catch(e) {
             console.log(e)
         }
+        setLoader(false)
     }
 
     const handleOpenEditModal = (item) => {
@@ -48,23 +69,29 @@ const ProductManagePage = (props) => {
 
     const formatCurrency = (data) => {
         data.forEach((item, index) => {
-            data[index].price = item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            data[index].price = item.price.toLocaleString('it-IT');
         })
         setProductList(data) 
     }
 
     const pageChange = (event, page) => {
+        setPage(page)
+        if (searchTemplate.product || searchTemplate.categoryId) {
+            handleSearch(page, searchTemplate.categoryId, searchTemplate.product)
+            return
+        }    
         getProductList(page)
     }
 
     const handleOpenAddModal = () => {
         setModalTitle('Add product')
-        setEditProductObj('')
+        setEditProductObj(null)
         childRef.current.handleOpenModal()
     }
 
-    const handleCloseModalAfterSave = () => {        
-        getProductList();
+    const handleCloseModalAfterSave = () => {
+        setPage(1)
+        getProductList(1);
     }
 
     const openWidePhoto = (photo) => {
@@ -72,6 +99,57 @@ const ProductManagePage = (props) => {
         photo.forEach((item) => {array.push(item.url)})
         setIsOpen(true)
         setPhotoData(array)
+    }
+
+    const handleDelete = async (id) => {
+        try {       
+            const res = await AdminApi.deleteProduct(id);
+            console.log(res)
+            if(res.status === 200) {
+                setPage(1)                
+                getProductList(1)              
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }        
+    }
+
+    const checkSearchInputDoExist = async (page, category, product) => {        
+        try {
+            if (product) {
+                if(category !== 'n/a') {
+                    return await AdminApi.searchProductByCategoryAndProduct(page, category, product)
+                }
+                return await AdminApi.searchProductByProduct(page, product)
+            }
+            if (category !== 'n/a') {
+                return await AdminApi.searchProductByCategory(page, category)
+            }
+            getProductList(1)
+        }
+        catch(e) {
+
+        }
+    }
+
+    const handleSearch = async (page, category, product) => {
+        setPage(1)
+        try {
+            setLoader(true)
+            const res = await checkSearchInputDoExist(page, category, product)
+            if (res.status === 200) {
+                formatCurrency(res.data.product)
+                setTotalPage(res.data.total_page)
+                setSearchTemplate({product: product, categoryId: category})                
+            } else if(res === 201) {
+                alert({icon: 'error', title: 'Không tìm thấy sản phẩm', msg: res.message})
+            }
+        }
+        catch(e) {
+
+        }
+        setLoader(false)      
     }
 
     return(
@@ -86,7 +164,48 @@ const ProductManagePage = (props) => {
                 onClose={() => setIsOpen(false)}
             />
             <ProductModal ref={childRef} title={modalTitle} modalEditFilter={editProductObj} reloadNewData={handleCloseModalAfterSave}></ProductModal>                
-            <h4>Sản phẩm</h4>        
+            <h4>Sản phẩm</h4>
+            <div className='row search-section'>
+                <div className='col-3'>
+                    <InputLabel htmlFor="input-with-icon-adornment"><h6>Tìm kiếm theo sản phẩm</h6></InputLabel>
+                    <Input
+                    id="input-with-icon-adornment"
+                    className='searchInput'
+                    value={searchProductInput}
+                    onChange={(e) => {
+                        setSearchProductInput(e.target.value)
+                    }}
+                    startAdornment={
+                        <InputAdornment position="start">
+                            <BiSearch size={18}/>
+                        </InputAdornment>
+                    }
+                    />
+                </div>
+                <div className='col-3'>
+                    <InputLabel id="demo-simple-select-label">Danh mục</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        className='category-select-box'
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        >
+                        {
+                            categoryList.map((item, index) => (
+                                <MenuItem key={index} value={item._id}>{item.name}</MenuItem>
+                            ))
+                        }                        
+                    </Select>
+                </div>
+                <div className='col-3'>
+                    <Button className='btn' variant="contained" color="primary" onClick={() => handleSearch(1, category, searchProductInput)}>
+                        Tìm kiếm
+                    </Button>
+                </div>
+            </div>           
+            <div>
+            </div>      
                 <div className='row m-0 title'>
                     <div className='col-1 text-center'>
                         ID
@@ -148,7 +267,7 @@ const ProductManagePage = (props) => {
                                 {item.category.name}
                             </div>
                             <div className='col-2 product-item'>
-                                {item.price}
+                                {item.price} VND
                             </div>
                             <div className='col-1 product-item'>
                                 {
@@ -168,7 +287,7 @@ const ProductManagePage = (props) => {
                                 <IconButton color="primary" onClick={() => handleOpenEditModal(item)}>
                                     <FaEdit size='20px'></FaEdit>
                                 </IconButton>
-                                <IconButton className='text-danger' color="secondary" aria-label="delete">
+                                <IconButton className='text-danger' color="secondary" aria-label="delete" onClick={() => handleDelete(item._id)}>
                                     <IoTrashBin size='20px'></IoTrashBin>
                                 </IconButton>
                             </div>
@@ -176,7 +295,7 @@ const ProductManagePage = (props) => {
                     }
                 </div> 
                 <div className='mt-4 paging'>
-                    <Pagination count={totalPage} onChange={pageChange} variant="outlined" shape="rounded" />
+                    <Pagination count={totalPage} page={page} onChange={pageChange} variant="outlined" shape="rounded" />
                 </div>          
         </div>
     )

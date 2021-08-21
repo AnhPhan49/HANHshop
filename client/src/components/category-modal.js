@@ -26,7 +26,7 @@ const CategoryEditModal = (props) => {
     const handleSwitch = () => {
         setChecked(!checked)
     }
-
+ 
     const onSubmit = async (e) => {        
         try{
             e.preventDefault();
@@ -34,6 +34,7 @@ const CategoryEditModal = (props) => {
                 "name": editName,
                 "active": checked
             }
+            console.log(formData)
             let res = null
             if (props.modalEditFilter) {
                 res = await AdminApi.updateCategory(props.modalEditFilter._id, formData);
@@ -41,7 +42,7 @@ const CategoryEditModal = (props) => {
                 res = await AdminApi.addCategory(formData);
             }            
             if(res.status === 200) {              
-                alert({icon : 'success',title : 'Success', msg : res.message})                    
+                alert({icon : 'success',title : res.message, msg : 'Thao tác thành công'})                    
             } 
         }
         catch(e) {
@@ -50,7 +51,7 @@ const CategoryEditModal = (props) => {
         props.closeModalHandler()
         return 
     }
-
+    
     return(
         <div className='category-modal'>
             <h4>{props.title}</h4>

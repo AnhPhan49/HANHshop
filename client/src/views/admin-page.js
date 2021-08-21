@@ -14,18 +14,23 @@ import {
     ListItemIcon,
     ListItemText
 } from '@material-ui/core';
-import {GrFormNext, GrFormPrevious} from 'react-icons/gr'
-import {RiStackFill, RiShoppingCart2Fill, RiLogoutBoxFill} from 'react-icons/ri'
-import {FaUsers, FaStore} from 'react-icons/fa'
-import {HiMenu} from 'react-icons/hi'
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr'
+import { RiStackFill, RiShoppingCart2Fill, RiUserReceivedFill, RiLockPasswordFill } from 'react-icons/ri'
+import { FaUsers, FaStore } from 'react-icons/fa'
+import { HiMenu } from 'react-icons/hi'
 import { IoReceiptSharp } from "react-icons/io5";
+import { AiFillSetting } from 'react-icons/ai'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import {userlogoutsuccess} from '../reducers/userReducer'
 import clsx from 'clsx';
 
 import CategoryManagePage from './category-manage-page'
 import ProductManagePage from './product-manage-page'
+import InventoryManagePage from './inventory-manage-page'
+import AccountManagePage from './account-manage-page'
 
 const drawerWidth = 240;
 
@@ -99,6 +104,7 @@ const AdminPage = (props) => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [view, setView] = useState(0);
+    const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -118,9 +124,6 @@ const AdminPage = (props) => {
     }, {
         title: <h5 className={classes.sidebarText}>Xác nhận đơn hàng</h5>,
         icon: <IoReceiptSharp size='24px'></IoReceiptSharp>
-    }, {
-      title: <h5 className={classes.sidebarText}>Đăng xuất</h5>,
-        icon: <RiLogoutBoxFill size='24px'></RiLogoutBoxFill>
     }
   ]
 
@@ -136,16 +139,31 @@ const AdminPage = (props) => {
       setView(index)
     }
 
+    const handleClickSettingMenu = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseSettingMenu = () => {
+      setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+      localStorage.removeItem('token')
+      dispatch(userlogoutsuccess())
+      setAnchorEl(null);
+      return history.push('/login')
+    }
+
     const renderSwitch = (param) => {
       switch(param) {
+        case 0:
+          return <AccountManagePage></AccountManagePage>;
         case 1:
           return <CategoryManagePage></CategoryManagePage>;
         case 2:
           return <ProductManagePage></ProductManagePage>;
-        case 5:
-          localStorage.removeItem('token')
-          dispatch(userlogoutsuccess())
-          return history.push('/login')
+        case 3:
+          return <InventoryManagePage></InventoryManagePage>;      
         default:
       }
     }
@@ -169,11 +187,25 @@ const AdminPage = (props) => {
                     [classes.hide]: open,
                     })}
                 >
-                    <HiMenu size='26px' color='white'/>
+                  <HiMenu size='26px' color='white'/>
                 </IconButton>
                 <Typography variant="h4" noWrap>
                     Admin
-                </Typography>
+                </Typography >
+                <div className='admin-toolbar-setting'>
+                  <IconButton onClick={handleClickSettingMenu}>
+                    <AiFillSetting size='24px' color='white'></AiFillSetting>
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleCloseSettingMenu}
+                  >
+                    <MenuItem onClick={handleCloseSettingMenu}><h5><RiLockPasswordFill size='18px'></RiLockPasswordFill> <span>Đổi mật khẩu</span></h5></MenuItem>                  
+                    <MenuItem onClick={handleLogout}><h5><RiUserReceivedFill size='18px'></RiUserReceivedFill> <span>Đăng xuất</span></h5></MenuItem>
+                  </Menu>
+                </div>                                       
                 </Toolbar>
             </AppBar>
             <Drawer

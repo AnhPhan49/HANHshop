@@ -42,13 +42,12 @@ const Login = (props) => {
                         <FormGroup>
                             <FormControl>                            
                                 <TextField
-                                    {...register("email")}                                     
+                                    {...register("phone")}                                     
                                     InputLabelProps={{
                                         classes: {
                                             root: classes.labelRoot
                                         }
-                                    }}
-                                    type='email'
+                                    }}                                    
                                     required
                                     id="standard-basic"
                                     label="Email address" />

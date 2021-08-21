@@ -13,7 +13,12 @@ import Homepage from './views/homepage';
 import Login from './views/login'
 import AdminPage from './views/admin-page'
 import PrivateRoute from './components/private-route'
-
+import Header from './components/header'
+import NavBar from './components/navbar';
+import Footer from './components/Footer';
+import Contact from'./components/Contact/Contact'
+import Discount from'./components/Discount/Discount'
+import Product from'./components/Product/Product'
 function App() {
   return (
     <Provider store={store}>
@@ -28,6 +33,31 @@ function App() {
             <Route path="/" exact>
               <Homepage />
             </Route>
+            {/* contact */}
+            <Route path="/contact" exact>
+              <Header />
+              <NavBar/>
+              <Contact/>
+              <Footer/> 
+            </Route>
+            {/* endcontact */}
+             {/* discount*/}
+             <Route path="/discount" exact>
+              <Header />
+              <NavBar/>
+             <Discount/>
+              <Footer/> 
+            </Route>
+            {/* enddiscount */}
+              {/* product*/}
+              <Route path="/product" exact>
+              <Header />
+              <NavBar/>
+             <Product/>
+              <Footer/> 
+            </Route>
+            {/* product */}
+
           </Switch>      
       </Router>
     </Provider>
