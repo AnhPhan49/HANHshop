@@ -49,7 +49,7 @@ module.exports.search = async (req, res) =>{
             search.name = {"$regex": search.name, "$options":"i"}
         let searchProducts = await productModel.find({...search},'_id').sort({'createdAt': 'desc'})
         if(Math.ceil(searchProducts.length/10) < page + 1){
-            return res.status(404).json({message: "Chưa có trang thông báo này"})
+            return res.status(201).json({message: "Chưa có trang thông báo này"})
         }
         let productFilter = searchProducts.slice(page*10, page*10 + 10)
         let reformattedArray = []
@@ -65,3 +65,20 @@ module.exports.search = async (req, res) =>{
         return res.status(400).json({message: err.message})
     }
 }
+
+module.exports.listHistoryInventory = async (req, res) => {
+    try{
+        let {id,page} = req.query
+        if (!id) throw new Error("Something went wrong with ID inventory")
+        page= page - 1
+        if(page < 0) throw new Error("Page not found!!")
+        let history = await historyInventoryModel.find().sort({'createdAt': 'desc'}).populate('user','fullname')
+        if(Math.ceil(history.length/10) < page + 1){
+            return res.status(201).json({message: "Chưa có trang thông báo này"})
+        }
+        let historyFilter = history.slice(page*10, page*10+10)
+        return res.status(200).json({message: "Success", data: {total: Math.ceil(history.length/10), page: page + 1, list: historyFilter}})
+    } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+} 
