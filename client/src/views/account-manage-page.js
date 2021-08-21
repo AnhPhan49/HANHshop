@@ -18,7 +18,7 @@ const AccountManagePage = () => {
     };
 
     return(
-        <div className='account-page'>
+        <div>
             <AppBar position="static" color="white">
                 <Tabs
                     value={value}
