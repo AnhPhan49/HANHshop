@@ -1,6 +1,11 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import AdminApi from '../../apis/adminApis'
 
 const UserManagement = () => {
+    useEffect(() => {
+
+    },[])    
+
     return(
         <div>
             <div>

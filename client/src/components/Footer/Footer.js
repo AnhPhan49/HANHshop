@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { GrMail } from 'react-icons/gr'
 import {FaPhoneAlt, FaUserAlt} from 'react-icons/fa'
-import vnflag from '../assets/flag-2.jpg'
+import vnflag from '../../assets/flag-2.jpg'
 import {BsSearch} from 'react-icons/bs'
 import {AiOutlineHeart, AiOutlineShoppingCart} from 'react-icons/ai'
 import { Badge } from '@material-ui/core';

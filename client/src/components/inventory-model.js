@@ -250,10 +250,7 @@ const ProductModal = forwardRef((props, ref) => {
              e.preventDefault();
             
                  let formData = {
-                 
-                     "count":Number(editNumber)*-1
-                  
-                     
+                    "count":Number(editNumber)*-1
                  }
                  console.log(formData)
              

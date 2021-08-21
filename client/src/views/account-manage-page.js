@@ -1,14 +1,7 @@
 import React, {useState} from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 import {AppBar} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-const useStyles = makeStyles({
-    root: {
-      flexGrow: 1,
-    },
-});
 
 function a11yProps(index) {
     return {
@@ -17,8 +10,7 @@ function a11yProps(index) {
     };
 }
 
-const AccountManagePage = () => {
-    const classes = useStyles();
+const AccountManagePage = () => {    
     const [value, setValue] = useState(0);
   
     const handleChange = (event, newValue) => {
