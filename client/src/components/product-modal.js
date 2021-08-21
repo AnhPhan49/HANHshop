@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],        
         borderRadius: 10,        
         height: 600,
+        width: 800,
         minWidth: 350,
         overflowY:'scroll'
     },
@@ -96,14 +97,25 @@ const ProductModal = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         handleOpenModal(){
             setOpen(true)
-            setPreviewFile([])
-            setFile([])
         },        
     }));
 
     useEffect(() => {
-        getCategoryList()
+        getCategoryList()        
     }, [])
+
+    useEffect(() => {
+        if (props.modalEditFilter) { 
+            setName(props.modalEditFilter.name)
+            setPrice(revertPrice(props.modalEditFilter.price))
+            setSaleTag(props.modalEditFilter.sale_tag)
+            setDesc(props.modalEditFilter.description)
+            setCategory(props.modalEditFilter.category._id)
+            // setFile()
+            // setPreviewFile()
+            setStatus(props.modalEditFilter.status)            
+        }
+    }, [props.modalEditFilter])    
 
     useEffect(() => {
         if(status !== 'Sale') {
@@ -113,19 +125,31 @@ const ProductModal = forwardRef((props, ref) => {
 
     useEffect(() =>{
         if(status === 'Sale'){
-            if(name && price && desc && category && file.length && saletag) {
+            if(name && price && desc && category && saletag) {
                 setSubmitButtonState(false)
             } else {
                 setSubmitButtonState(true)
             }            
         } else {
-            if(name && price && desc && category && file.length) {
+            if(name && price && desc && category) {
                 setSubmitButtonState(false)
             } else {
                 setSubmitButtonState(true)
             }
         }
-    }, [name , price , desc , category , file , saletag, status])
+    }, [name , price , desc , category , saletag, status])
+
+    const revertPrice = (fp) => {
+        const formatPrice = fp
+        const normalizeArray = formatPrice.split('.')
+
+        let normalizePrice = ''
+        normalizeArray.forEach((item) => {
+            normalizePrice = normalizePrice + item           
+        })        
+
+        return normalizePrice
+    }
     
     const getCategoryList = async () => {
         try{
@@ -175,17 +199,16 @@ const ProductModal = forwardRef((props, ref) => {
             if(saletag) {
                 formData.append("price", saletag)
             }
-            let token = localStorage.getItem('token')
 
-            const res = await axios.post('https://hanh-shop.herokuapp.com/api/product/create', formData,
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-type": "multipart/form-data",
-                },
-            })            
-            if(res.status === 200) {
-                alert({icon: 'success', title: 'Tạo thành công', msg: res.message})
+            let res = null
+
+            if (props.modalEditFilter) {
+                res = await AdminApi.updateProduct(props.modalEditFilter._id, formData)
+            } else {
+                res = await AdminApi.addProduct(formData);   
+            }                   
+            if(res.status === 200) {             
+                alert({icon: 'success', title: res.message, msg: 'Thao tác thành công'})
             }
         } catch(e) {
             console.log(e)
@@ -199,11 +222,12 @@ const ProductModal = forwardRef((props, ref) => {
         const files = [...e.target.files];
         const fileArr = [];
         const fileErrorArr = []
+        
         if (!files.length) return;
 
-        if(file.length === 3){            
+        if(file.length === 3 || (props.modalEditFilter && (props.modalEditFilter.image.length + file.length === 3))){            
             // alert({icon:'error' ,title:'File is too large!', msg:'Maximum size of a file is 10MB'})
-            return;
+            return;         
         }
 
         files.forEach((file) => {
@@ -367,7 +391,7 @@ const ProductModal = forwardRef((props, ref) => {
                                                 editor.editing.view.change(writer => {
                                                     writer.setStyle(
                                                     "height",
-                                                    "100px",                                                                                                  
+                                                    "250px",                                                                                                  
                                                     editor.editing.view.document.getRoot()
                                                     );
                                                 });
@@ -440,11 +464,18 @@ const ProductModal = forwardRef((props, ref) => {
                                     </FormGroup>                                    
                                 </FormGroup>
 
-                                <FormGroup className='mt-3'>
-                                    <Button disabled={submitButtonState} type='submit' variant="contained" color="primary" id='material-button-label'>
-                                        Lưu
-                                    </Button>
-                                </FormGroup>
+                                <div className='mt-3 row modal-action'>
+                                    <div className='col-6'>
+                                        <Button type='button' onClick={handleCloseModal} variant="contained" color="secondary" id='material-button-label'>
+                                            Thoát
+                                        </Button>
+                                    </div>
+                                    <div className='col-6'>
+                                        <Button disabled={submitButtonState} type='submit' variant="contained" color="primary" id='material-button-label'>
+                                            Lưu
+                                        </Button>
+                                    </div>                                                                      
+                                </div>
                             </form>                    
                         </div>
                     </div>

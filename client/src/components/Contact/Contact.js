@@ -4,7 +4,6 @@ import React, {useState} from 'react'
 const Contact = (props) => {
     
     return(
-
         <div className="main">
         <div className="content">
           <div className="section group">

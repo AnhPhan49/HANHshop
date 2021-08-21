@@ -43,10 +43,14 @@ const AdminApi = {
         const url = `/api/product/search?page=${page}&name=${product}&category=${categoryId}`
         return axiosClient.get(url)
     },
-    deleteProduct(id) {
-        const url = `/api/product/delete/${id}`
+    updateProduct(productId, data) {
+        const url = `/api/product/update/${productId}`
+        return axiosClient.put(url, data)
+    },
+    deleteProduct(productId) {
+        const url = `/api/product/delete/${productId}`
         return axiosClient.delete(url)
-    },    
+    },
 }
 
 export default AdminApi

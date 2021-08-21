@@ -48,6 +48,9 @@ axiosClient.interceptors.response.use((res) => {
         case 404:
             alert({icon : 'error',title : 'Error',message: '404 Not Found' })
             break
+        case 405:
+            alert({icon : 'error',title : 'Error',message: 'Bạn không thể thao tác vào mục này' })
+            break
         case 500:
             alert({icon : 'error',title : 'Error',message: '404 Not Found' })
              break

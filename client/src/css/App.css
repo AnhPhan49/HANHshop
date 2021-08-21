@@ -150,16 +150,16 @@ body {
 }
 
 .nav-item .nav-menu {
-	margin-right: 5%;
-	margin-left: 5%;
-	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
 }
 
 .nav-item .nav-menu li {
 	list-style: none;
 	display: inline-block;
 	position: relative;
-	
+	margin: auto;
 }
 
 .nav-item .nav-menu li a {
@@ -413,7 +413,7 @@ body {
 	cursor: pointer;
 }
 
-.category-page, .production-page {
+.category-page, .production-page, .account-page {
 	background-color: white;
 	padding-top: 10px;
 	padding-bottom: 10px;	
@@ -424,8 +424,7 @@ body {
 	margin-right: 2%;
 	padding-top: 16px;
 	padding-bottom: 8px;
-	margin-bottom: 0;
-	border-bottom: 1px solid lightgray;
+	margin-bottom: 0;	
 }
 
 .production-page h4 span, .category-page h4 span {
@@ -436,15 +435,16 @@ body {
 	padding-left: 2%;
 	padding-right: 2%;
 	margin-left: 2%;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 10px;	
 }
 
 .category-page .title div, .production-page .title div{
+	border-top: 1px solid lightgray;
 	font-size: 1.5rem;
 	font-weight: 700;
 	border-bottom: 1px solid lightgray;
-	padding-bottom: 10px;
+	padding-bottom: 16px;
+	padding-top: 16px;
 	color: gray;
 }
 
@@ -601,4 +601,13 @@ body {
 	margin: 5px;
 	padding: 4px;
 	width: 80%;
+}
+
+.modal-action {
+	text-align: center;
+}
+
+.admin-toolbar-setting {
+	margin-left: auto;
+	margin-right: 0;
 }

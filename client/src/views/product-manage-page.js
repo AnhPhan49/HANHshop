@@ -50,15 +50,15 @@ const ProductManagePage = (props) => {
         try{
             setLoader(true)
             const res = await AdminApi.getProductList(page);
-            if(res.status === 200) {                
+            if(res.status === 200) {
                 formatCurrency(res.data.product)
-                setTotalPage(res.data.total_page)
-                setLoader(false)
+                setTotalPage(res.data.total_page)                
             }
         }
         catch(e) {
             console.log(e)
         }
+        setLoader(false)
     }
 
     const handleOpenEditModal = (item) => {
@@ -69,7 +69,7 @@ const ProductManagePage = (props) => {
 
     const formatCurrency = (data) => {
         data.forEach((item, index) => {
-            data[index].price = item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            data[index].price = item.price.toLocaleString('it-IT');
         })
         setProductList(data) 
     }
@@ -85,7 +85,7 @@ const ProductManagePage = (props) => {
 
     const handleOpenAddModal = () => {
         setModalTitle('Add product')
-        setEditProductObj('')
+        setEditProductObj(null)
         childRef.current.handleOpenModal()
     }
 
@@ -104,15 +104,15 @@ const ProductManagePage = (props) => {
     const handleDelete = async (id) => {
         try {       
             const res = await AdminApi.deleteProduct(id);
+            console.log(res)
             if(res.status === 200) {
-                setPage(1)
-                alert({icon: 'success', title: 'Xóa sản phẩm thành công', msg: res.message})
-                getProductList(1)
+                setPage(1)                
+                getProductList(1)              
             }
         }
         catch(e) {
             console.log(e)
-        }
+        }        
     }
 
     const checkSearchInputDoExist = async (page, category, product) => {        
@@ -134,19 +134,22 @@ const ProductManagePage = (props) => {
     }
 
     const handleSearch = async (page, category, product) => {
+        setPage(1)
         try {
             setLoader(true)
             const res = await checkSearchInputDoExist(page, category, product)
             if (res.status === 200) {
                 formatCurrency(res.data.product)
                 setTotalPage(res.data.total_page)
-                setSearchTemplate({product: product, categoryId: category})
-                setLoader(false)
+                setSearchTemplate({product: product, categoryId: category})                
+            } else if(res === 201) {
+                alert({icon: 'error', title: 'Không tìm thấy sản phẩm', msg: res.message})
             }
         }
         catch(e) {
 
-        }        
+        }
+        setLoader(false)      
     }
 
     return(
@@ -264,7 +267,7 @@ const ProductManagePage = (props) => {
                                 {item.category.name}
                             </div>
                             <div className='col-2 product-item'>
-                                {item.price}
+                                {item.price} VND
                             </div>
                             <div className='col-1 product-item'>
                                 {
