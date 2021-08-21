@@ -51,6 +51,14 @@ const AdminApi = {
         const url = `/api/product/delete/${productId}`
         return axiosClient.delete(url)
     },
+    getManagerAccountList() {
+        const url = '/api/user/list/manager'
+        return axiosClient.get(url)
+    },
+    getCustomerAccountList() {
+        const url = '/api/user/list/customer'
+        return axiosClient.get(url)
+    }
 }
 
 export default AdminApi
