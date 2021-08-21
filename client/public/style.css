@@ -239,8 +239,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  }
  .header_bottom_left{
 	 float:left;
-	 margin-left: 7px;
-	 width:25%;
+	 margin-left: 85px;
+	 width: 20% !important;
+	 margin-top: 24px;
 	}
  .categories{
 	 border:1px solid #EEE;
@@ -272,9 +273,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  }
  .header_bottom_right{
 	 float:left;
-	 width:74%;
+	 width: 70%;
 	 padding-left:1%;
- }
+	}
  /***** Content *****/
  .content {
 	 padding: 20px 0;
@@ -571,8 +572,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 margin: 0% 0 0% 1.6%;
  }
  .cont-desc:first-child {
-	 margin-left: 0;
- }
+	 margin-left: 80px;
+	}
  .desc {
 	 display: block;
 	 float: left;
@@ -1595,4 +1596,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 width:93%;
 	 }
  }
- 
+		a.v1 img {
+			height: 28px !important;
+		}

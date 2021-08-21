@@ -1,6 +1,8 @@
 import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bnb-gallery/dist/style.css'
+// import './css/receipt.css';
+// import './css/style.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,12 +15,11 @@ import Homepage from './views/homepage';
 import Login from './views/login'
 import AdminPage from './views/admin-page'
 import PrivateRoute from './components/private-route'
-import Header from './components/header'
-import NavBar from './components/navbar';
-import Footer from './components/Footer';
-import Contact from'./components/Contact/Contact'
-import Discount from'./components/Discount/Discount'
-import Product from'./components/Product/Product'
+import Header from './components/Header/header'
+import NavBar from './components/Nav/navbar';
+import Footer from './components/Footer/Footer';
+import Url from'./components/Router/Url'
+
 function App() {
   return (
     <Provider store={store}>
@@ -30,33 +31,16 @@ function App() {
             <PrivateRoute path="/admin">
               <AdminPage />
             </PrivateRoute>
-            <Route path="/" exact>
-              <Homepage />
-            </Route>
-            {/* contact */}
-            <Route path="/contact" exact>
+
+            <Route>
+    <div className="App">
               <Header />
               <NavBar/>
-              <Contact/>
+              <Url/>
               <Footer/> 
-            </Route>
-            {/* endcontact */}
-             {/* discount*/}
-             <Route path="/discount" exact>
-              <Header />
-              <NavBar/>
-             <Discount/>
-              <Footer/> 
-            </Route>
-            {/* enddiscount */}
-              {/* product*/}
-              <Route path="/product" exact>
-              <Header />
-              <NavBar/>
-             <Product/>
-              <Footer/> 
-            </Route>
-            {/* product */}
+    </div>
+              </Route>
+            
 
           </Switch>      
       </Router>

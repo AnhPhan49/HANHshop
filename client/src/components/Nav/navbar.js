@@ -1,16 +1,22 @@
 import React from 'react'
-import fireicon from '../assets/fire-icon-1.gif'
-
+import fireicon from '../../assets/fire-icon-1.gif'
+import {
+ 
+    BrowserRouter as Router,
+    Route, 
+    Link ,
+    NavLink
+} from "react-router-dom";
 const NavBar = (props) => {
     return(
         <div className='nav-item'>
             <nav className='nav-menu'>
                 <ul className='nav-container'>
                     <li>
-                        <a href='/'>Trang chủ</a>                                                       
+                    <NavLink to="/">Trang Chủ</NavLink>                       
                     </li>
                     <li>
-                        <a href='/product'>Danh sách sản phẩm</a>
+                    <NavLink to="/product">Danh Sách Sản Phẩm</NavLink>
                         <ul className='dropdown'>
                             <li>
                                 <a>Đồ gia dụng</a>
@@ -22,14 +28,16 @@ const NavBar = (props) => {
                         
                     </li>
                     <li>
-                        <a href='/discount' >Ưu đãi <span><img src={fireicon} alt=''></img></span></a>                                    
+                    <NavLink to="/discount">Ưu Đãi<span><img src={fireicon} alt=''></img></span></NavLink>                             
+                    </li>
+                 
+                    <li>
+                    <NavLink to="/contact">Liên Hệ</NavLink>
+                        
                     </li>
                     <li>
-                        <a href='/contact'>Hướng dẫn mua hàng</a>                        
-                    </li>                   
-                    <li>
-                        <a href='/contact'>Liên hệ</a>                        
-                    </li>             
+                    <NavLink to="/booked">Đơn Hàng</NavLink>                    
+                    </li>
                 </ul>                
             </nav>
         </div>        
