@@ -54,12 +54,3 @@ module.exports.getCart = async (req, res) =>{
         return res.status(400).json({message: err.message})
     }
 }
-
-module.exports.addListProduct = async (req, res) => {
-    try{
-        let {total_price, product} = req.body
-        
-    } catch (err) {
-        return res.status(400).json({message: err.message})
-    }
-}

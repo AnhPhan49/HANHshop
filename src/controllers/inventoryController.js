@@ -7,9 +7,10 @@ module.exports.updateInventory = async (req, res) =>{
         let {id} = req.params
         let {count, producer} = req.body
         if (!id) throw new Error("Không tìm thấy ID")
-        if (!producer) throw new Error ("Vui lòng nhập nhà cung cấp")
+        if (!producer && count > 0) throw new Error ("Vui lòng nhập nhà cung cấp")
         let updateInven = await inventoryModel.findById(id)
         let totalRemain = updateInven.total + count
+
         if (totalRemain < 0) {
             throw new Error("KHông đủ hàng trong kho")
         } else if(totalRemain === 0){
@@ -43,18 +44,14 @@ module.exports.search = async (req, res) =>{
         let {page} = search
         page= page - 1
         if(page < 0) throw new Error("Page not found!!")
-        
         delete search.page
         if(Object.keys(search).includes('name'))
             search.name = {"$regex": search.name, "$options":"i"}
-
         let searchProducts = await productModel.find({...search},'_id').sort({'createdAt': 'desc'})
-
-        if(searchProducts.length/10 < page + 1){
-            return res.status(404).json({message: "Chưa có trang thông báo này"})
+        if(Math.ceil(searchProducts.length/10) < page + 1){
+            return res.status(201).json({message: "Chưa có trang thông báo này"})
         }
         let productFilter = searchProducts.slice(page*10, page*10 + 10)
-
         let reformattedArray = []
         productFilter.map(obj => {
             reformattedArray.push(obj._id)
@@ -68,3 +65,20 @@ module.exports.search = async (req, res) =>{
         return res.status(400).json({message: err.message})
     }
 }
+
+module.exports.listHistoryInventory = async (req, res) => {
+    try{
+        let {id,page} = req.query
+        if (!id) throw new Error("Something went wrong with ID inventory")
+        page= page - 1
+        if(page < 0) throw new Error("Page not found!!")
+        let history = await historyInventoryModel.find().sort({'createdAt': 'desc'}).populate('user','fullname')
+        if(Math.ceil(history.length/10) < page + 1){
+            return res.status(201).json({message: "Chưa có trang thông báo này"})
+        }
+        let historyFilter = history.slice(page*10, page*10+10)
+        return res.status(200).json({message: "Success", data: {total: Math.ceil(history.length/10), page: page + 1, list: historyFilter}})
+    } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+} 

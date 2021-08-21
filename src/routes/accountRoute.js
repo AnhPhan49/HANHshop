@@ -8,7 +8,8 @@ const {
     createManager,
     current,
     listAccount,
-    blockAccount
+    blockAccount,
+    changePasswordAdmin
 } = require('../controllers/accountController')
 
 accountRoute.route('/create-manager').post(checkLogin, checkAdmin, registerValidator,createManager)
@@ -17,6 +18,10 @@ accountRoute.route('/list/:type').get(checkLogin, checkAdmin, listAccount)
 
 accountRoute.route('/current').get(checkLogin, current)
 
-accountRoute.route('/block/:id').delete(checkLogin, blockAccount)
+accountRoute.route('/block/:id').delete(checkLogin, checkAdmin, blockAccount)
+
+accountRoute.route('/admin/change-password/:id').put(checkLogin, checkAdmin, changePasswordAdmin)
+
+accountRoute.route('/change-password/:id').put(checkLogin, )
 
 module.exports = accountRoute
