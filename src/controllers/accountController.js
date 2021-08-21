@@ -84,6 +84,29 @@ module.exports.listAccount = async(req, res) =>{
     }
 }
 
+module.exports.changePassword = async (req, res) =>{
+    try {
+        let {id} = req.params
+        let {password, newPassword} = req.body
+
+        if (!password) throw new Error("Vui lòng cung cấp mật khẩu hiện tại")
+        if (!newPassword) throw new Error("Vui lòng nhập mật khẩu mới")
+        if (newPassword < 6) throw new Error("Mật khẩu phải có trên 6 ký tự")
+        
+        let updateAccount = await accountModel.findById(id)
+        if (!updateAccount) throw new Error("Not found user")
+        let passwordMatch = await bcrypt.compare(password, updateAccount.password)
+        if(!passwordMatch) throw new Error("Mật khẩu hiện tại không chính xác")
+
+        let password_hash = await bcrypt.hash(newPassword, 10)
+        updateAccount.password = password_hash
+        await updateAccount.save()
+        return res.status(200).json({message: "Change password success"})
+    } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+}
+
 module.exports.blockAccount = async(req, res) =>{
     try{
         let {id} = req.params
@@ -96,3 +119,10 @@ module.exports.blockAccount = async(req, res) =>{
     }
 }
 
+module.exports.updateAccount = async (req, res) => {
+    try {
+
+    } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+}
