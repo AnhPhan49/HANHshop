@@ -59,7 +59,7 @@ const Product = (props) => {
         <div className="header_bottom_left">				
           <div className="categories">
             <ul>
-              <h3>Categories</h3>
+          
               <li><a href="#">Mobile Phones</a></li>
               <li><a href="#">Desktop</a></li>
               <li><a href="#">Laptop</a></li>

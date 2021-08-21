@@ -9,7 +9,9 @@ body {
   padding-left: 5%;
   padding-right: 5%;
 }
-
+.row {
+ margin-right :0px !important;
+}
 .header .hd-right, .header .hd-left {
   margin-left: 0;
   margin-right: 0;

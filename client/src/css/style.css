@@ -30,7 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  /*end reset*/
  @font-face {
 	 font-family: 'ambleregular';
-	 src:url(../font/Amble-Regular-webfont.ttf) format('truetype');
+
  }
  body {
 	 font-family: Arial, Helvetica, sans-serif;
@@ -228,7 +228,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  .search_box form input[type="submit"] {
 	 border: none;
 	 cursor: pointer;
-	 background: url(../images/search.png) no-repeat 0px 7px;
+
 	 position: absolute;
 	 right: 0;
 	 width: 20px;
@@ -239,8 +239,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  }
  .header_bottom_left{
 	 float:left;
-	 margin-left: 85px;
-	 width: 20% !important;
+	 margin-left: 46px;
+	 width: 20%;
 	 margin-top: 24px;
 	}
  .categories{
@@ -261,7 +261,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 color: #9C9C9C;
 	 font-family: 'ambleregular';
 	 margin:0 20px;
-	 background:url(../images/drop_arrow.png) no-repeat 0;
+
 	 border-bottom: 1px solid #EEE;
 	 text-transform:uppercase;	
  }
@@ -273,9 +273,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  }
  .header_bottom_right{
 	 float:left;
-	 width: 70%;
+	 width:74%;
 	 padding-left:1%;
-	}
+ }
  /***** Content *****/
  .content {
 	 padding: 20px 0;
@@ -319,7 +319,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 display: inline;
 	 font-size: 0.8125em;
 	 color: #333;
-	 background: url(../images/list-img.png) no-repeat right 3px;
+	
 	 padding:0px 12px 0px 0px;
  }
  .see p a:hover{
@@ -511,7 +511,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 height: 48px;
 	 border: none;
 	 text-indent: 100%;
-	 background: url(../images/arrow_up.png) no-repeat right top;
+	
  }
  #toTopHover {
 	 width: 48px;
@@ -689,12 +689,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  .wish-list li a:hover {
 	 color: #E4292F;
  }
- .wish-list li.wish{
-	 background:url(../images/wishlist.png) no-repeat 0;
- }
- .wish-list li.compare{
-	 background:url(../images/compare.png) no-repeat 0;
- }
+
  .product-desc, .product-tags {
 	 clear: both;
 	 padding-top: 20px;
@@ -716,7 +711,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 font-weight: bold;
  }
  .input-box {
-	 background: url(../images/tag.png) no-repeat 0 8px;
+	
 	 padding-left: 35px;
  }
  .input-box input[type="text"] {
@@ -860,11 +855,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 color: #666;
 	 display: block;
 	 font-family: 'ambleregular';
-	 background: url(../images/drop_arrow.png) no-repeat 0;
+	 background: url(../assets/images/drop_arrow.png) no-repeat 0;
 	 border-bottom:1px solid #F0F0F0;
  }
  .span_3_of_1 li a:hover {
-	 background: url(../images/drop_arrow-hover.png) no-repeat 0;
+
 	 color:#B81D22;
  }
  .span_3_of_2 .button {
@@ -1024,7 +1019,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 font-size: 0.82em;
 	 padding:7px 15px;
 	 color: #E4292F;
-	 background: url(../images/drop_arrow.png) no-repeat 0px 10px;
+	 background: url(../assets/images/drop_arrow.png) no-repeat 0px 10px;
 	 display: block;
 	 font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
  }
@@ -1596,6 +1591,4 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 width:93%;
 	 }
  }
-		a.v1 img {
-			height: 28px !important;
-		}
+ 
