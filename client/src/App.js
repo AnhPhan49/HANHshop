@@ -11,10 +11,9 @@ import {
 import { store } from './store'
 import { Provider } from 'react-redux'
 
-import Homepage from './views/homepage';
 import Login from './views/login'
 import AdminPage from './views/admin-page'
-import PrivateRoute from './components/private-route'
+import PrivateRoute from './components/Router/private-route'
 import Header from './components/Header/header'
 import NavBar from './components/Nav/navbar';
 import Footer from './components/Footer/Footer';
@@ -31,17 +30,14 @@ function App() {
             <PrivateRoute path="/admin">
               <AdminPage />
             </PrivateRoute>
-
             <Route>
-    <div className="App">
-              <Header />
-              <NavBar/>
-              <Url/>
-              <Footer/> 
-    </div>
-              </Route>
-            
-
+              <div className="App">
+                <Header />
+                <NavBar/>
+                <Url/>
+                <Footer/> 
+              </div>
+            </Route>
           </Switch>      
       </Router>
     </Provider>

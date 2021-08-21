@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { TextField, Button, FormGroup, Switch, FormControlLabel, makeStyles } from '@material-ui/core'
-import AdminApi from '../apis/adminApis'
-import alert from '../utils/alert'
-
-import FormHelperText from '@material-ui/core/FormHelperText';
+import AdminApi from '../../apis/adminApis'
+import alert from '../../utils/alert'
 
 const useStyles = makeStyles((theme) => ({
     labelRoot: {

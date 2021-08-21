@@ -5,8 +5,10 @@ import vnflag from '../../assets/flag-2.jpg'
 import {BsSearch} from 'react-icons/bs'
 import {AiOutlineHeart, AiOutlineShoppingCart} from 'react-icons/ai'
 import { Badge } from '@material-ui/core';
+import { useHistory } from 'react-router-dom'
 
 const Header = (props) => {
+    const history = useHistory()
     
     return(
         <div>
@@ -30,7 +32,7 @@ const Header = (props) => {
                     </div>
                     <div className='header-item col-6'>
                         <FaUserAlt className='user-icon' size='18px'></FaUserAlt>
-                        <span>Đăng nhập</span>
+                        <span onClick={() => history.push('/login')}>Đăng nhập</span>
                     </div>
                 </div>                
             </div>

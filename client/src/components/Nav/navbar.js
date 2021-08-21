@@ -1,7 +1,6 @@
 import React from 'react'
 import fireicon from '../../assets/fire-icon-1.gif'
 import {
- 
     BrowserRouter as Router,
     Route, 
     Link ,
