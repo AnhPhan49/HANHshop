@@ -42,7 +42,7 @@ const CategoryEditModal = (props) => {
                 res = await AdminApi.addCategory(formData);
             }            
             if(res.status === 200) {              
-                alert({icon : 'success',title : 'Success', msg : res.message})                    
+                alert({icon : 'success',title : res.message, msg : 'Thao tác thành công'})                    
             } 
         }
         catch(e) {

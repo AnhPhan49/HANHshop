@@ -146,7 +146,7 @@ const ProductModal = forwardRef((props, ref) => {
             </div>
         </Fade>)
       }
-      else if(props.status==false){
+      else if(props.status===false){
           return(
             <Fade in={open}>
             <div className={classes.paper}>                        

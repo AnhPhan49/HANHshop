@@ -5,10 +5,9 @@ const NavBar = (props) => {
     return(
         <div className='nav-item'>
             <nav className='nav-menu'>
-                <ul>
+                <ul className='nav-container'>
                     <li>
-                        <a href='/'>Trang chủ</a>                                   
-                        
+                        <a href='/'>Trang chủ</a>                                                       
                     </li>
                     <li>
                         <a href='/product'>Danh sách sản phẩm</a>
@@ -26,16 +25,11 @@ const NavBar = (props) => {
                         <a href='/discount' >Ưu đãi <span><img src={fireicon} alt=''></img></span></a>                                    
                     </li>
                     <li>
-                        <a>Blog</a>
-                        
-                    </li>
+                        <a href='/contact'>Hướng dẫn mua hàng</a>                        
+                    </li>                   
                     <li>
-                        <a href='/contact'>Liên hệ</a>
-                        
-                    </li>
-                    <li>
-                        <a>Chuyện của HANH</a>                        
-                    </li>
+                        <a href='/contact'>Liên hệ</a>                        
+                    </li>             
                 </ul>                
             </nav>
         </div>        

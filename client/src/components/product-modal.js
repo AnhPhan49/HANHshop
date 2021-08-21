@@ -9,8 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Modal from '@material-ui/core/Modal';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
@@ -18,6 +16,8 @@ import {AiOutlineCloseCircle, AiOutlineCloudUpload} from 'react-icons/ai'
 import AdminApi from '../apis/adminApis'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import alert from '../utils/alert';
+import axios from 'axios'
 
 import FormHelperText from '@material-ui/core/FormHelperText';
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     switchControl: {
         marginTop: 6,        
     },
-    modal: {   
+    modal: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',      
@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],        
         borderRadius: 10,        
         height: 600,
-        minWidth: 300,
+        width: 800,
+        minWidth: 350,
         overflowY:'scroll'
     },
     paperContainer: {
@@ -82,32 +83,79 @@ const ProductModal = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false)    
     const [previewFile, setPreviewFile] = useState([])
     const [file, setFile] = useState([])    
-
-    const [id,setId] = useState()
+    
     const [name, setName] = useState()
     const [price, setPrice] = useState()
+    const [saletag, setSaleTag] = useState()
     const [desc, setDesc] = useState()
-    const [category, setCategory] = useState([])
-    const [status, setStatus] = useState('0')
-    const [available, setAvailable] = useState(false)
+    const [category, setCategory] = useState()
+    const [categoryList, setCategoryList] = useState([])
+    const [status, setStatus] = useState('N/A')
+    
+    const [submitButtonState, setSubmitButtonState] = useState(true)
 
     useImperativeHandle(ref, () => ({
         handleOpenModal(){
             setOpen(true)
-            setPreviewFile([])
-            setFile([])
         },        
     }));
 
     useEffect(() => {
-        getCategoryList()
+        getCategoryList()        
     }, [])
+
+    useEffect(() => {
+        if (props.modalEditFilter) { 
+            setName(props.modalEditFilter.name)
+            setPrice(revertPrice(props.modalEditFilter.price))
+            setSaleTag(props.modalEditFilter.sale_tag)
+            setDesc(props.modalEditFilter.description)
+            setCategory(props.modalEditFilter.category._id)
+            // setFile()
+            // setPreviewFile()
+            setStatus(props.modalEditFilter.status)            
+        }
+    }, [props.modalEditFilter])    
+
+    useEffect(() => {
+        if(status !== 'Sale') {
+            setSaleTag('')
+        }
+    }, [status])
+
+    useEffect(() =>{
+        if(status === 'Sale'){
+            if(name && price && desc && category && saletag) {
+                setSubmitButtonState(false)
+            } else {
+                setSubmitButtonState(true)
+            }            
+        } else {
+            if(name && price && desc && category) {
+                setSubmitButtonState(false)
+            } else {
+                setSubmitButtonState(true)
+            }
+        }
+    }, [name , price , desc , category , saletag, status])
+
+    const revertPrice = (fp) => {
+        const formatPrice = fp
+        const normalizeArray = formatPrice.split('.')
+
+        let normalizePrice = ''
+        normalizeArray.forEach((item) => {
+            normalizePrice = normalizePrice + item           
+        })        
+
+        return normalizePrice
+    }
     
     const getCategoryList = async () => {
         try{
             const res = await AdminApi.getCategoryList();
             if(res.status === 200){
-                
+                setCategoryList(res.data)
             }
         } catch(e) {
 
@@ -123,14 +171,50 @@ const ProductModal = forwardRef((props, ref) => {
     };
 
     const handleCloseModal = () => {
-        setOpen(false)
         setPreviewFile([])
         setFile([])
+        setName('')
+        setPrice('')
+        setSaleTag('')
+        setDesc('')
+        setCategory('')
+        setStatus('N/A')
+        setOpen(false)
     }
 
-    const handleSubmitForm = (e) => {
+    const handleSubmitForm = async (e) => {
         e.preventDefault();
-        setOpen(false)
+        setSubmitButtonState(true)
+        try {
+            const formData = new FormData();
+
+            formData.append("name", name)
+            formData.append("price", price)  
+            formData.append("status", status)
+            formData.append("category", category)                        
+            file.forEach((item) => {
+                formData.append("file", item)
+            })
+            formData.append("description", desc)
+            if(saletag) {
+                formData.append("price", saletag)
+            }
+
+            let res = null
+
+            if (props.modalEditFilter) {
+                res = await AdminApi.updateProduct(props.modalEditFilter._id, formData)
+            } else {
+                res = await AdminApi.addProduct(formData);   
+            }                   
+            if(res.status === 200) {             
+                alert({icon: 'success', title: res.message, msg: 'Thao tác thành công'})
+            }
+        } catch(e) {
+            console.log(e)
+        }
+        setSubmitButtonState(false)
+        handleCloseModal()
         props.reloadNewData()
     }
 
@@ -138,11 +222,12 @@ const ProductModal = forwardRef((props, ref) => {
         const files = [...e.target.files];
         const fileArr = [];
         const fileErrorArr = []
+        
         if (!files.length) return;
 
-        if(file.length === 3){
+        if(file.length === 3 || (props.modalEditFilter && (props.modalEditFilter.image.length + file.length === 3))){            
             // alert({icon:'error' ,title:'File is too large!', msg:'Maximum size of a file is 10MB'})
-            return;
+            return;         
         }
 
         files.forEach((file) => {
@@ -155,7 +240,7 @@ const ProductModal = forwardRef((props, ref) => {
              
         fileReader(fileArr)
 
-        if(fileErrorArr.length) {
+        if(fileErrorArr.length) {            
             // alert({icon:'error' ,title:'File ảnh quá lớn', msg:'Dung lượng ảnh tối đa chỉ được 10MB'})
         }            
     }
@@ -168,7 +253,7 @@ const ProductModal = forwardRef((props, ref) => {
                 reader.onloadend = () => {
                     setPreviewFile([...previewFile, reader.result])          
                 }
-            })
+            })            
             setFile(file.concat(data))                    
 
         } catch(e){
@@ -177,9 +262,8 @@ const ProductModal = forwardRef((props, ref) => {
     }
 
     const handleRemoveMedia = (index) => {        
-
-        setPreviewFile(previewFile.filter((_, i) => i !== index))
-        setFile(file.filter((_, i) => i !== index))        
+        setPreviewFile(previewFile.filter((_, i) => i !== index))        
+        setFile(file.filter((_, i) => i !== index))     
     }
 
     return(
@@ -208,6 +292,8 @@ const ProductModal = forwardRef((props, ref) => {
                                                 root: classes.labelRoot
                                             }
                                         }}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                         required
                                         id="standard-basic"
                                         label="Tên sản phẩm"/>
@@ -219,9 +305,48 @@ const ProductModal = forwardRef((props, ref) => {
                                                 root: classes.labelRoot
                                             }
                                         }}
-                                        required
+                                        value={price}
+                                        onChange={(e) => {
+                                            if(e.target.value > 0) {
+                                                setPrice(e.target.value)
+                                            }                                            
+                                        }}
+                                        InputProps={{
+                                            inputProps: { 
+                                                min: 1000
+                                            }
+                                        }}
+                                        required                                        
+                                        type='number'                                        
                                         id="standard-basic"
                                         label="Giá tiền" />
+                                        <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm</h6></FormHelperText>                                
+                                </FormGroup>
+                                <FormGroup>
+                                    <TextField                                        
+                                        InputLabelProps={{
+                                            classes: {
+                                                root: classes.labelRoot
+                                            }
+                                        }}
+                                        disabled={(status === 'Sale')?false:true}                                        
+                                        value={saletag}
+                                        onChange={(e) => {
+                                            if(e.target.value > 0 && e.target.value <= 100) {
+                                                setSaleTag(e.target.value)
+                                            }                          
+                                        }}
+                                        InputProps={{
+                                            inputProps: { 
+                                                min: 1,
+                                                max: 100
+                                            }
+                                        }}
+                                        type="number"                                                                            
+                                        required
+                                        id="standard-basic"
+                                        label="Phần trăm Sale (Chỉ dành cho Sale)" />
+                                        <FormHelperText id="component-error-text"><h6>Phần trăm Sale không được chêch lệch 0-100%</h6></FormHelperText>
                                 </FormGroup>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel id="demo-simple-select-label"><span style={{ fontSize: '1.5rem' }}>Danh mục</span></InputLabel>
@@ -233,9 +358,11 @@ const ProductModal = forwardRef((props, ref) => {
                                     onChange={handleChangeCategory}
                                     required
                                     >
-                                        <MenuItem value='0'>Nồi</MenuItem>
-                                        <MenuItem value='1'>Áo quần</MenuItem>
-                                        <MenuItem value='2'>Thể thao</MenuItem>
+                                        {
+                                            categoryList.map((item,index) => (
+                                                <MenuItem key={index} value={item._id}>{item.name}</MenuItem>
+                                        ))
+                                        }                                       
                                     </Select>
                                 </FormControl>          
                                 <FormControl className={classes.formControl}>
@@ -248,42 +375,44 @@ const ProductModal = forwardRef((props, ref) => {
                                     onChange={handleChangeStatus}
                                     required                 
                                     >
-                                        <MenuItem value='0'><em>N/A</em></MenuItem>
-                                        <MenuItem value='1'>Hot</MenuItem>
-                                        <MenuItem value='2'>Sale</MenuItem>
-                                        <MenuItem value='3'>Phổ biến</MenuItem>                    
+                                        <MenuItem value='N/A'><em>N/A</em></MenuItem>
+                                        <MenuItem value='Hot'>Hot</MenuItem>
+                                        <MenuItem value='Sale'>Sale</MenuItem>
+                                        <MenuItem value='Phổ biến'>Phổ biến</MenuItem>                    
                                     </Select>
                                 </FormControl>
                                 <FormGroup className='mt-3 mb-3'>
                                     <FormLabel><span style={{ fontSize: '1.5rem' }}>Mô tả sản phẩm</span></FormLabel>
-                                    <CKEditor                                                        
-                                        editor={ ClassicEditor }
-                                        fontSize={16}
-                                        onReady={ editor => {                                
-                                            editor.editing.view.change(writer => {
-                                                writer.setStyle(
-                                                  "height",
-                                                  "100px",                                                  
-                                                  editor.editing.view.document.getRoot()
-                                                );
-                                              });
-                                        } }                                  
-                                        config={{                                                  
-                                            toolbar: ['heading','|','bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable',
-                                              'tableColumn', 'tableRow', 'mergeTableCells', '|', 'undo', 'redo']
-                                          }}                                                                      
-                                        data={desc}
-                                        onChange={ ( event, editor ) => {                                                                   
-                                            console.log(editor.getData())
-                                        } }                                       
-                                    />
+                                    <div className='ckeditor'>
+                                        <CKEditor                                                        
+                                            editor={ ClassicEditor }
+                                            fontSize={16}
+                                            onReady={ editor => {                                
+                                                editor.editing.view.change(writer => {
+                                                    writer.setStyle(
+                                                    "height",
+                                                    "250px",                                                                                                  
+                                                    editor.editing.view.document.getRoot()
+                                                    );
+                                                });
+                                            } }                                  
+                                            config={{                                                  
+                                                toolbar: ['heading','|','bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable',
+                                                'tableColumn', 'tableRow', 'mergeTableCells', '|', 'undo', 'redo'],
+                                                
+                                            }}                                                                   
+                                            data={desc}
+                                            onChange={ ( event, editor ) => {                                                                   
+                                                setDesc(editor.getData())
+                                            } }                                       
+                                        />
+                                    </div>                                    
                                 </FormGroup>                             
                                 <FormGroup>
                                     <FormGroup className='mt-1'>
                                         <input                            
                                             type='file'
-                                            hidden
-                                            // multiple
+                                            hidden                                            
                                             onChange={handleChangeMedia}
                                             alt=""
                                             accept="image/png, image/jpeg"
@@ -297,7 +426,7 @@ const ProductModal = forwardRef((props, ref) => {
                                                             {previewFile.map((item, index) => (
                                                             <ImageListItem key={index}>
                                                                 <img src={item} alt='' />
-                                                                <ImageListItemBar                                                    
+                                                                <ImageListItemBar
                                                                 classes={{
                                                                     root: classes.titleBar,                                                        
                                                                 }}
@@ -319,43 +448,34 @@ const ProductModal = forwardRef((props, ref) => {
                                                         </div>
                                                     </div>
                                                 )
-                                            }
-                                            
+                                            }                                            
                                             <div>
-                                                <Button                                            
+                                                <Button                                    
                                                     onClick={() => fileRef.current.click()}                                                
                                                     id='material-button-label'
                                                     type='button'                                         
-                                                    color="primary"
+                                                    color="primary"                                                    
                                                     >
                                                     Add <span><PhotoLibrary></PhotoLibrary></span>
                                                 </Button> 
                                             </div>                                                                       
-                                        </div>                                        
+                                        </div>
+                                        <FormHelperText id="component-error-text"><h5>Chỉ tối đa có thể up được 3 ảnh</h5></FormHelperText>                                                                           
                                     </FormGroup>                                    
                                 </FormGroup>
 
-                                <FormGroup>
-                                    <FormControlLabel
-                                        className={classes.switchControl}
-                                        id='demo-simple-select-label'
-                                        control={
-                                        <Switch
-                                            checked={available}
-                                            onChange={() => setAvailable(!available)}
-                                            name=""
-                                            color="primary"
-                                        />
-                                        }
-                                        label={<span style={{ fontSize: '1.5rem' }}>Lưu kho</span>}
-                                    />
-                                </FormGroup>
-
-                                <FormGroup className='mt-1'>
-                                    <Button type='submit' variant="contained" color="primary" id='material-button-label'>
-                                        Lưu
-                                    </Button>
-                                </FormGroup>
+                                <div className='mt-3 row modal-action'>
+                                    <div className='col-6'>
+                                        <Button type='button' onClick={handleCloseModal} variant="contained" color="secondary" id='material-button-label'>
+                                            Thoát
+                                        </Button>
+                                    </div>
+                                    <div className='col-6'>
+                                        <Button disabled={submitButtonState} type='submit' variant="contained" color="primary" id='material-button-label'>
+                                            Lưu
+                                        </Button>
+                                    </div>                                                                      
+                                </div>
                             </form>                    
                         </div>
                     </div>
