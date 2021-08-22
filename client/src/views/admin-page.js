@@ -15,11 +15,13 @@ import {
     ListItemText
 } from '@material-ui/core';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr'
-import { RiStackFill, RiShoppingCart2Fill, RiUserReceivedFill, RiLockPasswordFill } from 'react-icons/ri'
+import { RiUserReceivedFill, RiLockPasswordFill } from 'react-icons/ri'
 import { FaUsers, FaStore } from 'react-icons/fa'
 import { HiMenu } from 'react-icons/hi'
 import { IoReceiptSharp } from "react-icons/io5";
 import { AiFillSetting } from 'react-icons/ai'
+import { BsFillInboxesFill, BsFillInboxFill } from 'react-icons/bs'
+
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
@@ -114,10 +116,10 @@ const AdminPage = (props) => {
         icon: <FaUsers size='24px'></FaUsers>
     }, {
         title: <h5 className={classes.sidebarText}>Danh mục</h5>,
-        icon: <RiStackFill size='24px'></RiStackFill>
+        icon: <BsFillInboxesFill size='24px'></BsFillInboxesFill>
     }, {
         title: <h5 className={classes.sidebarText}>Sản phẩm</h5>,
-        icon: <RiShoppingCart2Fill size='24px'></RiShoppingCart2Fill>
+        icon: <BsFillInboxFill size='24px'></BsFillInboxFill>
     }, {
         title: <h5 className={classes.sidebarText}>Quản lý kho</h5>,
         icon: <FaStore size='24px'></FaStore>

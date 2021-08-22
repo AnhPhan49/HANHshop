@@ -2,9 +2,7 @@ import React, {useState} from 'react'
 import check from '../../assets/check.png'
 import shop from '../../assets/shop.png'
 const Receipt = (props) => {
-    
     return(
-
         <div className="main">
         <div className="content">
           <div className="cartoption">		
