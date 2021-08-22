@@ -5,6 +5,7 @@ import { IoTrashBin, IoAddCircle } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import { MdBrokenImage } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
+import ConfirmModal from "../components/confirm-modal"
 
 import Pagination from '@material-ui/lab/Pagination';
 import AdminApi from '../apis/adminApis'
@@ -17,10 +18,12 @@ const ProductManagePage = () => {
     const [loading, setLoader] = useState(true)
     const [open, setOpen] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+    const [openConfirmModal, setOpenConfirmModal] = useState(false)
     const [photoData, setPhotoData] = useState([])
     const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState(1)
     const [productList, setProductList] = useState([])
+    const [deleteItem, setDeleteItem] = useState()
 
     const [searchProductInput, setSearchProductInput] = useState()
     const [categoryList, setCategoryList] = useState([{_id: 'n/a', name: 'Tất cả'}])
@@ -47,7 +50,7 @@ const ProductManagePage = () => {
         }
     }
 
-    const getProductList = async (page) => {
+    const getProductList = async (page) => {        
         try{
             setLoader(true)
             const res = await AdminApi.getProductList(page);            
@@ -114,12 +117,13 @@ const ProductManagePage = () => {
         }
         catch(e) {
             console.log(e)
-        }        
+        }
+        handleCloseConfirmModal()   
     }
 
     const pageChange = (event, page) => {
         setPage(page)
-        if (searchTemplate.product || searchTemplate.categoryId.categoryId !== 'n/a') {
+        if (searchTemplate.product || searchTemplate.categoryId !== 'n/a') {            
             handleSearch(page)
             return;
         }
@@ -161,11 +165,25 @@ const ProductManagePage = () => {
         catch(e) {
             console.log(e)
         }
-        setLoader(false)      
+        setLoader(false)
+    }
+
+    const handleCloseConfirmModal = () => {
+        setOpenConfirmModal(false)
+    }
+
+    const handleOpenConfirmModal = (product) => {
+        setDeleteItem(product)
+        setOpenConfirmModal(true)
+    }
+
+    const handleAcceptConfirmModal = () => {
+        handleDelete(deleteItem._id)
     }
 
     return(
         <div className='production-page'>
+            <ConfirmModal open={openConfirmModal} handleClose={handleCloseConfirmModal} unaccept={handleCloseConfirmModal} accept={handleAcceptConfirmModal}></ConfirmModal>
             <IconButton className='float-button' color="primary" onClick={handleOpenAddModal}>
                 <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
             </IconButton>
@@ -302,7 +320,7 @@ const ProductManagePage = () => {
                                             <IconButton color="primary" onClick={() => handleOpenEditModal(item)}>
                                                 <FaEdit size='20px'></FaEdit>
                                             </IconButton>
-                                            <IconButton className='text-danger' color="secondary" aria-label="delete" onClick={() => handleDelete(item._id)}>
+                                            <IconButton className='text-danger' color="secondary" aria-label="delete" onClick={() => handleOpenConfirmModal(item)}>
                                                 <IoTrashBin size='20px'></IoTrashBin>
                                             </IconButton>
                                         </div>

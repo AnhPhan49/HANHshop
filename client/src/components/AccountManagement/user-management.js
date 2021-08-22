@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
+import { FaUserSlash, FaUser, FaEdit } from "react-icons/fa";
+import IconButton from '@material-ui/core/IconButton';
 
-const UserManagement = () => {
+const UserManagement = (props) => {
     const [accountList, setAccountList] = useState([])
     const accountdata = useSelector ((state) => state.accountdata.customerAccountData)
 
@@ -9,16 +11,27 @@ const UserManagement = () => {
         setAccountList(accountdata)
     },[accountdata])
 
+    const convertTime = (unformatTime) => {        
+        let date = new Date(unformatTime)
+        const formatedTime = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();                    
+        return formatedTime
+    }
+
     return(
-        <div className='production-page'>
+        <div
+            role="tabpanel"
+            hidden={props.value !== props.index}
+            id={`full-width-tabpanel-${props.index}`}
+            aria-labelledby={`full-width-tab-${props.index}`}
+            className='production-page'>
             <div className='row m-0 title'>
-                <div className='col-2 text-center'>
+                <div className='col-1 text-center'>
                     STT
                 </div>
                 <div className='col-4 text-center'>
-                    Tên
+                    Tên đầy đủ
                 </div>
-                <div className='col-2 text-center'>
+                <div className='col-3 text-center'>
                     Ngày tạo
                 </div>
                 <div className='col-2 text-center'>
@@ -29,23 +42,29 @@ const UserManagement = () => {
                 </div>
             </div>
             <div className='product-list'>
-                {
+            {
                     accountList && accountList.map((item, index) => (
-                        <div>
-                            <div>
+                        <div key={item} className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}}>
+                            <div className='col-1 product-item'>
                                 {index + 1}
                             </div>
-                            <div>
-                                Tên
+                            <div className='col-4 product-item'>
+                                {item.fullname}
                             </div>
-                            <div>
-                                Ngày tạo
+                            <div className='col-3 product-item'>
+                                {convertTime(item.createdAt)}
                             </div>
-                            <div>
-                                Trạng thái
+                            <div className='col-2 product-item'>
+                                {item.blocked?(
+                                    <FaUserSlash size={20} color='gray'></FaUserSlash>
+                                ): (
+                                    <FaUser size={20} className='text-primary'></FaUser>
+                                )}
                             </div>
-                            <div>
-                                Tùy chỉnh
+                            <div className='col-2 product-item'>
+                                <IconButton color="primary" >
+                                    <FaEdit size={20} ></FaEdit>
+                                </IconButton>
                             </div>
                         </div>
                     ))

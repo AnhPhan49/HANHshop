@@ -10,7 +10,11 @@ const useStyles = makeStyles((theme) => ({
     labelRoot: {
         fontSize: '1.5rem',
     },
+    resize: {
+        fontSize: '1.5rem'
+    }
 }))
+
 const Login = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles()
@@ -45,9 +49,13 @@ const Login = (props) => {
                                         classes: {
                                             root: classes.labelRoot
                                         }
-                                    }}                                    
-                                    required
-                                    id="standard-basic"
+                                    }}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.resize,
+                                        },                                       
+                                    }}                                
+                                    required                                    
                                     label="Email address" />
                             </FormControl>
                         </FormGroup>
@@ -60,9 +68,13 @@ const Login = (props) => {
                                             root: classes.labelRoot
                                         }
                                     }}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.resize,
+                                        },                                       
+                                    }}
                                     type='password'
-                                    required
-                                    id="standard-basic"
+                                    required                                    
                                     label="Password" />                                                        
                             </FormControl>
                         </FormGroup>                            
