@@ -1,46 +1,36 @@
 import React, {useEffect, useState} from 'react'
-import AdminApi from '../../apis/adminApis'
+import { useSelector } from 'react-redux'
 
 const UserManagement = () => {
     const [accountList, setAccountList] = useState([])
+    const accountdata = useSelector ((state) => state.accountdata.customerAccountData)
 
     useEffect(() => {
-
-    },[])
-
-    const getUserList = async () => {
-        try {
-            const res = AdminApi.getCustomerAccountList();
-            if(res === 200) {
-                
-            }
-        } catch(e) {
-
-        }
-    }
+        setAccountList(accountdata)
+    },[accountdata])
 
     return(
         <div className='production-page'>
             <div className='row m-0 title'>
-                <div>
+                <div className='col-2 text-center'>
                     STT
                 </div>
-                <div>
+                <div className='col-4 text-center'>
                     Tên
                 </div>
-                <div>
+                <div className='col-2 text-center'>
                     Ngày tạo
                 </div>
-                <div>
+                <div className='col-2 text-center'>
                     Trạng thái
                 </div>
-                <div>
+                <div className='col-2 text-center'>
                     Tùy chỉnh
                 </div>
             </div>
-            <div>
+            <div className='product-list'>
                 {
-                    accountList.map((item, index) => (
+                    accountList && accountList.map((item, index) => (
                         <div>
                             <div>
                                 {index + 1}

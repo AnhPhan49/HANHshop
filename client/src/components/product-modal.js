@@ -17,14 +17,16 @@ import AdminApi from '../apis/adminApis'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import alert from '../utils/alert';
-import axios from 'axios'
 
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: "1%",      
+        margin: '1%',      
         width: '48%'
+    },
+    FormGroup: {
+        marginTop: 10
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -196,12 +198,12 @@ const ProductModal = forwardRef((props, ref) => {
                 formData.append("file", item)
             })
             formData.append("description", desc)
+
             if(saletag) {
-                formData.append("price", saletag)
+                formData.append("sale_tag", saletag)
             }
 
             let res = null
-
             if (props.modalEditFilter) {
                 res = await AdminApi.updateProduct(props.modalEditFilter._id, formData)
             } else {
@@ -285,7 +287,7 @@ const ProductModal = forwardRef((props, ref) => {
                         <div className={classes.paperContainer}>
                             <h4>{props.title}</h4>
                             <form onSubmit={handleSubmitForm}>                            
-                                <FormGroup>
+                                <FormGroup className={classes.FormGroup}>
                                     <TextField                                        
                                         InputLabelProps={{
                                             classes: {
@@ -298,7 +300,7 @@ const ProductModal = forwardRef((props, ref) => {
                                         id="standard-basic"
                                         label="Tên sản phẩm"/>
                                 </FormGroup>
-                                <FormGroup>
+                                <FormGroup className={classes.FormGroup}>
                                     <TextField                                        
                                         InputLabelProps={{
                                             classes: {
@@ -321,33 +323,7 @@ const ProductModal = forwardRef((props, ref) => {
                                         id="standard-basic"
                                         label="Giá tiền" />
                                         <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm</h6></FormHelperText>                                
-                                </FormGroup>
-                                <FormGroup>
-                                    <TextField                                        
-                                        InputLabelProps={{
-                                            classes: {
-                                                root: classes.labelRoot
-                                            }
-                                        }}
-                                        disabled={(status === 'Sale')?false:true}                                        
-                                        value={saletag}
-                                        onChange={(e) => {
-                                            if(e.target.value > 0 && e.target.value <= 100) {
-                                                setSaleTag(e.target.value)
-                                            }                          
-                                        }}
-                                        InputProps={{
-                                            inputProps: { 
-                                                min: 1,
-                                                max: 100
-                                            }
-                                        }}
-                                        type="number"                                                                            
-                                        required
-                                        id="standard-basic"
-                                        label="Phần trăm Sale (Chỉ dành cho Sale)" />
-                                        <FormHelperText id="component-error-text"><h6>Phần trăm Sale không được chêch lệch 0-100%</h6></FormHelperText>
-                                </FormGroup>
+                                </FormGroup>                                
                                 <FormControl className={classes.formControl}>
                                     <InputLabel id="demo-simple-select-label"><span style={{ fontSize: '1.5rem' }}>Danh mục</span></InputLabel>
                                     <Select
@@ -381,6 +357,32 @@ const ProductModal = forwardRef((props, ref) => {
                                         <MenuItem value='Phổ biến'>Phổ biến</MenuItem>                    
                                     </Select>
                                 </FormControl>
+                                <FormGroup>
+                                    <TextField                                        
+                                        InputLabelProps={{
+                                            classes: {
+                                                root: classes.labelRoot
+                                            }
+                                        }}
+                                        disabled={(status === 'Sale')?false:true}                                        
+                                        value={saletag}
+                                        onChange={(e) => {
+                                            if(e.target.value > 0 && e.target.value <= 100) {
+                                                setSaleTag(e.target.value)
+                                            }                          
+                                        }}
+                                        InputProps={{
+                                            inputProps: { 
+                                                min: 1,
+                                                max: 100
+                                            }
+                                        }}
+                                        type="number"                                                                            
+                                        required
+                                        id="standard-basic"
+                                        label="Phần trăm Sale (Chỉ dành cho Sale)" />
+                                        <FormHelperText id="component-error-text"><h6>Phần trăm Sale không được chêch lệch 0-100%</h6></FormHelperText>
+                                </FormGroup>
                                 <FormGroup className='mt-3 mb-3'>
                                     <FormLabel><span style={{ fontSize: '1.5rem' }}>Mô tả sản phẩm</span></FormLabel>
                                     <div className='ckeditor'>
@@ -391,7 +393,7 @@ const ProductModal = forwardRef((props, ref) => {
                                                 editor.editing.view.change(writer => {
                                                     writer.setStyle(
                                                     "height",
-                                                    "250px",                                                                                                  
+                                                    "250px",                                                                                  
                                                     editor.editing.view.document.getRoot()
                                                     );
                                                 });

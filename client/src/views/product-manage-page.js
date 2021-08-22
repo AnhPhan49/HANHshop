@@ -78,7 +78,7 @@ const ProductManagePage = (props) => {
         setPage(page)
         if (searchTemplate.product || searchTemplate.categoryId) {
             handleSearch(page, searchTemplate.categoryId, searchTemplate.product)
-            return
+            return;
         }    
         getProductList(page)
     }
@@ -103,8 +103,7 @@ const ProductManagePage = (props) => {
 
     const handleDelete = async (id) => {
         try {       
-            const res = await AdminApi.deleteProduct(id);
-            console.log(res)
+            const res = await AdminApi.deleteProduct(id);            
             if(res.status === 200) {
                 setPage(1)                
                 getProductList(1)              
@@ -141,7 +140,8 @@ const ProductManagePage = (props) => {
             if (res.status === 200) {
                 formatCurrency(res.data.product)
                 setTotalPage(res.data.total_page)
-                setSearchTemplate({product: product, categoryId: category})                
+                setSearchTemplate({product: product, categoryId: category})
+                console.log(searchTemplate)              
             } else if(res === 201) {
                 alert({icon: 'error', title: 'Không tìm thấy sản phẩm', msg: res.message})
             }
@@ -241,7 +241,7 @@ const ProductManagePage = (props) => {
                         )
                     }
                     {
-                        productList.map((item, index) => 
+                        productList && productList.map((item, index) => 
                         <div className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item._id}>
                             <div className='col-1 product-item'>
                                 {index + 1}
