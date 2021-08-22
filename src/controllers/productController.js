@@ -30,7 +30,7 @@ module.exports.createProduct = async (req, res) => {
         if (!checkCateExist) throw new Error("Đã có lỗi xảy ra với danh mục")
 
         if(status === "Sale" && (!sale_tag || sale_tag<=0 || sale_tag > 100)){
-            throw new Error("Đà có lỗi xảy ra với trạng thái sản phẩm")
+            throw new Error("Đã có lỗi xảy ra với trạng thái sản phẩm")
         }else if(status ==="Sale" && sale_tag >0 && sale_tag <= 100) {
             price_after_sale = price*(100-sale_tag)/100
         } else sale_tag = 0
