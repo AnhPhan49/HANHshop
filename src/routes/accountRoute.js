@@ -1,6 +1,6 @@
 const express = require('express')
 const accountRoute = express.Router()
-const registerValidator = require('./validators/registerValidator')
+const createManagerValidator = require('./validators/creatManagerValidator')
 const updateAccountValidator = require('./validators/updateAccountValidator')
 const checkLogin = require('../midlewares/loginMidleware')
 const checkAdmin = require('../midlewares/AdminMidleware')
@@ -15,7 +15,7 @@ const {
     updateAccount
 } = require('../controllers/accountController')
 
-accountRoute.route('/create-manager').post(checkLogin, checkAdmin, registerValidator,createManager)
+accountRoute.route('/create-manager').post(checkLogin, checkAdmin, createManagerValidator,createManager)
 
 accountRoute.route('/list/:type').get(checkLogin, checkAdmin, listAccount)
 
