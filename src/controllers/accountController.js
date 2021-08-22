@@ -121,7 +121,19 @@ module.exports.blockAccount = async(req, res) =>{
 
 module.exports.updateAccount = async (req, res) => {
     try {
-
+        let result = validationResult(req)
+        if(result.errors.length !== 0){
+            let messages = result.mapped()
+            let message = ''
+            for(m in messages){
+                message= messages[m].msg
+                break
+            }
+            throw new Error (message)
+        }
+        let updateData = req.body
+        let updateAccount = await accountModel.findByIdAndUpdate(id, {updateData}, {new: true})
+        return res.status(200).json({message: "Update success", data: updateAccount})
     } catch (err) {
         return res.status(400).json({message: err.message})
     }
