@@ -60,7 +60,7 @@ module.exports.search = async (req, res) =>{
         let dataSearch = await inventoryModel.find({
             product: {$in: reformattedArray}
         }).populate('product')
-        return res.status(200).json({message:"Success", data: {page: page + 1, total_page: Math.ceil(searchProducts.length/10), inventory: dataSearch}})
+        return res.status(200).json({message:"Success", data: {page: page + 1, total_page: Math.ceil(searchProducts.length/10), inventory: dataSearch.reverse()}})
     } catch (err){
         return res.status(400).json({message: err.message})
     }
