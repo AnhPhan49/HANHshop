@@ -1,27 +1,56 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 
 const ManagerManagement = () => {
+    const [accountList, setAccountList] = useState([])
+    const accountdata = useSelector((state) => state.accountdata.managerAccountData)
+
+    useEffect(() => {
+        setAccountList(accountdata)
+    }, [accountdata])
+
+
     return(
-        <div>
-            <div>
-                <div>
+        <div className='production-page'>
+            <div className='row m-0 title'>
+                <div className='col-2 text-center'>
                     STT
                 </div>
-                <div>
+                <div className='col-4 text-center'>
                     Tên
                 </div>
-                <div>
+                <div className='col-2 text-center'>
                     Ngày tạo
                 </div>
-                <div>
+                <div className='col-2 text-center'>
                     Trạng thái
                 </div>
-                <div>
+                <div className='col-2 text-center'>
                     Tùy chỉnh
                 </div>
             </div>
-            <div>
-                
+            <div className='product-list'>
+                {
+                    accountList && accountList.map((item, index) => (
+                        <div>
+                            <div>
+                                {index + 1}
+                            </div>
+                            <div>
+                                Tên
+                            </div>
+                            <div>
+                                Ngày tạo
+                            </div>
+                            <div>
+                                Trạng thái
+                            </div>
+                            <div>
+                                Tùy chỉnh
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     )

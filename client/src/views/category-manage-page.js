@@ -130,7 +130,7 @@ const CategoryManagePage = (props) => {
                             )
                         }
                     {
-                        catelist.map((item, index) => 
+                        catelist && catelist.map((item, index) => 
                         <div className='row m-0 category-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item._id}>
                             <div className='col-1 category-item text-center'>
                                 {index + 1}

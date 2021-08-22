@@ -88,22 +88,21 @@ console.log(status);
             <InventoryModal ref={childRef} status={status} title={modalTitle} modalEditFilter={editObj} reloadNewData={handleCloseModalAfterSave}></InventoryModal>                
             <h4>Kho Hàng</h4>        
                 <div className='row m-0 title'>
-                    <div className='col-2 text-center'>
+                    <div className='col-1 text-center'>
                         ID
                     </div>
                     <div className='col-2 text-center'>
                         Sản phẩm
                     </div>
-                    <div className='col-2 text-center'>
+                    <div className='col-4 text-center'>
                         Miêu tả
                     </div>
                     <div className='col-2 text-center'>
                         Giá
                     </div>
-                    <div className='col-2 text-center'>
+                    <div className='col-1 text-center'>
                         Số lượng
-                    </div>
-                   
+                    </div>                   
                     <div className='col-2 text-center'>
                         Tùy chọn
                     </div>
@@ -117,35 +116,30 @@ console.log(status);
                         )
                     }
                     {
-                        inventoryList.map((item, index) => 
+                        inventoryList && inventoryList.map((item, index) => 
                         <div className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}} key={item._id}>
-                            <div className='col-2 product-item'>
+                            <div className='col-1 product-item'>
                                 {index + 1}
                             </div>
                             <div className='col-2 product-item'>
                                 {item.product.name}
                             </div>
                            
-                            <div className='col-2 product-item'>
-                                {item.product.description}
-                            </div>
+                            <div className='col-4 product-item' dangerouslySetInnerHTML={{__html: item.product.description}}/>
                             <div className='col-2 product-item'>
                                 {item.product.price}
-                            </div>
-                          
-                            <div className='col-2 product-item'>
+                            </div>                          
+                            <div className='col-1 product-item'>
                             {
-                                    (item.total)
-                                 
-                                }
+                                (item.total)                                 
+                            }
                             </div>
                             <div className='col-2 product-item'>
                                 <IconButton color="primary" onClick={() => handleOpenEditModal(item)}>
-                                <ControlPointIcon style={{ fontSize: 30 }}></ControlPointIcon>
-                                   
+                                    <ControlPointIcon style={{ fontSize: 30 }}></ControlPointIcon>                                   
                                 </IconButton>
                                 <IconButton color="primary" onClick={() => handleOpenAddModal(item)}>
-                                <RemoveIcon style={{ fontSize: 30 }} ></RemoveIcon>
+                                    <RemoveIcon style={{ fontSize: 30 }} ></RemoveIcon>
                                 </IconButton>
                             </div>
                         </div>)
