@@ -70,8 +70,6 @@ const CategoryManagePage = (props) => {
         setOpen(false);
     };
 
-
-
     const convertTime = (data) => {
         data.forEach((item, index) => {
             let date = new Date(item.createdAt)
