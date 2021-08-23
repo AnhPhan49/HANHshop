@@ -130,7 +130,8 @@ const ProductManagePage = () => {
         getProductList(page)
     }
 
-    const checkSearchInputDoExist = async (page) => {        
+    const checkSearchInputDoExist = async (page) => {
+        console.log(category)  
         try {
             if (searchProductInput) {
                 if(category !== 'n/a') {
@@ -138,9 +139,10 @@ const ProductManagePage = () => {
                 }
                 return await AdminApi.searchProductByProduct(page, searchProductInput)
             }
-            if (category !== 'n/a') {
+            if (category !== 'n/a') {                
                 return await AdminApi.searchProductByCategory(page, category)
             }
+            console.log("here")
             return await AdminApi.getProductList(page)
         }
         catch(e) {
@@ -154,7 +156,7 @@ const ProductManagePage = () => {
             setLoader(true)
             const res = await checkSearchInputDoExist(page, category, searchProductInput)
             if (res.status === 200) {
-                formatCurrency(res.data.product)
+                setProductList(res.data.product)
                 setTotalPage(res.data.total_page)
                 setSearchTemplate({product: searchProductInput, categoryId: category})                            
             }
