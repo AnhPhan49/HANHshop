@@ -215,7 +215,7 @@ const ProductModal = forwardRef((props, ref) => {
                                     <TextField                                        
                                         InputLabelProps={{
                                             classes: {
-                                                root: classes.labelRoot
+                                                root: classes.resize
                                             }
                                         }}
                                         value={name}
@@ -232,7 +232,7 @@ const ProductModal = forwardRef((props, ref) => {
                                     <TextField                                        
                                         InputLabelProps={{
                                             classes: {
-                                                root: classes.labelRoot
+                                                root: classes.resize
                                             }
                                         }}
                                         value={price}
@@ -286,7 +286,7 @@ const ProductModal = forwardRef((props, ref) => {
                                     <TextField                                        
                                         InputLabelProps={{
                                             classes: {
-                                                root: classes.labelRoot
+                                                root: classes.resize
                                             }
                                         }}
                                         disabled={(status === 'Sale')?false:true}                                        
@@ -431,9 +431,6 @@ const useStyles = makeStyles((theme) => ({
     selectTemplate:{
         padding: 4,
         fontSize: '1.4rem'
-    },
-    labelRoot: {
-        fontSize: '1.5rem',
     },
     switchControl: {
         marginTop: 6,        

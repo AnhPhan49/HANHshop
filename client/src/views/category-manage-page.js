@@ -9,7 +9,7 @@ import { FaEdit } from "react-icons/fa";
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import AdminApi from '../apis/adminApis'
-import CategoryEditModal from '../components/CategoryManagement/category-modal'
+import CategoryEditModal from '../components/CategoryManagementModal/category-modal'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -41,8 +41,8 @@ const CategoryManagePage = (props) => {
         try{
             setLoader(true)
             const res = await AdminApi.getCategoryList();
-            if(res.status === 200) {                
-                convertTime(res.data)
+            if(res.status === 200) {                                
+                setCateList(res.data)
                 setLoader(false)
             }
         }
@@ -70,12 +70,10 @@ const CategoryManagePage = (props) => {
         setOpen(false);
     };
 
-    const convertTime = (data) => {
-        data.forEach((item, index) => {
-            let date = new Date(item.createdAt)
-            data[index].createdAt = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();            
-        })
-        setCateList(data)
+    const convertTime = (unformatTime) => {        
+        let date = new Date(unformatTime)
+        const formatedTime = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();                    
+        return formatedTime
     }
 
     return(
@@ -136,8 +134,10 @@ const CategoryManagePage = (props) => {
                             <div className='col-3 category-item text-center'>
                                 {item.name}
                             </div>
-                            <div className='col-3 category-item text-center'>
-                                {item.createdAt}
+                            <div className='col-3 category-item text-center'>                                
+                                {
+                                    convertTime(item.createdAt)
+                                }                    
                             </div>
                             <div className='col-2 category-item text-center'>
                                 {
