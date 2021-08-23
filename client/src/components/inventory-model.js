@@ -81,7 +81,14 @@ const useStyles = makeStyles((theme) => ({
                 {...other}
                 getInputRef={inputRef}
                 allowNegative={false}
-               
+                 onValueChange={(values) => {
+                  onChange({
+                      target: {
+                          name: props.name,
+                          value: values.value,
+                      },
+                  });
+              }}   
               
                 isNumericString
             />
@@ -147,7 +154,7 @@ const ProductModal = forwardRef((props, ref) => {
                     <h4>{props.title}</h4>
                     <form onSubmit={handleSubmitFormImport}>          
                     <div className={classes.root}>                 
-                    <FormGroup>                           
+        <FormGroup>                           
         <TextField
                 id="standard-basic"
                 label="Nhà Cung Cấp"
