@@ -6,20 +6,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import AdminApi from '../apis/adminApis'
 import alert from '../utils/alert'
-import PropTypes from 'prop-types';
-import MaskedInput from 'react-text-mask';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
+import NumberFormat from 'react-number-format';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
-          margin: '46px',
-          marginBottom :'35px',
+          margin: '55px',
+          marginBottom :'10px',
+          marginTop :'45px',
+          marginLeft :'35px',
           fontSize: '1.5rem',
-          transform: 'translate(0, -20.5px) scale(1.75)',
+          transform: 'translate(0, -21.5px) scale(1.5)',
          
-    
         },
       },
     formControl: {
@@ -34,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.4rem'
     },
     labelRoot: {
-        fontSize: '1.5rem',
+        fontSize: '1.0rem',
     },
     switchControl: {
         marginTop: 6,        
@@ -48,12 +45,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,      
         boxShadow: theme.shadows[5],        
         borderRadius: 10,        
-        height: 300,
+        height: 350,
         minWidth: 300,
         // overflowY:'scroll'
     },
     paperContainer: {
         padding: theme.spacing(5, 5, 5),
+        fontSize: '23px'
     },
     imageWrapper: {
         flexWrap: 'wrap',
@@ -71,31 +69,34 @@ const useStyles = makeStyles((theme) => ({
     // },
     title: {
         color: 'red',
-        fontSize: 20
+        fontSize: 25
     }
   }));
 
-function TextMaskCustom(props) {
-    const { inputRef, ...other } = props;
-  
-    return (
-      <MaskedInput 
-        {...other}
-        
-        ref={(ref) => {
-          inputRef(ref ? ref.inputElement : null);
-        }}
-        
-        mask={[ /[1-9]/, /\d/, /\d/, /\d/, /\d/, /\d/,/\d/, /\d/, /\d/, /\d/]}
-        placeholderChar={'\u2000'}
-        showMask
-      />
-    );
+  function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+    
+     return (
+            <NumberFormat
+                {...other}
+                getInputRef={inputRef}
+                allowNegative={false}
+                 onValueChange={(values) => {
+                  onChange({
+                      target: {
+                          name: props.name,
+                          value: values.value,
+                      },
+                  });
+              }}   
+              
+                isNumericString
+            />
+        );
   }
+
   
-  TextMaskCustom.propTypes = {
-    inputRef: PropTypes.func.isRequired,
-  };
+
 const ProductModal = forwardRef((props, ref) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false)    
@@ -119,23 +120,22 @@ const ProductModal = forwardRef((props, ref) => {
             <div className={classes.paper}>                        
                 <div className={classes.paperContainer}>
                     <h4>{props.title}</h4>
-                    <form onSubmit={handleSubmitFormExport}>                            
-                    <div className={classes.root}>
-        <FormControl>
-        <InputLabel
-         
-         htmlFor="formatted-text-mask-input"  >Số lượng</InputLabel>
-        < Input
-        
-        value={editNumber}
-        
-        onChange={(e) => setEditNumber(e.target.value)}
-          name="textmask"
-          id="formatted-text-mask-input"
-          inputComponent={TextMaskCustom}
-        />
-      </FormControl>
-                    </div>           
+                    <form onSubmit={handleSubmitFormExport}>        
+                                     
+                 <div className={classes.root}>
+                      <FormGroup>
+            <TextField
+                id="standard-basic"
+                label="Số Lượng"
+                value={editNumber}
+              
+                InputProps={{
+                    inputComponent: NumberFormatCustom,
+                  }}
+                onChange={(e) => setEditNumber(e.target.value)}
+                />
+        </FormGroup>   
+        </div>                        
                 <FormGroup className='mt-5'>
                             <Button type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
@@ -152,39 +152,36 @@ const ProductModal = forwardRef((props, ref) => {
             <div className={classes.paper}>                        
                 <div className={classes.paperContainer}>
                     <h4>{props.title}</h4>
-                    <form onSubmit={handleSubmitFormImport}>                            
-       
+                    <form onSubmit={handleSubmitFormImport}>          
+                    <div className={classes.root}>                 
+        <FormGroup>                           
+        <TextField
+                id="standard-basic"
+                label="Nhà Cung Cấp"
+                value={editProducer}
+                InputLabelProps={{
+                    classes: {
+                      root: classes.labelRoot,                              
+                    }
+                }}
+                onChange={(e) => setEditProducer(e.target.value)}
+                />
+        </FormGroup>     
+             <FormGroup>
+            <TextField
+                id="standard-basic"
+                label="Số Lượng"
+                value={editNumber}
+              
+                InputProps={{
+                    inputComponent: NumberFormatCustom,
+                  }}
+                onChange={(e) => setEditNumber(e.target.value)}
+                />
+        </FormGroup>   
         
-        <div className={classes.root}>
-        <FormControl>
-        <InputLabel
-         
-         htmlFor="formatted-text-mask-input"  >Số lượng</InputLabel>
-        < Input
         
-        value={editNumber}
-        
-        onChange={(e) => setEditNumber(e.target.value)}
-          name="textmask"
-          id="formatted-text-mask-input"
-          inputComponent={TextMaskCustom}
-        />
-      </FormControl>
-      <FormControl>
-        <InputLabel
-         
-         htmlFor="formatted-text-mask-input"  >Nhà Cung Cấp</InputLabel>
-        < Input
-        
-        value={editProducer}
-        
-        onChange={(e) => setEditProducer(e.target.value)}
-          name="textmask"
-          id="formatted-text-mask-input"
-          inputComponent={TextMaskCustom}
-        />
-      </FormControl>
-      </div>
+        </div>
         {/* <FormGroup>
             <TextField
                 id="standard-basic"
