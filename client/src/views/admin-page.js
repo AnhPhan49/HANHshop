@@ -231,10 +231,10 @@ const AdminPage = (props) => {
                 <Divider />
                     <List>
                     {sidebar.map((item, index) => (
-                        <ListItem button key={item.title} onClick={() => handleView(index)}>
-                        <ListItemIcon>{item.icon}</ListItemIcon>
-                        <ListItemText primary={item.title}/>
-                        <Divider />
+                        <ListItem button key={index} onClick={() => handleView(index)}>
+                          <ListItemIcon>{item.icon}</ListItemIcon>
+                          <ListItemText primary={item.title}/>
+                          <Divider />
                         </ListItem>                        
                     ))}
                     </List>                                

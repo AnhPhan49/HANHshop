@@ -513,14 +513,6 @@ body {
 	font-weight: 700;
 }
 
-#standard-basic, #demo-simple-select-label {
-	font-size: 1.5rem;
-}
-
-#material-button-label {
-	font-size: 1.2rem;
-}
-
 .modal-image-frame {		
 	border-radius: 8px;
 	height: 180px;
@@ -600,7 +592,7 @@ body {
 
 .production-page .search-section .category-select-box {
 	font-size: 1.5rem;
-	margin: 5px;
+	margin-top: 10px;
 	padding: 4px;
 	width: 80%;
 }

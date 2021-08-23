@@ -1,4 +1,4 @@
-import React, {useState, useRef, forwardRef, useImperativeHandle, useEffect } from 'react'
+import React, {useState, useRef, forwardRef, useEffect } from 'react'
 import { TextField, Button, FormGroup, IconButton, FormLabel } from '@material-ui/core'
 import { PhotoLibrary } from '@material-ui/icons';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -20,69 +20,11 @@ import alert from '../utils/alert';
 
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: '1%',      
-        width: '48%'
-    },
-    FormGroup: {
-        marginTop: 10
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-    selectTemplate:{
-        padding: 4,
-        fontSize: '1.4rem'
-    },
-    labelRoot: {
-        fontSize: '1.5rem',
-    },
-    switchControl: {
-        marginTop: 6,        
-    },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',      
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,      
-        boxShadow: theme.shadows[5],        
-        borderRadius: 10,        
-        height: 600,
-        width: 800,
-        minWidth: 350,
-        overflowY:'scroll'
-    },
-    paperContainer: {
-        padding: theme.spacing(5, 5, 5),
-    },
-    imageWrapper: {
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,  
-    },
-    imageList: {
-        flexWrap: 'nowrap',    
-        transform: 'translateZ(0)',
-    },
-    titleBar: {
-        background:
-          'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-    },
-    title: {
-        color: 'red',
-        fontSize: 20
-    }
-  }));
-
 const ProductModal = forwardRef((props, ref) => {
     const classes = useStyles();
     const fileRef = useRef()
 
-    const [open, setOpen] = useState(false)    
+    // const [open, setOpen] = useState(false) 
     const [previewFile, setPreviewFile] = useState([])
     const [file, setFile] = useState([])    
     
@@ -93,32 +35,25 @@ const ProductModal = forwardRef((props, ref) => {
     const [category, setCategory] = useState()
     const [categoryList, setCategoryList] = useState([])
     const [status, setStatus] = useState('N/A')
-    
     const [submitButtonState, setSubmitButtonState] = useState(true)
 
-    useImperativeHandle(ref, () => ({
-        handleOpenModal(){
-            setOpen(true)
-        },        
-    }));
-
     useEffect(() => {
-        getCategoryList()        
-    }, [])
+        getCategory()
+    })
 
-    useEffect(() => {
+    useEffect(() => {    
         if (props.modalEditFilter) { 
             setName(props.modalEditFilter.name)
-            setPrice(revertPrice(props.modalEditFilter.price))
+            setPrice(props.modalEditFilter.price)
             setSaleTag(props.modalEditFilter.sale_tag)
             setDesc(props.modalEditFilter.description)
             setCategory(props.modalEditFilter.category._id)
             // setFile()
             // setPreviewFile()
             setStatus(props.modalEditFilter.status)            
-        }
-    }, [props.modalEditFilter])    
-
+        }       
+    }, [props.modalEditFilter])
+    
     useEffect(() => {
         if(status !== 'Sale') {
             setSaleTag('')
@@ -141,26 +76,15 @@ const ProductModal = forwardRef((props, ref) => {
         }
     }, [name , price , desc , category , saletag, status])
 
-    const revertPrice = (fp) => {
-        const formatPrice = fp
-        const normalizeArray = formatPrice.split('.')
-
-        let normalizePrice = ''
-        normalizeArray.forEach((item) => {
-            normalizePrice = normalizePrice + item           
-        })        
-
-        return normalizePrice
-    }
-    
-    const getCategoryList = async () => {
-        try{
-            const res = await AdminApi.getCategoryList();
-            if(res.status === 200){
-                setCategoryList(res.data)
+    const getCategory = async () => {
+        try {
+            const res = await AdminApi.getCategoryList()
+            if(res.status === 200) {
+                const temp = [{_id: 'n/a', name: 'Tất cả'}]
+                setCategoryList(temp.concat(res.data))
             }
         } catch(e) {
-
+            console.log(e)
         }
     }
 
@@ -181,7 +105,7 @@ const ProductModal = forwardRef((props, ref) => {
         setDesc('')
         setCategory('')
         setStatus('N/A')
-        setOpen(false)
+        props.handleCloseModal()
     }
 
     const handleSubmitForm = async (e) => {
@@ -216,7 +140,7 @@ const ProductModal = forwardRef((props, ref) => {
             console.log(e)
         }
         setSubmitButtonState(false)
-        handleCloseModal()
+        // handleCloseModal()
         props.reloadNewData()
     }
 
@@ -274,7 +198,7 @@ const ProductModal = forwardRef((props, ref) => {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={open}
+                open={props.open}
                 onClose={handleCloseModal}            
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -282,7 +206,7 @@ const ProductModal = forwardRef((props, ref) => {
                     timeout: 500,
                 }}
             >
-                <Fade in={open}>
+                <Fade in={props.open}>
                     <div className={classes.paper}>                        
                         <div className={classes.paperContainer}>
                             <h4>{props.title}</h4>
@@ -295,9 +219,13 @@ const ProductModal = forwardRef((props, ref) => {
                                             }
                                         }}
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) => setName(e.target.value)}                                        
+                                        InputProps={{
+                                            classes: {
+                                              input: classes.resize,
+                                            },
+                                        }}
                                         required
-                                        id="standard-basic"
                                         label="Tên sản phẩm"/>
                                 </FormGroup>
                                 <FormGroup className={classes.FormGroup}>
@@ -308,28 +236,26 @@ const ProductModal = forwardRef((props, ref) => {
                                             }
                                         }}
                                         value={price}
-                                        onChange={(e) => {
-                                            if(e.target.value > 0) {
-                                                setPrice(e.target.value)
-                                            }                                            
+                                        onChange={(e) => { setPrice(e.target.value)                                                                                    
                                         }}
                                         InputProps={{
+                                            classes: {
+                                                input: classes.resize,
+                                            },
                                             inputProps: { 
-                                                min: 1000
+                                                min: 1000,                                                
                                             }
                                         }}
                                         required                                        
-                                        type='number'                                        
-                                        id="standard-basic"
+                                        type='number'
                                         label="Giá tiền" />
-                                        <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm</h6></FormHelperText>                                
+                                        <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm (Đơn vị vnđ)</h6></FormHelperText>                                
                                 </FormGroup>                                
                                 <FormControl className={classes.formControl}>
                                     <InputLabel id="demo-simple-select-label"><span style={{ fontSize: '1.5rem' }}>Danh mục</span></InputLabel>
                                     <Select
                                     className={classes.selectTemplate}
                                     labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
                                     value={category}
                                     onChange={handleChangeCategory}
                                     required
@@ -345,8 +271,7 @@ const ProductModal = forwardRef((props, ref) => {
                                     <InputLabel id="demo-simple-select-label"><span style={{ fontSize: '1.5rem' }}>Trạng thái</span></InputLabel>
                                     <Select
                                     className={classes.selectTemplate}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
+                                    labelId="demo-simple-select-label"                            
                                     value={status}
                                     onChange={handleChangeStatus}
                                     required                 
@@ -366,20 +291,20 @@ const ProductModal = forwardRef((props, ref) => {
                                         }}
                                         disabled={(status === 'Sale')?false:true}                                        
                                         value={saletag}
-                                        onChange={(e) => {
-                                            if(e.target.value > 0 && e.target.value <= 100) {
-                                                setSaleTag(e.target.value)
-                                            }                          
+                                        onChange={(e) => {                                            
+                                            setSaleTag(e.target.value)                                                                    
                                         }}
                                         InputProps={{
+                                            classes: {
+                                                input: classes.resize,
+                                            },
                                             inputProps: { 
                                                 min: 1,
-                                                max: 100
+                                                max: 100,                                                
                                             }
                                         }}
                                         type="number"                                                                            
-                                        required
-                                        id="standard-basic"
+                                        required                                        
                                         label="Phần trăm Sale (Chỉ dành cho Sale)" />
                                         <FormHelperText id="component-error-text"><h6>Phần trăm Sale không được chêch lệch 0-100%</h6></FormHelperText>
                                 </FormGroup>
@@ -400,8 +325,7 @@ const ProductModal = forwardRef((props, ref) => {
                                             } }                                  
                                             config={{                                                  
                                                 toolbar: ['heading','|','bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable',
-                                                'tableColumn', 'tableRow', 'mergeTableCells', '|', 'undo', 'redo'],
-                                                
+                                                'tableColumn', 'tableRow', 'mergeTableCells', '|', 'undo', 'redo'],                                                
                                             }}                                                                   
                                             data={desc}
                                             onChange={ ( event, editor ) => {                                                                   
@@ -453,8 +377,8 @@ const ProductModal = forwardRef((props, ref) => {
                                             }                                            
                                             <div>
                                                 <Button                                    
-                                                    onClick={() => fileRef.current.click()}                                                
-                                                    id='material-button-label'
+                                                    onClick={() => fileRef.current.click()} 
+                                                    style={{fontSize: '1.2rem'}}                                                                                            
                                                     type='button'                                         
                                                     color="primary"                                                    
                                                     >
@@ -468,12 +392,12 @@ const ProductModal = forwardRef((props, ref) => {
 
                                 <div className='mt-3 row modal-action'>
                                     <div className='col-6'>
-                                        <Button type='button' onClick={handleCloseModal} variant="contained" color="secondary" id='material-button-label'>
+                                        <Button type='button' onClick={props.handleCloseModal} variant="contained" color="secondary" style={{fontSize: '1.2rem'}}>
                                             Thoát
                                         </Button>
                                     </div>
                                     <div className='col-6'>
-                                        <Button disabled={submitButtonState} type='submit' variant="contained" color="primary" id='material-button-label'>
+                                        <Button disabled={submitButtonState} type='submit' variant="contained" color="primary"  style={{fontSize: '1.2rem'}}>
                                             Lưu
                                         </Button>
                                     </div>                                                                      
@@ -486,5 +410,69 @@ const ProductModal = forwardRef((props, ref) => {
         </div>
     )
 })
+
+const useStyles = makeStyles((theme) => ({
+    resize: {
+        fontSize: '1.5rem'
+    },
+    buttonLabel: {
+        fontSize: '1.2rem'
+    },
+    formControl: {
+        margin: '1%',      
+        width: '48%'
+    },
+    FormGroup: {
+        marginTop: 10
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+    selectTemplate:{
+        padding: 4,
+        fontSize: '1.4rem'
+    },
+    labelRoot: {
+        fontSize: '1.5rem',
+    },
+    switchControl: {
+        marginTop: 6,        
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',      
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,      
+        boxShadow: theme.shadows[5],        
+        borderRadius: 10,      
+        height: 600,
+        width: 800,
+        minWidth: 350,
+        overflowY:'scroll'
+    },
+    paperContainer: {
+        padding: theme.spacing(5, 5, 5),
+    },
+    imageWrapper: {
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,  
+    },
+    imageList: {
+        flexWrap: 'nowrap',    
+        transform: 'translateZ(0)',
+    },
+    titleBar: {
+        background:
+          'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    },
+    title: {
+        color: 'red',
+        fontSize: 20
+    }
+  }));
 
 export default ProductModal

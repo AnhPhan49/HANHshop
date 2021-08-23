@@ -70,12 +70,10 @@ const CategoryManagePage = (props) => {
         setOpen(false);
     };
 
-
-
     const convertTime = (data) => {
         data.forEach((item, index) => {
             let date = new Date(item.createdAt)
-            data[index].createdAt = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();            
+            data[index].createdAt = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();            
         })
         setCateList(data)
     }

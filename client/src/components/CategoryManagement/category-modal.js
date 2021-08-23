@@ -31,8 +31,7 @@ const CategoryEditModal = (props) => {
             let formData = {
                 "name": editName,
                 "active": checked
-            }
-            console.log(formData)
+            }            
             let res = null
             if (props.modalEditFilter) {
                 res = await AdminApi.updateCategory(props.modalEditFilter._id, formData);
@@ -56,7 +55,11 @@ const CategoryEditModal = (props) => {
             <form onSubmit={onSubmit}>
                 <FormGroup>
                     <TextField
-                        id="standard-basic"
+                        InputProps={{
+                            classes: {
+                                input: classes.labelRoot,
+                            },
+                        }}                        
                         label="Tên danh mục"
                         value={editName}
                         InputLabelProps={{
