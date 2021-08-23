@@ -42,8 +42,8 @@ const UserManagement = (props) => {
                 </div>
             </div>
             <div className='product-list'>
-            {
-                    accountList && accountList.map((item, index) => (
+                {
+                    accountList&&accountList.length?(accountList.map((item, index) => (
                         <div key={item} className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}}>
                             <div className='col-1 product-item'>
                                 {index + 1}
@@ -67,7 +67,11 @@ const UserManagement = (props) => {
                                 </IconButton>
                             </div>
                         </div>
-                    ))
+                    ))):(
+                        <div className='text-center mt-4'>
+                            <h5>Không có dữ liệu trả về</h5>
+                        </div>
+                    )
                 }
             </div>
         </div>

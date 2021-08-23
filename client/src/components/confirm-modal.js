@@ -23,7 +23,7 @@ const ConfirmModal = (props) => {
             >
                 <Fade in={props.open}>
                     <div className={classes.paper}>
-                        <h4>Bạn có chắc thực hiện thao tác này? <span className='text-danger'>Sẽ không thể hoàn tác sau khi thực hiện</span></h4>
+                        <h4>Bạn có chắc thực hiện thao tác này?</h4>
                         <div className='row mt-5'>
                             <div className='col-6 text-center'>
                                 <Button variant="contained" color="secondary" onClick={props.handleClose} style={{fontSize: '1.2rem'}}>
