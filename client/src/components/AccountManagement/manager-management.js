@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import { FaUserSlash, FaUser, FaEdit } from "react-icons/fa";
 import IconButton from '@material-ui/core/IconButton';
-
+import AdminCreateAccountModal from '../AdminCreateAccountModal/index'
+import ChangePasswordModal from '../ChangePasswordModal/index'
 
 const ManagerManagement = (props) => {
     const [accountList, setAccountList] = useState([])
     const accountdata = useSelector((state) => state.accountdata.managerAccountData)
+    const [open, setOpen] = useState(false) 
+    const [actionAccountId, setActionAccountId] = useState()  
 
     useEffect(() => {
-        setAccountList(accountdata)        
+        setAccountList(accountdata)
     }, [accountdata])
 
     const convertTime = (unformatTime) => {
@@ -18,13 +21,25 @@ const ManagerManagement = (props) => {
         return formatedTime
     }
 
+    const handleOpenModal = (id) => {
+        setActionAccountId(id)
+        setOpen(true)
+    }
+    
+    const handleCloseModal = () => {
+        setActionAccountId()
+        setOpen(false)
+    }
+
     return(
         <div
             role="tabpanel"
             hidden={props.value !== props.index}
             id={`full-width-tabpanel-${props.index}`}
             aria-labelledby={`full-width-tab-${props.index}`}
-            className='production-page'>
+            className='production-page'>            
+            <AdminCreateAccountModal open={props.open} handleClose={props.handleCloseAddModal} closeAfterSave={props.closeAfterSave}></AdminCreateAccountModal>
+            <ChangePasswordModal open={open} handleClose={handleCloseModal} accountId={actionAccountId}></ChangePasswordModal>
             <div className='row m-0 title'>
                 <div className='col-1 text-center'>
                     STT
@@ -63,7 +78,7 @@ const ManagerManagement = (props) => {
                                 )}
                             </div>
                             <div className='col-2 product-item'>
-                                <IconButton color="primary" >
+                                <IconButton color="primary" onClick={() => handleOpenModal(item._id)}>
                                     <FaEdit size={20} ></FaEdit>
                                 </IconButton>
                             </div>
