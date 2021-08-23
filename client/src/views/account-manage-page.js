@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {AppBar, useTheme, Tabs, Tab, IconButton} from '@material-ui/core';
+import {AppBar, useTheme, Tabs, Tab, IconButton } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import { IoAddCircle } from "react-icons/io5";
 import {setCustomerData, setManagerData} from '../reducers/accountManagementReducer'
@@ -18,9 +18,9 @@ function a11yProps(index) {
 
 const AccountManagePage = () => {    
     const dispatch = useDispatch();
-    const [value, setValue] = useState(0)
-    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState(0)    
     const theme = useTheme();
+    const [open, setOpen] = useState(false)
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -34,6 +34,19 @@ const AccountManagePage = () => {
         getCustomerList()
         getManagerList()
     }, [])
+
+    const handleOpenAddModal = () => {
+        setOpen(true)
+    }
+
+    const handleCloseAddModal = () => {
+        setOpen(false)
+    }
+
+    const closeAfterSave = () => {
+        getManagerList()
+        handleCloseAddModal()
+    }
   
     const getCustomerList = async () => {
         try {
@@ -58,16 +71,16 @@ const AccountManagePage = () => {
         }
     }
 
-    const handleOpenAddModal = () => {
-        setOpen(true)
-    }
-
     return(
         <div>
-            <AppBar position="static" color="white">
-                <IconButton className='float-button' color="primary" onClick={handleOpenAddModal}>
-                    <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
-                </IconButton>
+            {
+                value===1 && (
+                    <IconButton className='float-button' color="primary" onClick={handleOpenAddModal}>
+                        <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
+                    </IconButton>
+                )
+            }            
+            <AppBar position="static" color="white">      
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -85,7 +98,7 @@ const AccountManagePage = () => {
                     onChangeIndex={handleChangeIndex}
                 >
                     <UserManagement value={value} index={0} dir={theme.direction}></UserManagement>
-                    <ManagerManagement value={value} index={1} dir={theme.direction}></ManagerManagement>
+                    <ManagerManagement value={value} index={1} dir={theme.direction} open={open} handleCloseAddModal={handleCloseAddModal} closeAfterSave={closeAfterSave}></ManagerManagement>
                 </SwipeableViews>               
         </div>
     )

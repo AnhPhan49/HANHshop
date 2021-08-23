@@ -36,7 +36,7 @@ const ConfirmModal = (props) => {
                                 </Button>
                             </div>
                         </div>
-                        </div>                    
+                    </div>                    
                 </Fade>            
         </Modal>
     )

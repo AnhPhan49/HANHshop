@@ -58,6 +58,18 @@ const AdminApi = {
     getCustomerAccountList() {
         const url = '/api/user/list/customer'
         return axiosClient.get(url)
+    },
+    createManagerAccount(data) {
+        const url = '/api/user/create-manager'
+        return axiosClient.post(url, data)
+    },
+    adminChangeManagerPassword(id, data) {
+        const url = `/api/user/admin/change-password/${id}`
+        return axiosClient.put(url, data)
+    },
+    blockAccount(id) {
+        const url = `/api/user/block/${id}`
+        return axiosClient.delete(url)
     }
 }
 
