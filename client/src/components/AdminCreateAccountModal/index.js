@@ -17,7 +17,7 @@ const AdminCreateAccountModal = (props) => {
     const submitHandle = (e) => {
         e.preventDefault()
         if(password !== repassword) {
-
+            return
         }
     }
 

@@ -130,8 +130,7 @@ const ProductManagePage = () => {
         getProductList(page)
     }
 
-    const checkSearchInputDoExist = async (page) => {
-        console.log(category)  
+    const checkSearchInputDoExist = async (page) => {        
         try {
             if (searchProductInput) {
                 if(category !== 'n/a') {
@@ -139,10 +138,9 @@ const ProductManagePage = () => {
                 }
                 return await AdminApi.searchProductByProduct(page, searchProductInput)
             }
-            if (category !== 'n/a') {                
+            if (category !== 'n/a') {
                 return await AdminApi.searchProductByCategory(page, category)
             }
-            console.log("here")
             return await AdminApi.getProductList(page)
         }
         catch(e) {
@@ -272,7 +270,7 @@ const ProductManagePage = () => {
                                 <Skeleton animation="wave" height={80}/>
                                 <Skeleton animation="wave" height={80}/>
                                 <Skeleton animation="wave" height={80}/>                                                                
-                            </div>                                         
+                            </div>                  
                         ): (
                             <>
                                 {

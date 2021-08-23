@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { FaUserSlash, FaUser, FaEdit } from "react-icons/fa";
 import IconButton from '@material-ui/core/IconButton';
 
+
 const ManagerManagement = (props) => {
     const [accountList, setAccountList] = useState([])
     const accountdata = useSelector((state) => state.accountdata.managerAccountData)
@@ -11,7 +12,7 @@ const ManagerManagement = (props) => {
         setAccountList(accountdata)        
     }, [accountdata])
 
-    const convertTime = (unformatTime) => {        
+    const convertTime = (unformatTime) => {
         let date = new Date(unformatTime)
         const formatedTime = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();                    
         return formatedTime
@@ -42,8 +43,8 @@ const ManagerManagement = (props) => {
                 </div>
             </div>
             <div className='product-list'>
-                {
-                    accountList && accountList.map((item, index) => (
+            {
+                    accountList&&accountList.length?(accountList.map((item, index) => (
                         <div key={item} className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}}>
                             <div className='col-1 product-item'>
                                 {index + 1}
@@ -67,7 +68,11 @@ const ManagerManagement = (props) => {
                                 </IconButton>
                             </div>
                         </div>
-                    ))
+                    ))):(
+                        <div className='text-center mt-4'>
+                            <h5>Không có dữ liệu trả về</h5>
+                        </div>
+                    )
                 }
             </div>
         </div>
