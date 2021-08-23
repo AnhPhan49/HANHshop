@@ -1225,16 +1225,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 margin: 0% 0 1% 1.6%;
  }
  .col:first-child {
-	 margin-left: 60px;
- }
+	 margin-left: 65px !important;
+	 margin-right: -65px;
+	}
  .span_2_of_3 {
-	 width: 63.1%;
+	 width: 29.1% !important;
 	 padding: 1.5%;
- }
+	}
  .span_1_of_3 {
-	 width: 29.2%;
+	 width: 64.2% !important;
 	 padding: 1.5%;
- }
+	}
  .span_2_of_3  h2, .span_1_of_3  h2 {
 	 margin-bottom: 0.5em;
 	 line-height: 1.2;
