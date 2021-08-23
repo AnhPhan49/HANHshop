@@ -31,7 +31,7 @@ const ConfirmModal = (props) => {
                                 </Button>
                             </div>
                             <div className='col-6 text-center'>
-                                <Button variant="contained" color="primary" onClick={props.accept} style={{fontSize: '1.2rem'}}>
+                                <Button disabled={props.buttonState} variant="contained" color="primary" onClick={props.accept} style={{fontSize: '1.2rem'}}>
                                     Đồng ý
                                 </Button>
                             </div>

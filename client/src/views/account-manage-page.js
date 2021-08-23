@@ -98,7 +98,7 @@ const AccountManagePage = () => {
                     onChangeIndex={handleChangeIndex}
                 >
                     <UserManagement value={value} index={0} dir={theme.direction}></UserManagement>
-                    <ManagerManagement value={value} index={1} dir={theme.direction} open={open} handleCloseAddModal={handleCloseAddModal} closeAfterSave={closeAfterSave}></ManagerManagement>
+                    <ManagerManagement value={value} index={1} dir={theme.direction} open={open} handleCloseAddModal={handleCloseAddModal} closeAfterSave={closeAfterSave} reloadData={getManagerList}></ManagerManagement>
                 </SwipeableViews>               
         </div>
     )

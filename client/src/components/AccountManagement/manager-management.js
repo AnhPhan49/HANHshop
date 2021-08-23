@@ -4,12 +4,17 @@ import { FaUserSlash, FaUser, FaEdit } from "react-icons/fa";
 import IconButton from '@material-ui/core/IconButton';
 import AdminCreateAccountModal from '../AdminCreateAccountModal/index'
 import ChangePasswordModal from '../ChangePasswordModal/index'
+import ConfirmModal from '../confirm-modal'
+import AdminApi from '../../apis/adminApis';
+import alert from '../../utils/alert';
 
 const ManagerManagement = (props) => {
     const [accountList, setAccountList] = useState([])
     const accountdata = useSelector((state) => state.accountdata.managerAccountData)
-    const [open, setOpen] = useState(false) 
-    const [actionAccountId, setActionAccountId] = useState()  
+    const [open, setOpen] = useState(false)
+    const [openConfirmModal,setOpenConfirmModal] = useState(false)
+    const [actionAccountId, setActionAccountId] = useState()
+    const [btnState, setBtnState] = useState(false)
 
     useEffect(() => {
         setAccountList(accountdata)
@@ -19,6 +24,32 @@ const ManagerManagement = (props) => {
         let date = new Date(unformatTime)
         const formatedTime = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();                    
         return formatedTime
+    }
+
+    const blockUser = async () => {
+        try {
+            setBtnState(true)
+            const res = await AdminApi.blockAccount(actionAccountId)
+            if(res.status === 200) {
+                alert({icon:'success', title: res.message, msg: 'Thao tác thành công'})
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }
+        setBtnState(false)
+        handleCloseConfirmModalAfterSave()    
+        props.reloadData()
+    }
+
+    const handleOpenConfirmModal = (id) => {
+        setActionAccountId(id)
+        setOpenConfirmModal(true)
+    }
+
+    const handleCloseConfirmModalAfterSave = () => {
+        setActionAccountId()
+        setOpenConfirmModal(false)
     }
 
     const handleOpenModal = (id) => {
@@ -40,6 +71,7 @@ const ManagerManagement = (props) => {
             className='production-page'>            
             <AdminCreateAccountModal open={props.open} handleClose={props.handleCloseAddModal} closeAfterSave={props.closeAfterSave}></AdminCreateAccountModal>
             <ChangePasswordModal open={open} handleClose={handleCloseModal} accountId={actionAccountId}></ChangePasswordModal>
+            <ConfirmModal open={openConfirmModal} handleClose={()=> setOpenConfirmModal(false)} accept={blockUser} buttonState={btnState}></ConfirmModal>
             <div className='row m-0 title'>
                 <div className='col-1 text-center'>
                     STT
@@ -71,11 +103,13 @@ const ManagerManagement = (props) => {
                                 {convertTime(item.createdAt)}
                             </div>
                             <div className='col-2 product-item'>
-                                {item.blocked?(
-                                    <FaUserSlash size={20} color='gray'></FaUserSlash>
-                                ): (
-                                    <FaUser size={20} className='text-primary'></FaUser>
-                                )}
+                                <IconButton color="primary" onClick={() => handleOpenConfirmModal(item._id)}>                                                                    
+                                    {item.blocked?(
+                                        <FaUserSlash size={22} color='gray'></FaUserSlash>
+                                    ): (
+                                        <FaUser size={20} className='text-primary'></FaUser>
+                                    )}
+                                </IconButton>
                             </div>
                             <div className='col-2 product-item'>
                                 <IconButton color="primary" onClick={() => handleOpenModal(item._id)}>

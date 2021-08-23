@@ -36,71 +36,6 @@ import AccountManagePage from './account-manage-page'
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),    
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(1),
-  },
-  sidebarText: {
-    fontWeight: 700,
-    color: 'gray',
-  }
-}));
-
 const AdminPage = (props) => {
     const classes = useStyles();
     const theme = useTheme();
@@ -113,19 +48,19 @@ const AdminPage = (props) => {
     var sidebar = [
       {
         title: <h5 className={classes.sidebarText}>Tài khoản</h5>,
-        icon: <FaUsers size='24px'></FaUsers>
+        icon: <FaUsers size='24px' color={view===0?'rgba(0,204,255,255)':''}></FaUsers>
     }, {
         title: <h5 className={classes.sidebarText}>Danh mục</h5>,
-        icon: <BsFillInboxesFill size='24px'></BsFillInboxesFill>
+        icon: <BsFillInboxesFill size='24px' color={view===1?'rgba(0,204,255,255)':''}></BsFillInboxesFill>
     }, {
         title: <h5 className={classes.sidebarText}>Sản phẩm</h5>,
-        icon: <BsFillInboxFill size='24px'></BsFillInboxFill>
+        icon: <BsFillInboxFill size='24px' color={view===2?'rgba(0,204,255,255)':''}></BsFillInboxFill>
     }, {
         title: <h5 className={classes.sidebarText}>Quản lý kho</h5>,
-        icon: <FaStore size='24px'></FaStore>
+        icon: <FaStore size='24px' color={view===3?'rgba(0,204,255,255)':''}></FaStore>
     }, {
         title: <h5 className={classes.sidebarText}>Xác nhận đơn hàng</h5>,
-        icon: <IoReceiptSharp size='24px'></IoReceiptSharp>
+        icon: <IoReceiptSharp size='24px' color={view===4?'rgba(0,204,255,255)':''}></IoReceiptSharp>
     }
   ]
 
@@ -248,5 +183,70 @@ const AdminPage = (props) => {
         </div>
     )
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
+    },
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),    
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+  },
+  sidebarText: {
+    fontWeight: 700,
+    color: 'gray',
+  }
+}));
 
 export default AdminPage

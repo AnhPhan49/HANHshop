@@ -24,6 +24,7 @@ const ProductManagePage = () => {
     const [totalPage, setTotalPage] = useState(1)
     const [productList, setProductList] = useState([])
     const [deleteItem, setDeleteItem] = useState()
+    const [btnState, setBtnState] = useState(false)
 
     const [searchProductInput, setSearchProductInput] = useState()
     const [categoryList, setCategoryList] = useState([{_id: 'n/a', name: 'Tất cả'}])
@@ -107,7 +108,8 @@ const ProductManagePage = () => {
     }
 
     const handleDelete = async (id) => {
-        try {       
+        try {
+            setBtnState(true)
             const res = await AdminApi.deleteProduct(id);            
             if(res.status === 200) {
                 alert({icon: 'success', title: res.message, msg: 'Xóa sản phẩm thành công'})
@@ -118,6 +120,7 @@ const ProductManagePage = () => {
         catch(e) {
             console.log(e)
         }
+        setBtnState(false)
         handleCloseConfirmModal()   
     }
 
@@ -183,7 +186,7 @@ const ProductManagePage = () => {
 
     return(
         <div className='production-page'>
-            <ConfirmModal open={openConfirmModal} handleClose={handleCloseConfirmModal} unaccept={handleCloseConfirmModal} accept={handleAcceptConfirmModal}></ConfirmModal>
+            <ConfirmModal open={openConfirmModal} handleClose={handleCloseConfirmModal} unaccept={handleCloseConfirmModal} accept={handleAcceptConfirmModal} buttonState={btnState}></ConfirmModal>
             <IconButton className='float-button' color="primary" onClick={handleOpenAddModal}>
                 <IoAddCircle color='#0C9' size='60px'></IoAddCircle>
             </IconButton>
