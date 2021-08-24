@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import BannerItem from '../components/Banner/banner-item'
 import SaleItemCard from '../components/sale-item-card'
 import CategoryCard from '../components/category-card'
 import Carousel from 'react-material-ui-carousel'
 import {FcNext, FcPrevious} from 'react-icons/fc'
+import ShopApi from '../apis/shopApis'
 
 var items = [
     {
@@ -18,51 +19,6 @@ var items = [
         title: "Bạn cần mua đồ? Okay hãy đến với chúng tôi",
         desc: "Chúng tôi cung cấp cho bạn các dịch vụ mua bán online",
         img: 'https://mekoong.com/wp-content/uploads/2021/06/phillip.jpg'
-    }
-]
-
-var sale_items = [
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
     }
 ]
 
@@ -120,6 +76,25 @@ var category = [
 ]
 
 const Homepage = (props) => {
+    const [saleProduct, setSaleProduct] = useState([])
+
+    useEffect(() => {
+        getSaleProductList()
+    }, [])
+
+    const getSaleProductList = async () => {
+        try {
+            const res = await ShopApi.getHomePageHotProductData(1, "Sale")
+            console.log(res)
+            if(res.status === 200) {
+                setSaleProduct(res.data.product)
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
     return(
         <div className='homepage'>        
             <Carousel
@@ -146,11 +121,11 @@ const Homepage = (props) => {
                     </div>
                     <div className='row sale-items mt-3'>
                         {
-                            sale_items.map((item, i) =>
+                            saleProduct && saleProduct.map((item, i) =>
                             <div className='col-lg-2 col-md-3'>
-                                <SaleItemCard key={i} img_src={item.img} title={item.title} sale_price={item.sale_price} base_price={item.base_price} discount_percent={item.discount_percent}></SaleItemCard>
+                                <SaleItemCard key={i} img_src={item.image[0].url} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
                             </div>)
-                        }  
+                        }
                     </div>
                 </div>
                 <div className='category-section'>

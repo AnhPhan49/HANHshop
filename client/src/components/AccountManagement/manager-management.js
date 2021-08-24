@@ -92,7 +92,7 @@ const ManagerManagement = (props) => {
             <div className='product-list'>
             {
                     accountList&&accountList.length?(accountList.map((item, index) => (
-                        <div key={item} className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}}>
+                        <div key={index} className='row m-0 product-row' style={{background: `${(index%2===0)?'#ebebeb':''}`}}>
                             <div className='col-1 product-item'>
                                 {index + 1}
                             </div>

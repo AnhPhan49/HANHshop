@@ -35,7 +35,7 @@ function App() {
                 <Header />
                 <NavBar/>
                 <Url/>
-                <Footer/> 
+                <Footer/>
               </div>
             </Route>
           </Switch>      

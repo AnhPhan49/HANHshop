@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   loggedIn: !!localStorage.getItem("token"),
+  user: {}
 }
 
 export const userSlice = createSlice({
@@ -14,8 +15,11 @@ export const userSlice = createSlice({
         userlogoutsuccess: (state) => {
           state.loggedIn = false
         },
+        savecurrentuserdata: (state, action) => {
+          state.user = action.payload
+        }
       },
 })
 
-export const {userloginsuccess, userlogoutsuccess} = userSlice.actions
+export const {userloginsuccess, userlogoutsuccess, savecurrentuserdata} = userSlice.actions
 export default userSlice.reducer

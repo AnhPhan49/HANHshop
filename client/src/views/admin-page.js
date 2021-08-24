@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {
     CssBaseline,
     AppBar,
@@ -26,8 +26,9 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {userlogoutsuccess} from '../reducers/userReducer'
+import {userlogoutsuccess, savecurrentuserdata} from '../reducers/userReducer'
 import clsx from 'clsx';
+import AdminApi from '../apis/adminApis'
 
 import CategoryManagePage from './category-manage-page'
 import ProductManagePage from './product-manage-page'
@@ -39,34 +40,72 @@ const drawerWidth = 240;
 const AdminPage = (props) => {
     const classes = useStyles();
     const theme = useTheme();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [open, setOpen] = useState(false);
     const [view, setView] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
-    const dispatch = useDispatch();
-    const history = useHistory();
+    const [currentSidebar, setCurrentSidebar] = useState()
 
-    var sidebar = [
+    useEffect(() => {
+      getCurrentUser()
+    }, [])
+
+    var AdminSidebar = [
       {
-        title: <h5 className={classes.sidebarText}>Tài khoản</h5>,
-        icon: <FaUsers size='24px' color={view===0?'rgba(0,204,255,255)':''}></FaUsers>
-    }, {
         title: <h5 className={classes.sidebarText}>Danh mục</h5>,
-        icon: <BsFillInboxesFill size='24px' color={view===1?'rgba(0,204,255,255)':''}></BsFillInboxesFill>
-    }, {
-        title: <h5 className={classes.sidebarText}>Sản phẩm</h5>,
-        icon: <BsFillInboxFill size='24px' color={view===2?'rgba(0,204,255,255)':''}></BsFillInboxFill>
-    }, {
-        title: <h5 className={classes.sidebarText}>Quản lý kho</h5>,
-        icon: <FaStore size='24px' color={view===3?'rgba(0,204,255,255)':''}></FaStore>
-    }, {
-        title: <h5 className={classes.sidebarText}>Xác nhận đơn hàng</h5>,
-        icon: <IoReceiptSharp size='24px' color={view===4?'rgba(0,204,255,255)':''}></IoReceiptSharp>
-    }
-  ]
+        icon: <BsFillInboxesFill size='24px' color={view===0?'rgba(0,204,255,255)':''}></BsFillInboxesFill>
+      }, {
+          title: <h5 className={classes.sidebarText}>Sản phẩm</h5>,
+          icon: <BsFillInboxFill size='24px' color={view===1?'rgba(0,204,255,255)':''}></BsFillInboxFill>
+      }, {
+          title: <h5 className={classes.sidebarText}>Quản lý kho</h5>,
+          icon: <FaStore size='24px' color={view===2?'rgba(0,204,255,255)':''}></FaStore>
+      }, {
+          title: <h5 className={classes.sidebarText}>Xác nhận đơn hàng</h5>,
+          icon: <IoReceiptSharp size='24px' color={view===3?'rgba(0,204,255,255)':''}></IoReceiptSharp>
+      }, {
+        title: <h5 className={classes.sidebarText}>Tài khoản</h5>,
+        icon: <FaUsers size='24px' color={view===4?'rgba(0,204,255,255)':''}></FaUsers>
+      },
+    ]
 
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
+    var ManagerSidebar = [
+      {
+        title: <h5 className={classes.sidebarText}>Danh mục</h5>,
+        icon: <BsFillInboxesFill size='24px' color={view===0?'rgba(0,204,255,255)':''}></BsFillInboxesFill>
+      }, {
+          title: <h5 className={classes.sidebarText}>Sản phẩm</h5>,
+          icon: <BsFillInboxFill size='24px' color={view===1?'rgba(0,204,255,255)':''}></BsFillInboxFill>
+      }, {
+          title: <h5 className={classes.sidebarText}>Quản lý kho</h5>,
+          icon: <FaStore size='24px' color={view===2?'rgba(0,204,255,255)':''}></FaStore>
+      }, {
+          title: <h5 className={classes.sidebarText}>Xác nhận đơn hàng</h5>,
+          icon: <IoReceiptSharp size='24px' color={view===3?'rgba(0,204,255,255)':''}></IoReceiptSharp>
+      }
+    ]
+
+  const getCurrentUser = async () => {
+    try {
+      const res = await AdminApi.getCurrentUser();      
+      if (res.status === 200) {
+        dispatch(savecurrentuserdata(res.data))
+        if(res.data.role === 'admin') {        
+          setCurrentSidebar(AdminSidebar)
+        }
+        else {
+          setCurrentSidebar(ManagerSidebar)
+        }
+      }
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
     const handleDrawerClose = () => {
       setOpen(false);
@@ -93,13 +132,13 @@ const AdminPage = (props) => {
 
     const renderSwitch = (param) => {
       switch(param) {
-        case 0:
+        case 4:
           return <AccountManagePage></AccountManagePage>;
-        case 1:
+        case 0:
           return <CategoryManagePage></CategoryManagePage>;
-        case 2:
+        case 1:
           return <ProductManagePage></ProductManagePage>;
-        case 3:
+        case 2:
           return <InventoryManagePage></InventoryManagePage>;      
         default:
       }
@@ -165,7 +204,7 @@ const AdminPage = (props) => {
                 </div>
                 <Divider />
                     <List>
-                    {sidebar.map((item, index) => (
+                    {currentSidebar && currentSidebar.map((item, index) => (
                         <ListItem button key={index} onClick={() => handleView(index)}>
                           <ListItemIcon>{item.icon}</ListItemIcon>
                           <ListItemText primary={item.title}/>
