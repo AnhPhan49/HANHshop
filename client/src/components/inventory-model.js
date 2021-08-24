@@ -102,7 +102,7 @@ const ProductModal = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false)    
     const [editNumber, setEditNumber] = useState()
     const [editProducer, setEditProducer] = useState()
-    const[buttonstatus,setstatus]=useState(false);
+    const [buttonstatus, setstatus]=useState(false);
     useImperativeHandle(ref, () => ({
         handleOpenModal(){
             setOpen(true)
@@ -115,7 +115,7 @@ const ProductModal = forwardRef((props, ref) => {
      
     }
     const demo=()=>{
-      if(props.status==true){
+      if(props.status===true){
           return( <Fade in={open}>
             <div className={classes.paper}>                        
                 <div className={classes.paperContainer}>
@@ -137,7 +137,7 @@ const ProductModal = forwardRef((props, ref) => {
         </FormGroup>   
         </div>                        
                 <FormGroup className='mt-5'>
-                            <Button type='submit' variant="contained" color="primary" id='material-button-label'>
+                            <Button disabled={buttonstatus} type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
                             </Button>
                         </FormGroup>
@@ -195,8 +195,8 @@ const ProductModal = forwardRef((props, ref) => {
                 onChange={(e) => setEditProducer(e.target.value)}
                 />
         </FormGroup>                           */}
-                <FormGroup className='mt-5'>
-                            <Button type='submit' variant="contained" color="primary" id='material-button-label'>
+                        <FormGroup className='mt-5'>
+                            <Button disabled={buttonstatus} type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
                             </Button>
                         </FormGroup>
@@ -210,7 +210,7 @@ const ProductModal = forwardRef((props, ref) => {
     
     const handleSubmitFormImport = async(e) => {
        try{
-
+            setstatus(true)
             e.preventDefault();
           
                 let formData = {
@@ -237,19 +237,20 @@ const ProductModal = forwardRef((props, ref) => {
             console.log(e)
         }
         setOpen(false)
+        setstatus(false)
         props.reloadNewData()
         return 
 
     }
     const handleSubmitFormExport = async(e) => {
         try{
- 
-             e.preventDefault();
+            setstatus(true)
+            e.preventDefault();
             
-                 let formData = {
+                let formData = {
                     "count":Number(editNumber)*-1
-                 }
-                 console.log(formData)
+                }
+                console.log(formData)
              
            
              let res = null
@@ -268,6 +269,7 @@ const ProductModal = forwardRef((props, ref) => {
              console.log(e)
          }
          setOpen(false)
+         setstatus(false)
          props.reloadNewData()
          return 
  

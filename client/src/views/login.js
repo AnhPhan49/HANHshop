@@ -24,7 +24,7 @@ const Login = (props) => {
         try{
             const res = await AuthApis.login(data);                  
             if(res.status === 200) {             
-                localStorage.setItem("token", res.data)
+                localStorage.setItem("token", res.data)                           
                 AuthApis.setHeaderAxios(res.data)
                 dispatch(userloginsuccess())
                 history.push('/admin')

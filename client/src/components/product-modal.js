@@ -22,9 +22,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 const ProductModal = forwardRef((props, ref) => {
     const classes = useStyles();
-    const fileRef = useRef()
-
-    // const [open, setOpen] = useState(false) 
+    const fileRef = useRef()    
     const [previewFile, setPreviewFile] = useState([])
     const [file, setFile] = useState([])    
     
@@ -34,7 +32,7 @@ const ProductModal = forwardRef((props, ref) => {
     const [desc, setDesc] = useState()
     const [category, setCategory] = useState()
     const [categoryList, setCategoryList] = useState([])
-    const [status, setStatus] = useState('N/A')
+    const [status, setStatus] = useState('N/A')    
     const [submitButtonState, setSubmitButtonState] = useState(true)
 
     useEffect(() => {
@@ -79,9 +77,8 @@ const ProductModal = forwardRef((props, ref) => {
     const getCategory = async () => {
         try {
             const res = await AdminApi.getCategoryList()
-            if(res.status === 200) {
-                const temp = [{_id: 'n/a', name: 'Tất cả'}]
-                setCategoryList(temp.concat(res.data))
+            if(res.status === 200) {                
+                setCategoryList(res.data)
             }
         } catch(e) {
             console.log(e)
@@ -109,8 +106,8 @@ const ProductModal = forwardRef((props, ref) => {
     }
 
     const handleSubmitForm = async (e) => {
-        e.preventDefault();
-        setSubmitButtonState(true)
+        e.preventDefault();                
+        setSubmitButtonState(true)        
         try {
             const formData = new FormData();
 
@@ -249,7 +246,7 @@ const ProductModal = forwardRef((props, ref) => {
                                         required                                        
                                         type='number'
                                         label="Giá tiền" />
-                                        <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm (Đơn vị vnđ)</h6></FormHelperText>                                
+                                        <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm (Đơn vị vnđ)</h6></FormHelperText>
                                 </FormGroup>                                
                                 <FormControl className={classes.formControl}>
                                     <InputLabel id="demo-simple-select-label"><span style={{ fontSize: '1.5rem' }}>Danh mục</span></InputLabel>
@@ -388,8 +385,8 @@ const ProductModal = forwardRef((props, ref) => {
                                         </div>
                                         <FormHelperText id="component-error-text"><h5>Chỉ tối đa có thể up được 3 ảnh</h5></FormHelperText>                                                                           
                                     </FormGroup>                                    
-                                </FormGroup>
-
+                                </FormGroup>                               
+                            
                                 <div className='mt-3 row modal-action'>
                                     <div className='col-6'>
                                         <Button type='button' onClick={props.handleCloseModal} variant="contained" color="secondary" style={{fontSize: '1.2rem'}}>

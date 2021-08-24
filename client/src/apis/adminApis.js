@@ -70,6 +70,10 @@ const AdminApi = {
     blockAccount(id) {
         const url = `/api/user/block/${id}`
         return axiosClient.delete(url)
+    },
+    getCurrentUser() {
+        const url = `/api/user/current`
+        return axiosClient.get(url)
     }
 }
 
