@@ -1,5 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import SaleItemCard from '../sale-item-card'
+import {Link} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import ShopApi from '../../apis/shopApis'
+import {saveCategoryData} from '../../reducers/shopReducer'
 
 var sale_items = [
     {
@@ -53,44 +57,49 @@ var sale_items = [
     },
 ]
 const Product = (props) => {
-    
-    return(
+    const [categoryList, setCategoryList] = useState([])
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        getCategoryList()
+    },[])
+
+    const getCategoryList = async () => {
+        try {
+            const res = await ShopApi.getCategoryList()
+            console.log(res)
+            if(res.status === 200) {
+                setCategoryList(res.data)
+                dispatch(saveCategoryData(res.data))
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+    return(
         <div className="header_slide">
         <div className="header_bottom_left">				
           <div className="categories">
-            <ul>          
-              <li><a href="#">Mobile Phones</a></li>
-              <li><a href="#">Desktop</a></li>
-              <li><a href="#">Laptop</a></li>
-              <li><a href="#">Accessories</a></li>
-              <li><a href="#">Software</a></li>
-              <li><a href="#">Sports &amp; Fitness</a></li>
-              <li><a href="#">Footwear</a></li>
-              <li><a href="#">Jewellery</a></li>
-              <li><a href="#">Clothing</a></li>
-              <li><a href="#">Home Decor &amp; Kitchen</a></li>
-              <li><a href="#">Beauty &amp; Healthcare</a></li>
-              <li><a href="#">Toys, Kids &amp; Babies</a></li>
+            <ul>
+                {
+                    categoryList.map((item, index) => (
+                        <Link key={index}>
+                            <li><a>{item.name}</a></li>
+                        </Link>
+                    ))
+                }
             </ul>
           </div>					
         </div>
         <div className="header_bottom_right">	
         <div className='homepage'>
-           
-          
             <div className='homepage-body mt-2'>
                 <div className='sale-section'>
                     <h3>
-                        Ưu Đãi
+                        Danh sách sản phẩm
                     </h3>
-                    <div className='row sale-control'>
-                        <div className='sale-title col-6'>
-                            <div>
-                            Đang Giảm Giá
-                            </div>                            
-                        </div>                                                                              
-                    </div>
                     <div className='row sale-items mt-3'>
                         {
                             sale_items.map((item, i) =>

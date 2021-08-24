@@ -29,17 +29,18 @@ const SaleItemCard = (props) => {
                     {props.title}
                 </div>
                 <div className='sale-price'>
-                    đ {formatCurrency(props.sale_price)}                  
+                    đ{formatCurrency(props.sale_price)}                  
                 </div>
-                
-                <div className='percent-sale'>
-                    <span>
-                    Giảm {props.discount_percent}%
-                    </span>                    
-                </div>
-                {/* <div className='base-price'>
-                    đ {formatCurrency(props.base_price)}             
-                </div> */}
+                <div className='row m-0'>
+                  <div className='base-price col-6'>
+                      đ{formatCurrency(props.base_price)}             
+                  </div>
+                  <div className='percent-sale col-6'>
+                      <span>
+                      Giảm {props.discount_percent}%
+                      </span>                    
+                  </div> 
+                </div>                               
               </div>
           </CardContent>
         </CardActionArea>       

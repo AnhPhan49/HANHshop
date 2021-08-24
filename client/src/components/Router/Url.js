@@ -23,7 +23,7 @@ class Url extends Component {
                 <Route path="/contact"  component={Contact}/>
                 <Route path="/booked"  component={Booked}/>
                 <Route path="/receipt"  component={Receipt}/>
-                <Route path="/detail"  component={Detail}/>            
+                <Route path="/detail/:id"  component={Detail}/>            
             </div>
         );
     }
