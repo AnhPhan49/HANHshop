@@ -15,11 +15,11 @@ const Header = (props) => {
             <div className='header row'>
                 <div className='hd-left row col-8'>
                     <div className='header-item col-4'>
-                        <GrMail size='18px' color='black'></GrMail>
+                        <GrMail size='16px' color='black'></GrMail>
                         <span className=''>something@gmail.com</span>
                     </div>
                     <div className='header-item col-8'>
-                        <FaPhoneAlt size='18px' color='black'></FaPhoneAlt>
+                        <FaPhoneAlt size='16px' color='black'></FaPhoneAlt>
                         <span>+123456</span>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ const Header = (props) => {
                         </span>
                     </div>
                     <div className='header-item col-6'>
-                        <FaUserAlt className='user-icon' size='18px'></FaUserAlt>
+                        <FaUserAlt className='user-icon' size='16px'></FaUserAlt>
                         <span onClick={() => history.push('/login')}>Đăng nhập</span>
                     </div>
                 </div>                

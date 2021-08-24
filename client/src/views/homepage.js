@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
-
 import BannerItem from '../components/Banner/banner-item'
 import SaleItemCard from '../components/sale-item-card'
 import CategoryCard from '../components/category-card'
 import Carousel from 'react-material-ui-carousel'
 import {FcNext, FcPrevious} from 'react-icons/fc'
 import ShopApi from '../apis/shopApis'
+
 import {Link} from 'react-router-dom'
 
 var items = [
@@ -126,7 +126,9 @@ const Homepage = (props) => {
                         {
                             saleProduct && saleProduct.map((item, i) =>
                             <div className='col-lg-2 col-md-3 mt-3'>
-                                <SaleItemCard key={i} img_src={item.image[0].url} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
+                                <Link to={`/detail/${item._id}`}>
+                                    <SaleItemCard key={i} img_src={item.image[0].url} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
+                                </Link>                                
                             </div>)
                         }
                     </div>

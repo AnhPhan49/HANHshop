@@ -6,8 +6,9 @@ body {
 }
 
 .header {
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
+  margin: 0;
 }
 .row {
  margin-right :0px !important;
@@ -20,7 +21,7 @@ body {
 }
 
 .header .hd-right .header-item img {
-  height: 18px;
+  height: 16px;
   width: auto;
 }
 
@@ -32,7 +33,7 @@ body {
 
 .header .header-item span {
   margin-left: 10px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .header .header-item {  
@@ -318,8 +319,9 @@ body {
 	color: white;
 }
 
-.sale-item-card .title {	
-	font-size: 1.4rem;
+.sale-item-card .title {
+	height: 40px;	
+	font-size: 1.5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
@@ -330,11 +332,16 @@ body {
 .sale-item-card .sale-price {
 	font-size: 1.6rem;
 	font-weight: 700;
+	margin-top: 2px;
 	color: rgba(203,44,49,255);
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 1; /* number of lines to show */
 	-webkit-box-orient: vertical;
+}
+
+.sale-item-card .percent-sale {
+	text-align: right;
 }
 
 .sale-item-card .percent-sale span {
@@ -345,10 +352,12 @@ body {
 	font-weight: 700;
 }
 
-/* .sale-item-card .base-price {
+.sale-item-card .base-price {
 	color: gray;
+	font-size: 1.2rem;
+	padding: 4px;
 	text-decoration: line-through;
-} */
+}
 
 .category-card {
 	border: 1px solid lightgray;

@@ -15,8 +15,7 @@ const useStyles = makeStyles((theme) => ({
           marginTop :'45px',
           marginLeft :'35px',
           fontSize: '1.5rem',
-          transform: 'translate(0, -21.5px) scale(1.5)',
-         
+          transform: 'translate(0, -21.5px) scale(1.5)',         
         },
       },
     formControl: {
@@ -93,9 +92,7 @@ const useStyles = makeStyles((theme) => ({
                 isNumericString
             />
         );
-  }
-
-  
+    }
 
 const ProductModal = forwardRef((props, ref) => {
     const classes = useStyles();
@@ -112,11 +109,11 @@ const ProductModal = forwardRef((props, ref) => {
   
     const handleCloseModal = () => {
         setOpen(false)
-     
     }
     const demo=()=>{
       if(props.status===true){
-          return( <Fade in={open}>
+          return(
+          <Fade in={open}>
             <div className={classes.paper}>                        
                 <div className={classes.paperContainer}>
                     <h4>{props.title}</h4>
@@ -194,7 +191,7 @@ const ProductModal = forwardRef((props, ref) => {
                 }}
                 onChange={(e) => setEditProducer(e.target.value)}
                 />
-        </FormGroup>                           */}
+        </FormGroup> */}
                         <FormGroup className='mt-5'>
                             <Button disabled={buttonstatus} type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
