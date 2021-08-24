@@ -12,7 +12,8 @@ const {
     blockAccount,
     changePasswordAdmin,
     changePassword,
-    updateAccount
+    updateAccount,
+    checkExist
 } = require('../controllers/accountController')
 
 accountRoute.route('/create-manager').post(checkLogin, checkAdmin, createManagerValidator,createManager)
@@ -28,5 +29,7 @@ accountRoute.route('/admin/change-password/:id').put(checkLogin, checkAdmin, cha
 accountRoute.route('/change-password/:id').put(checkLogin, changePassword)
 
 accountRoute.route('/update-account').put(checkLogin, updateAccountValidator, updateAccount)
+
+accountRoute.route('/check-exist').post(checkExist)
 
 module.exports = accountRoute

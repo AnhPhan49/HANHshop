@@ -138,3 +138,17 @@ module.exports.updateAccount = async (req, res) => {
         return res.status(400).json({message: err.message})
     }
 }
+
+module.exports.checkExist = async (req, res) => {
+    try{
+        let {phone} = req.body
+        let flag = false
+        if (!phone) throw new Error("Missing phone number!")
+        let checkExist = await accountModel.findOne({phone: phone})
+        if(checkExist) 
+            flag = true
+        return res.status(200).json({message: "Check data success", data: {exist: flag}})
+    } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+}
