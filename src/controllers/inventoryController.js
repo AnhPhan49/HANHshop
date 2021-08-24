@@ -8,6 +8,7 @@ module.exports.updateInventory = async (req, res) =>{
         let {count, producer} = req.body
         if (!id) throw new Error("Không tìm thấy ID")
         if (!producer && count > 0) throw new Error ("Vui lòng nhập nhà cung cấp")
+        if(count === 0) throw new Error("Vui lòng nhập số lượng lớn hơn 0")
         let updateInven = await inventoryModel.findById(id)
         let totalRemain = updateInven.total + count
 
