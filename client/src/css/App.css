@@ -286,8 +286,8 @@ body {
   }
   
 .homepage .homepage-body {
-	margin-right: 8%;
-	margin-left: 8%;	
+	margin-right: 4%;
+	margin-left: 4%;	
 }
 
 .homepage-body .sale-section .sale-control{
@@ -318,26 +318,8 @@ body {
 	color: white;
 }
 
-.sale-item-card {
-	border: 1px solid lightgray;
-	border-radius: 15px;
-}
-
-.sale-item-card:hover {
-	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-	cursor: pointer;
-}
-
-.sale-item-card img {
-	width: 100%;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-}
-
 .sale-item-card .title {	
 	font-size: 1.4rem;
-	font-weight: 700;
-	margin: 4px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
@@ -346,23 +328,27 @@ body {
 }
 
 .sale-item-card .sale-price {
-	margin: 4px;
-	font-size: 1.8rem;
+	font-size: 1.6rem;
 	font-weight: 700;
 	color: rgba(203,44,49,255);
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1; /* number of lines to show */
+	-webkit-box-orient: vertical;
 }
 
-.sale-item-card .sale-price span{
-	margin-left: 4px;
-	color: black;
-	font-size: small;
+.sale-item-card .percent-sale span {
+	background-color: rgb(246, 145, 19);
+	color: white;
+	padding: 2px;
+	font-size: 1rem;
+	font-weight: 700;
 }
 
-.sale-item-card .base-price {
+/* .sale-item-card .base-price {
 	color: gray;
 	text-decoration: line-through;
-	margin: 5px;
-}
+} */
 
 .category-card {
 	border: 1px solid lightgray;

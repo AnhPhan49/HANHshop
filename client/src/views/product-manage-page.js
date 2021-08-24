@@ -74,7 +74,7 @@ const ProductManagePage = () => {
 
     const formatCurrency = (price) => {
         return price.toLocaleString('it-IT');                
-    }    
+    }
 
     const handleOpenAddModal = () => {
         setModalTitle('Add product')

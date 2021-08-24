@@ -94,6 +94,11 @@ const ProductModal = forwardRef((props, ref) => {
     };
 
     const handleCloseModal = () => {
+        resetModalInput()
+        props.handleCloseModal()
+    }
+
+    const resetModalInput = () => {
         setPreviewFile([])
         setFile([])
         setName('')
@@ -102,7 +107,6 @@ const ProductModal = forwardRef((props, ref) => {
         setDesc('')
         setCategory('')
         setStatus('N/A')
-        props.handleCloseModal()
     }
 
     const handleSubmitForm = async (e) => {
@@ -136,8 +140,8 @@ const ProductModal = forwardRef((props, ref) => {
         } catch(e) {
             console.log(e)
         }
-        setSubmitButtonState(false)
-        // handleCloseModal()
+        setSubmitButtonState(false)        
+        resetModalInput()
         props.reloadNewData()
     }
 
@@ -233,6 +237,7 @@ const ProductModal = forwardRef((props, ref) => {
                                             }
                                         }}
                                         value={price}
+                                        onWheel={(e) => e.target.blur()}
                                         onChange={(e) => { setPrice(e.target.value)                                                                                    
                                         }}
                                         InputProps={{
@@ -291,6 +296,7 @@ const ProductModal = forwardRef((props, ref) => {
                                         onChange={(e) => {                                            
                                             setSaleTag(e.target.value)                                                                    
                                         }}
+                                        onWheel={(e) => e.target.blur()}
                                         InputProps={{
                                             classes: {
                                                 input: classes.resize,

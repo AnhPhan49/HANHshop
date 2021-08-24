@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import SaleItemCard from '../sale-item-card'
+
 var sale_items = [
     {
         img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
@@ -88,15 +89,12 @@ const Product = (props) => {
                             <div>
                             Đang Giảm Giá
                             </div>                            
-                        </div>                      
-                        <div className='col-6'>
-                            <button type='button'>Xem toàn bộ sản phẩm</button>
-                        </div>                                                          
+                        </div>                                                                              
                     </div>
                     <div className='row sale-items mt-3'>
                         {
                             sale_items.map((item, i) =>
-                            <div className='col-lg-2 col-md-3 mt-4'>
+                            <div className='col-lg-3 col-md-4 mt-4'>
                                 <SaleItemCard key={i} img_src={item.img} title={item.title} sale_price={item.sale_price} base_price={item.base_price} discount_percent={item.discount_percent}></SaleItemCard>
                             </div>)
                         }  
