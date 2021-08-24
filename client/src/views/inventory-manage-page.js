@@ -9,7 +9,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import AdminApi from '../apis/adminApis'
 import ReactBnbGallery from 'react-bnb-gallery';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import InventoryModal from '../components/inventory-model'
+import InventoryModal from '../components/inventory-modal'
 
 const ProductManagePage = (props) => {
     const childRef = useRef();  

@@ -23,12 +23,11 @@ import { AiFillSetting } from 'react-icons/ai'
 import { BsFillInboxesFill, BsFillInboxFill } from 'react-icons/bs'
 
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {userlogoutsuccess, savecurrentuserdata} from '../reducers/userReducer'
+import {userlogoutsuccess} from '../reducers/userReducer'
 import clsx from 'clsx';
-import AdminApi from '../apis/adminApis'
 
 import CategoryManagePage from './category-manage-page'
 import ProductManagePage from './product-manage-page'
@@ -37,19 +36,34 @@ import AccountManagePage from './account-manage-page'
 
 const drawerWidth = 240;
 
-const AdminPage = (props) => {
+const AdminPage = () => {
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector((state) => state.user.user)
     const [open, setOpen] = useState(false);
     const [view, setView] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [currentSidebar, setCurrentSidebar] = useState()
+    const [currentSidebar, setCurrentSidebar] = useState()    
 
     useEffect(() => {
-      getCurrentUser()
+      if(user.role === 'admin') {        
+        setCurrentSidebar(AdminSidebar)
+      }
+      else {
+        setCurrentSidebar(ManagerSidebar)
+      }
     }, [])
+    
+    useEffect(() => {
+      if(user.role === 'admin') {        
+        setCurrentSidebar(AdminSidebar)
+      }
+      else {
+        setCurrentSidebar(ManagerSidebar)
+      }
+    }, [view])
 
     var AdminSidebar = [
       {
@@ -85,23 +99,6 @@ const AdminPage = (props) => {
           icon: <IoReceiptSharp size='24px' color={view===3?'rgba(0,204,255,255)':''}></IoReceiptSharp>
       }
     ]
-
-  const getCurrentUser = async () => {
-    try {
-      const res = await AdminApi.getCurrentUser();      
-      if (res.status === 200) {
-        dispatch(savecurrentuserdata(res.data))
-        if(res.data.role === 'admin') {        
-          setCurrentSidebar(AdminSidebar)
-        }
-        else {
-          setCurrentSidebar(ManagerSidebar)
-        }
-      }
-    } catch(e) {
-      console.log(e)
-    }
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true);

@@ -84,12 +84,12 @@ const AccountManagePage = () => {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    indicatorColor="primary"
+                    indicatorColor=""
                     textColor="primary"
                     centered
                 >
-                    <Tab label={<h5>Khách hàng</h5>} {...a11yProps(0)} />
-                    <Tab label={<h5>Quản lý</h5>} {...a11yProps(1)} />
+                    <Tab label={<h4>Khách hàng</h4>} {...a11yProps(0)} />
+                    <Tab label={<h4>Quản lý</h4>} {...a11yProps(1)} />
                 </Tabs>
                 </AppBar>
                 <SwipeableViews

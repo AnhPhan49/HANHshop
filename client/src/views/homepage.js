@@ -6,6 +6,7 @@ import CategoryCard from '../components/category-card'
 import Carousel from 'react-material-ui-carousel'
 import {FcNext, FcPrevious} from 'react-icons/fc'
 import ShopApi from '../apis/shopApis'
+import {Link} from 'react-router-dom'
 
 var items = [
     {
@@ -114,15 +115,17 @@ const Homepage = (props) => {
                             <div>
                             Đang bán
                             </div>                            
-                        </div>                      
+                        </div>             
                         <div className='col-6'>
-                            <button type='button'>Mua toàn bộ sản phẩm</button>
+                            <Link to='/discount'>
+                                <button type='button'>Xem tất cả sản phẩm</button>
+                            </Link>                            
                         </div>                                                          
                     </div>
-                    <div className='row sale-items mt-3'>
+                    <div className='row sale-items'>
                         {
                             saleProduct && saleProduct.map((item, i) =>
-                            <div className='col-lg-2 col-md-3'>
+                            <div className='col-lg-2 col-md-3 mt-3'>
                                 <SaleItemCard key={i} img_src={item.image[0].url} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
                             </div>)
                         }
@@ -132,7 +135,7 @@ const Homepage = (props) => {
                     <h3>
                         Danh sách mặt hàng
                     </h3>
-                    <div className='row category-list'>
+                    <div className='row category-list m-0'>
                         {
                             category.map((item, i) => 
                             <div className='col-lg-2 col-md-3 mb-4'>
