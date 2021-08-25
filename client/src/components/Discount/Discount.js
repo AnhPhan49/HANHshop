@@ -1,70 +1,35 @@
-import React, {useEffect} from 'react'
-
-
+import React, {useEffect, useState} from 'react'
 import SaleItemCard from '../sale-item-card'
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button';
+import ShopApi from '../../apis/shopApis'
+import alert from '../../utils/alert'
 
+const Discount = () => {
+    const [saleProduct, setSaleProduct] = useState([])    
+    const [page, setPage] = useState(1)
 
+    useEffect(() => {
+        getSaleProductList(1)
+    }, [])
 
-
-var sale_items = [
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-    {
-        img:'https://cbu01.alicdn.com/img/ibank/O1CN01kEAcoj1cpHusIuLsR_!!2211230903649-0-cib.jpg',
-        title:'Thảm trải dài chống trượt không đường khâu vá Mingde xốp',
-        sale_price:'2.000 đ',
-        base_price:'30.000 đ',
-        discount_percent: '30%'
-    },
-]
-
-
-
-const Discount = (props) => {
+    const getSaleProductList = async (page) => {
+        try {
+            const res = await ShopApi.getHomePageHotProductData(page, "Sale")                 
+            if(res.status === 200) {
+                setPage(page)
+                setSaleProduct(...saleProduct, res.data.product)
+            }
+            if(res.status === 201) {
+                alert({icon:'error', title: res.message})
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
     return(
         <div className='homepage'>
-           
-          
             <div className='homepage-body mt-2'>
                 <div className='sale-section'>
                     <h3>
@@ -77,18 +42,21 @@ const Discount = (props) => {
                             </div>                            
                         </div>                                                                                
                     </div>
-                    <div className='row sale-items mt-3'>
+                    <div className='row sale-items m-0'>
                         {
-                            sale_items.map((item, i) =>
-                            <div className='col-lg-2 col-md-3 mt-4'>
-                                <SaleItemCard key={i} img_src={item.img} title={item.title} sale_price={item.sale_price} base_price={item.base_price} discount_percent={item.discount_percent}></SaleItemCard>
+                            saleProduct && saleProduct.map((item, i) =>
+                            <div className='col-lg-2 col-md-3 mt-3' key={i}>
+                                <Link to={`/detail/${item._id}`}>
+                                    <SaleItemCard img_src={item.image} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
+                                </Link>                                
                             </div>)
-                        }  
+                        }
                     </div>
-                </div>
-                      
-            </div>
-         
+                    <div className='text-center mt-5'>
+                        <Button variant="outlined" style={{fontSize: '1.4rem'}} onClick={() => getSaleProductList(page+1)}>Xem thêm</Button>
+                    </div>
+                </div>                      
+            </div>         
         </div>
     )
 }

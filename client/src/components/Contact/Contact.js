@@ -52,14 +52,14 @@ class Contact extends Component {
           <div className="section group">
             <div className="col span_1_of_3">
             <div className="contact_info">
-                <h3>Find Us Here</h3>
+                <h3>Địa chỉ</h3>
                 <div className="map">
                   <iframe width="100%" height={175} frameBorder={0} scrolling="no" marginHeight={0} marginWidth={0} src="https://maps.google.co.in/maps?f=q&source=s_q&hl=en&geocode=&q=Lighthouse+Point,+FL,+United+States&aq=4&oq=light&sll=26.275636,-80.087265&sspn=0.04941,0.104628&ie=UTF8&hq=&hnear=Lighthouse+Point,+Broward,+Florida,+United+States&t=m&z=14&ll=26.275636,-80.087265&output=embed" /><br /><small><a href="https://maps.google.co.in/maps?f=q&source=embed&hl=en&geocode=&q=Lighthouse+Point,+FL,+United+States&aq=4&oq=light&sll=26.275636,-80.087265&sspn=0.04941,0.104628&ie=UTF8&hq=&hnear=Lighthouse+Point,+Broward,+Florida,+United+States&t=m&z=14&ll=26.275636,-80.087265" style={{color: '#666', textAlign: 'left', fontSize: '12px'}}>View Larger Map</a></small>
                 </div>
               </div>
 
               <div className="company_address">
-                <h3>Company Information :</h3>
+                <h3>Địa chỉ liên hệ :</h3>
                 <p>500 Lorem Ipsum Dolor Sit,</p>
                 <p>22-56-2-9 Sit Amet, Lorem,</p>
                 <p>USA</p>
@@ -72,10 +72,10 @@ class Contact extends Component {
             </div>
             <div className="col span_2_of_3">
             <div className="contact-form">
-                <h2>Contact Us</h2>
+                <h2>Liên hệ với chúng tôi</h2>
                 <form method="post" action="contact-post.html">
                   <div>
-                    <span><label>Name</label></span>
+                    <span><label>Tên</label></span>
                     <span><input name="userName"  required type="text" onChange={(event)=> this.isChange(event)} className="textbox" data-validation-required-message="Please enter your name."/></span>
                   </div>
                   <div>
@@ -84,7 +84,7 @@ class Contact extends Component {
                   </div>
                  
                   <div>
-                    <span><label>Subject</label></span>
+                    <span><label>Nội dung</label></span>
                     <span><textarea name="userMsg"onChange={(event)=> this.isChange(event)} defaultValue={" "} /></span>
                   </div>
                   <div>

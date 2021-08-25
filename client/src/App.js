@@ -28,11 +28,13 @@ function App() {
             <PrivateRoute path="/admin">
               <AdminPage />
             </PrivateRoute>
-            <Route>              
-              <Header />
-              <NavBar/>
-              <Url/>
-              <Footer/>              
+            <Route>
+              <div className='App'> 
+                <Header />
+                <NavBar/>
+                <Url/>
+                <Footer/> 
+              </div>                                      
             </Route>
           </Switch>      
       </Router>

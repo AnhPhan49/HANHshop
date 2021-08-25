@@ -930,21 +930,26 @@ p.note{
 }
 .span_3_of_2  h2 {
 	font-family: 'Monda', sans-serif;
-	font-size:1.1em;
+	font-size:1.6em;
 	color: #CC3636;
 	font-weight : normal;
 	margin-top: 0px;
 	text-transform:uppercase;
 }
+
+.span_3_of_2 span {
+	font-size: 1.7rem;
+}
+
 .span_3_of_2  p{
 	font-size:0.8125em;
-	padding:0.3em 0;
+	padding: 0.3em 0;
 	color:#969696;
 	line-height: 1.6em;
 	font-family : verdana, arial, helvetica, helve, sans-serif; 	
 }
 .price p{
-	font-size:0.8125em;
+	font-size: 1.4rem;
 	padding:1.5% 1%;
 	color: #666;
 	vertical-align:top;
@@ -1092,9 +1097,10 @@ p.note{
 	    border: 1px solid #303030;
         background: #525252; 
         text-decoration:none;
+		cursor: pointer;
 }
 .span_3_of_1 li a{
-	font-size:0.8125em;
+	font-size: 1.4rem;
 	padding:0.42em 8%;
 	color: #666;
 	display: block;

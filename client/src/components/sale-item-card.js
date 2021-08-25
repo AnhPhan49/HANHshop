@@ -32,13 +32,13 @@ const SaleItemCard = (props) => {
                   props.discount_percent ? (
                     <div className='row m-0'>
                       <div className='base-price col-6'>
-                          đ{formatCurrency(props.base_price)}             
+                          đ{formatCurrency(props.base_price)}
                       </div>
                       <div className='percent-sale col-6'>
                             <span>
                               Giảm {props.discount_percent}%
-                            </span>                                                               
-                      </div> 
+                            </span>                                            
+                      </div>
                     </div>):(
                       <></>
                     )

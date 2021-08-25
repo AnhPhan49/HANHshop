@@ -76,7 +76,7 @@ var category = [
     }
 ]
 
-const Homepage = (props) => {
+const Homepage = () => {
     const [saleProduct, setSaleProduct] = useState([])
 
     useEffect(() => {
@@ -85,8 +85,7 @@ const Homepage = (props) => {
 
     const getSaleProductList = async () => {
         try {
-            const res = await ShopApi.getHomePageHotProductData(1, "Sale")
-            console.log(res)
+            const res = await ShopApi.getHomePageHotProductData(1, "Sale")            
             if(res.status === 200) {
                 setSaleProduct(res.data.product)
             }
@@ -125,9 +124,9 @@ const Homepage = (props) => {
                     <div className='row sale-items m-0'>
                         {
                             saleProduct && saleProduct.map((item, i) =>
-                            <div className='col-lg-2 col-md-3 mt-3'>
+                            <div className='col-lg-2 col-md-3 mt-3' key={i}>
                                 <Link to={`/detail/${item._id}`}>
-                                    <SaleItemCard key={i} img_src={item.image} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
+                                    <SaleItemCard img_src={item.image} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
                                 </Link>                                
                             </div>)
                         }

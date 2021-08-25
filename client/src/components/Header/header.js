@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { GrMail } from 'react-icons/gr'
 import {FaPhoneAlt, FaUserAlt} from 'react-icons/fa'
 import vnflag from '../../assets/flag-2.jpg'
@@ -6,10 +6,18 @@ import {BsSearch} from 'react-icons/bs'
 import {AiOutlineHeart, AiOutlineShoppingCart} from 'react-icons/ai'
 import { Badge } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Header = (props) => {
     const history = useHistory()
+    const user = useSelector(state => state.user.user)
+    const [curruser, setCurrUser] = useState()
     
+    useEffect(() => {
+        setCurrUser(user)
+        console.log(user)
+    }, [user])
+
     return(
         <div>
             <div className='header row'>
@@ -32,7 +40,15 @@ const Header = (props) => {
                     </div>
                     <div className='header-item col-6'>
                         <FaUserAlt className='user-icon' size='16px'></FaUserAlt>
-                        <span onClick={() => history.push('/login')}>Đăng nhập</span>
+                        {
+                            curruser?(
+                                <span onClick={() => history.push('/login')}>
+                                    {curruser.lastname + " " + curruser.firstname}
+                                </span>
+                            ):(
+                                <span onClick={() => history.push('/login')}>Đăng nhập</span>
+                            )
+                        }                        
                     </div>
                 </div>                
             </div>
