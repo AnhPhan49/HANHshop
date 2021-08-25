@@ -79,6 +79,7 @@ module.exports.registerController = async (req, res) =>{
     
         let newCart = new cartModel({
             customer: account._id,
+            product:[]
         })
         newCart.save()
         res.status(200).json({message:"Register success."})
