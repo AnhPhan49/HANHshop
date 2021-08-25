@@ -61,6 +61,7 @@ const Detail = (props) => {
   const getProduct = async () => {
     try {
       const res = await ShopApi.getProductDetail(id);
+      console.log(res)
       if (res.status === 200) {
         setProduct(res.data);
       }
