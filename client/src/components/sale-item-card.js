@@ -4,24 +4,21 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 
 const SaleItemCard = (props) => {
     const classes = useStyles();
 
     const formatCurrency = (price) => {
-        return price.toLocaleString('it-IT');                
+      return price.toLocaleString('it-IT');                
     }
 
     return(
         <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
+            component="img"            
             height="180"
-            image={props.img_src}
-            title="Contemplative Reptile"
+            image={props.img_src[0]?props.img_src[0].url:''}            
           />
           <CardContent>
               <div className='sale-item-card'>
@@ -29,18 +26,23 @@ const SaleItemCard = (props) => {
                     {props.title}
                 </div>
                 <div className='sale-price'>
-                    đ{formatCurrency(props.sale_price)}                  
+                    đ{props.sale_price?formatCurrency(props.sale_price):formatCurrency(props.base_price)}                  
                 </div>
-                <div className='row m-0'>
-                  <div className='base-price col-6'>
-                      đ{formatCurrency(props.base_price)}             
-                  </div>
-                  <div className='percent-sale col-6'>
-                      <span>
-                      Giảm {props.discount_percent}%
-                      </span>                    
-                  </div> 
-                </div>                               
+                {
+                  props.discount_percent ? (
+                    <div className='row m-0'>
+                      <div className='base-price col-6'>
+                          đ{formatCurrency(props.base_price)}             
+                      </div>
+                      <div className='percent-sale col-6'>
+                            <span>
+                              Giảm {props.discount_percent}%
+                            </span>                                                               
+                      </div> 
+                    </div>):(
+                      <></>
+                    )
+                }                               
               </div>
           </CardContent>
         </CardActionArea>       
@@ -52,7 +54,7 @@ const useStyles = makeStyles({
   root: {
     maxWidth: '100%',
     borderRadius:'10px',
-    height: '100%',    
+    height: 290,    
   },
 });
 
