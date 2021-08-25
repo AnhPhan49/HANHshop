@@ -25,6 +25,6 @@ productRoute.route("/search").get(search);
 
 productRoute.route("/delete/:id").delete(checkLogin, checkAdmin, deleteProduct);
 
-productRoute.route("/get/:id").get(checkLogin, getProduct);
+productRoute.route("/get/:id").get(getProduct);
 
 module.exports = productRoute;
