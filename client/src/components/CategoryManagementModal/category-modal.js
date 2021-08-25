@@ -48,7 +48,7 @@ const CategoryEditModal = (props) => {
         props.closeModalHandler()
         return 
     }
-    
+    console.log(props.modalEditFilter);
     return(
         <div className='category-modal'>
             <h4>{props.title}</h4>

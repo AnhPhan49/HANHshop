@@ -123,10 +123,10 @@ const ProductManagePage = () => {
 
     const pageChange = (event, page) => {
         setPage(page)
-        if (searchTemplate.product || searchTemplate.categoryId !== 'n/a') {            
-            handleSearch(page)
-            return;
-        }
+        // if (searchTemplate.product || searchTemplate.categoryId !== 'n/a') {            
+        //     handleSearch(page)
+        //     return;
+        // }
         getProductList(page)
     }
 

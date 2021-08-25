@@ -18,7 +18,7 @@ import Header from './components/Header/header'
 import NavBar from './components/Nav/navbar';
 import Footer from './components/Footer/Footer';
 import Url from'./components/Router/Url'
-
+import Register from './components/Login/Register';
 function App() {
   return (
     <Provider store={store}>
@@ -27,10 +27,14 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
+            <Route path="/register">
+              <Register/>
+            </Route>
             <PrivateRoute path="/admin">
               <AdminPage />
             </PrivateRoute>
             <Route>
+           
               <div className="App">
                 <Header />
                 <NavBar/>

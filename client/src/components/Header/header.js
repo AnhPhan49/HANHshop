@@ -32,7 +32,7 @@ const Header = (props) => {
                     </div>
                     <div className='header-item col-6'>
                         <FaUserAlt className='user-icon' size='18px'></FaUserAlt>
-                        <span onClick={() => history.push('/login')}>Đăng nhập</span>
+                        <span onClick={() => history.push('/register')}>Đăng nhập</span>
                     </div>
                 </div>                
             </div>

@@ -7,6 +7,7 @@ import Modal from '@material-ui/core/Modal';
 import AdminApi from '../apis/adminApis'
 import alert from '../utils/alert'
 import NumberFormat from 'react-number-format';
+import SaleItemCard from '../components/sale-item-card'
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -49,9 +50,18 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 300,
         // overflowY:'scroll'
     },
+    papernew: {
+        backgroundColor: theme.palette.background.paper,      
+        boxShadow: theme.shadows[5],        
+         
+        marginTop :'5px',     
+        height: 650,
+        minWidth: 440,
+        // overflowY:'scroll'
+    },
     paperContainer: {
         padding: theme.spacing(5, 5, 5),
-        fontSize: '23px'
+        fontSize: '22px'
     },
     imageWrapper: {
         flexWrap: 'wrap',
@@ -102,10 +112,13 @@ const ProductModal = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false)    
     const [editNumber, setEditNumber] = useState()
     const [editProducer, setEditProducer] = useState()
-    const[buttonstatus,setstatus]=useState(false);
+    const [historyProduct, setHistoryProduct] = useState([])
+    const [buttonstatus, setstatus]=useState(false);
+    const [n1, setN1] = useState([])
     useImperativeHandle(ref, () => ({
         handleOpenModal(){
             setOpen(true)
+            getProductList()
         },        
     }));
  
@@ -114,8 +127,96 @@ const ProductModal = forwardRef((props, ref) => {
         setOpen(false)
      
     }
+    const clearInput=()=>{
+        setEditNumber();
+        setEditProducer();
+    }
+    useEffect(() => {
+        // console.log(props.page)
+        getProductList()
+    
+    }, [])
+
+
+    const getProductList = async () => {
+        try {
+            // if(props.all==true){
+                // console.log(props.page);
+                // console.log(props.modalEditFilter);
+                const res = await AdminApi.getHistoryInventory(props.page,props.modalEditFilter)
+                console.log(res)
+                if(res.status === 200) {
+                    console.log(res.data.list)
+                    setHistoryProduct(res.data.list)
+                }
+                
+            
+           
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    const am=()=>{
+        historyProduct.forEach((item, index) => {
+            if(item.total_add<=0){
+                
+                // console.log(Number(item.total_add));
+                setN1(Number(item.total_add))
+            }
+            // else if(item.total_add>0){
+            //     console.log(item.total_add);
+            // }
+            // console.log(item)
+            
+        })
+    }
     const demo=()=>{
-      if(props.status==true){
+        {am()}
+        if(props.all==true){
+         
+            return(
+                <Fade in={open}>
+            <div className={classes.papernew}>                        
+                <div className={classes.paperContainer}>
+                    <h4>{props.title}</h4>
+                
+                    
+                    <div className="col">
+                    <table className="table table-striped table-inverse table-hover ">
+                      <thead className="thead-inverse">
+                        <tr>
+                          <th>Stt</th>
+                          <th>Total_current</th>
+                          <th>Total_add</th>
+                          <th>Producer</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+            { historyProduct && historyProduct.map((item, i) =>
+                      <tr>
+            <td>{i+1}</td>
+            <td >{item.total_current}</td>
+            <td>{item.total_add} </td>
+            <td>{item.producer}</td> 
+           
+          
+          </tr>
+          )}
+                      </tbody>
+                    </table>
+                  </div>
+                 
+                  </div>
+            </div>
+        </Fade>     
+            
+            )
+         
+        }
+    if(props.all==false){
+      if(props.status===true){
           return( <Fade in={open}>
             <div className={classes.paper}>                        
                 <div className={classes.paperContainer}>
@@ -137,7 +238,7 @@ const ProductModal = forwardRef((props, ref) => {
         </FormGroup>   
         </div>                        
                 <FormGroup className='mt-5'>
-                            <Button type='submit' variant="contained" color="primary" id='material-button-label'>
+                            <Button disabled={buttonstatus} type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
                             </Button>
                         </FormGroup>
@@ -182,21 +283,9 @@ const ProductModal = forwardRef((props, ref) => {
         
         
         </div>
-        {/* <FormGroup>
-            <TextField
-                id="standard-basic"
-                label="Nhà Cung Cấp"
-                value={editProducer}
-                InputLabelProps={{
-                    classes: {
-                      root: classes.labelRoot,                              
-                    }
-                }}
-                onChange={(e) => setEditProducer(e.target.value)}
-                />
-        </FormGroup>                           */}
-                <FormGroup className='mt-5'>
-                            <Button type='submit' variant="contained" color="primary" id='material-button-label'>
+        
+                        <FormGroup className='mt-5'>
+                            <Button disabled={buttonstatus} type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
                             </Button>
                         </FormGroup>
@@ -207,10 +296,11 @@ const ProductModal = forwardRef((props, ref) => {
             )
       }
     }
+    }
     
     const handleSubmitFormImport = async(e) => {
        try{
-
+            setstatus(true)
             e.preventDefault();
           
                 let formData = {
@@ -228,7 +318,8 @@ const ProductModal = forwardRef((props, ref) => {
                 console.log(res);
             }          
             if(res.status === 200) {              
-                alert({icon : 'success',title : 'Updated', msg : res.message})                                                    
+                alert({icon : 'success',title : 'Updated', msg : res.message})      
+                clearInput();                                              
             } 
        
                  
@@ -237,19 +328,20 @@ const ProductModal = forwardRef((props, ref) => {
             console.log(e)
         }
         setOpen(false)
+        setstatus(false)
         props.reloadNewData()
         return 
 
     }
     const handleSubmitFormExport = async(e) => {
         try{
- 
-             e.preventDefault();
+            setstatus(true)
+            e.preventDefault();
             
-                 let formData = {
+                let formData = {
                     "count":Number(editNumber)*-1
-                 }
-                 console.log(formData)
+                }
+                console.log(formData)
              
            
              let res = null
@@ -259,7 +351,8 @@ const ProductModal = forwardRef((props, ref) => {
                  console.log(res);
              }          
              if(res.status === 200) {              
-                 alert({icon : 'success',title : 'Updated', msg : res.message})                                                    
+                 alert({icon : 'success',title : 'Updated', msg : res.message})   
+                 clearInput();                                                 
              } 
          }
                   
@@ -268,14 +361,16 @@ const ProductModal = forwardRef((props, ref) => {
              console.log(e)
          }
          setOpen(false)
+         setstatus(false)
          props.reloadNewData()
          return 
  
      }
     
+//    console.log(n1)
+// console.log(historyProduct);
 
-// console.log(props.modalEditFilter.total);
-// console.log(Number(editNumber));
+
     return(
         <div className='product-modal'>    
         
@@ -292,6 +387,7 @@ const ProductModal = forwardRef((props, ref) => {
                 }}
             >
                  {demo()} 
+                
               
             </Modal>
         </div>

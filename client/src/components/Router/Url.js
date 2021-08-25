@@ -12,6 +12,7 @@ import Product from '../Product/Product';
 import Booked from '../Receipt/Booked'
 import Receipt from '../Receipt/Receipt'
 import Detail from '../Product/Detail'
+
 class Url extends Component {
     render() {
         return (
@@ -23,7 +24,8 @@ class Url extends Component {
                 <Route path="/contact"  component={Contact}/>
                 <Route path="/booked"  component={Booked}/>
                 <Route path="/receipt"  component={Receipt}/>
-                <Route path="/detail"  component={Detail}/>                
+                <Route path="/detail"  component={Detail}/>       
+                        
             </div>
         );
     }

@@ -3,7 +3,7 @@ article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, s
 ol,ul{list-style:none;margin:0;padding:0;}
 blockquote,q{quotes:none;}
 blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
-table{border-collapse:collapse;border-spacing:0;}
+table{border-collapse: collapse !important;border-spacing: 0 !important;}
 /* start editing from here */
 a{text-decoration:none;}
 .txt-rt{text-align:right;}/* text align right */
@@ -179,27 +179,28 @@ input[type="number"] {
 	font-size: 22px;
 	color: #6C6C6C;
 	font-family: 'Monda', sans-serif;
-	padding-bottom:.4em;
+	padding-bottom: 0.4em;
 }
 .register_account {
   background: #fff none repeat scroll 0 0;
   border: 1px solid #c0bebe;
   border-radius: 3px;
   float: left;
-  height: 284px;
-  padding: 20px;
-  width: 712px;
+  height: 385px;
+  padding-left: 25px;
+  padding-right: 30px;
+  width: 783px;
 }
 .register_account form input[type="text"],.register_account form select{
 	font-size:12px;
+	margin-top: !important;
 	color:#B3B1B1;
 	padding:8px;
 	outline:none;
 	margin:5px 0;
-	width:340px;
+	width: 340px !important;
 }
 .register_account form select{
-	width:360px;
 	color:#666;
 }
 .register_account form input[type="text"].code{
@@ -210,6 +211,8 @@ input[type="number"] {
 }
 .register_account table td{
 	width:100%;
+	padding-top: 25px;
+	padding-left: 13px;
 }
 .register_account p{
 	font-size:12px;
@@ -217,7 +220,7 @@ input[type="number"] {
 }
 .search{
 	float:left;
-	margin-top:3px;
+	margin-top: 42px;
 }
 
 .login_panel{
@@ -227,7 +230,9 @@ input[type="number"] {
 	padding:20px;
 	background:#FFF;
 	border:1px solid #C0BEBE;
-    -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 .login_panel input[type="text"],.login_panel input[type="password"]{
 	font-size:12px;
@@ -247,7 +252,7 @@ input[type="number"] {
 p.terms{
 	float:left;
 	font-size:12px;
-	padding:15px 0 0 15px;
+	padding: 55px 0 0 15px;
 }
 p.terms a,p.note a{
 	text-decoration:underline;
@@ -1390,7 +1395,8 @@ p.note{
 .cartpage {
   border: 1px solid #ddd;
   overflow: hidden;
-  padding: 10px;
+  margin-left: -200px;
+  margin-right: 45px;
 }
 .cartpage h2 {
   border-bottom: 1px solid #ddd;
@@ -2477,4 +2483,13 @@ p.terms {
 		width:92%;
 		padding:4%;
 	}
+}
+
+
+.contact {
+    margin-left: 0px;
+}
+
+.main {
+    margin-left: 230px;
 }

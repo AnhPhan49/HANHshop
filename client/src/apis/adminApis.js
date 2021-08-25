@@ -22,6 +22,10 @@ const AdminApi = {
         const url = `/api/inventory/update/${id}`;
         return axiosClient.put(url, data)
     },
+    getHistoryInventory(page,id){
+        const url = `/api/inventory/history?page=${page}&id=${id}`;
+        return axiosClient.get(url)
+    },
     // End_Inventory
     getProductList(page) {
         const url = `/api/product/search?page=${page}`

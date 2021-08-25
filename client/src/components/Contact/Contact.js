@@ -47,7 +47,7 @@ class Contact extends Component {
   }
   
     return(
-        <div className="main">
+        <div className="contact">
         <div className="content">
           <div className="section group">
             <div className="col span_1_of_3">
