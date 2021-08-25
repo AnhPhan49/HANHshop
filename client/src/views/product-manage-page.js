@@ -87,9 +87,8 @@ const ProductManagePage = () => {
         setOpen(false)
     }
 
-    const handleCloseModalAfterSave = () => {
-        setPage(1)
-        getProductList(1);
+    const handleCloseModalAfterSave = () => {        
+        getProductList(page);
         checkEditObject()
         setOpen(false)
     }
@@ -112,9 +111,8 @@ const ProductManagePage = () => {
             setBtnState(true)
             const res = await AdminApi.deleteProduct(id);            
             if(res.status === 200) {
-                alert({icon: 'success', title: res.message, msg: 'Xóa sản phẩm thành công'})
-                setPage(1)                
-                getProductList(1)              
+                alert({icon: 'success', title: res.message, msg: 'Xóa sản phẩm thành công'})                              
+                getProductList(page)              
             }
         }
         catch(e) {

@@ -15,7 +15,7 @@ const ProductManagePage = (props) => {
     const childRef = useRef();  
     const [loading, setLoader] = useState(true)    
     const [isOpen, setIsOpen] = useState(false)
-    const[status,setStatus]=useState()
+    const [status,setStatus]=useState()
     const [photoData, setPhotoData] = useState([])   
     const [totalPage, setTotalPage] = useState(1)       
     const [inventoryList, setInventoryList] = useState([])

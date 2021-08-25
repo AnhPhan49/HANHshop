@@ -18,6 +18,7 @@ class Url extends Component {
             <div>                
                 <Route exact path="/"  component={Homepage}/>
                 <Route path="/product"  component={Product}/>
+                <Route path="/category/:id"  component={Product}/>
                 {/* //news voi detail chung duong dan nhung tu new moi ra detail */}
                 <Route path="/discount"  component={Discount}/>
                 <Route path="/contact"  component={Contact}/>

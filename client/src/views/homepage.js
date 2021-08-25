@@ -115,19 +115,19 @@ const Homepage = (props) => {
                             <div>
                             Đang bán
                             </div>                            
-                        </div>             
+                        </div>
                         <div className='col-6'>
                             <Link to='/discount'>
                                 <button type='button'>Xem tất cả sản phẩm</button>
                             </Link>                            
                         </div>                                                          
                     </div>
-                    <div className='row sale-items'>
+                    <div className='row sale-items m-0'>
                         {
                             saleProduct && saleProduct.map((item, i) =>
                             <div className='col-lg-2 col-md-3 mt-3'>
                                 <Link to={`/detail/${item._id}`}>
-                                    <SaleItemCard key={i} img_src={item.image[0].url} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
+                                    <SaleItemCard key={i} img_src={item.image} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
                                 </Link>                                
                             </div>)
                         }

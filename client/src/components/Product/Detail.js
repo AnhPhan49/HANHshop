@@ -15,14 +15,21 @@ const Detail = (props) => {
   const [categoryList, setCategoryList] = useState([]) 
   const [relateProduct, setRelateProduct] = useState([]) 
 
-  useEffect(() => {
-    getProduct(product);
+  useEffect(() => {    
     getCategoryList()    
   }, []);
+
+  useEffect(() => {
+    getProduct()
+  }, [id])
 
   useEffect(() => {    
     getRelateProduct()    
   }, [product]);
+
+  const formatCurrency = (price) => {
+    return price.toLocaleString('it-IT');                
+  }
   
   const getCategoryList = async () => {
         try {
@@ -71,8 +78,7 @@ const Detail = (props) => {
               <div className="grid images_3_of_2">
                 <div id="container">
                   <div id="products_example">
-                    <div id="products">
-                      
+                    <div id="products">                      
                       <Carousel
                           NextIcon={<FcNext size={20}/>}
                           PrevIcon={<FcPrevious size={20}/>}>
@@ -92,7 +98,7 @@ const Detail = (props) => {
            			</span> 
                 <div className="price">
                   <p>
-                    Giá: <span>đ{product && product.price}</span>
+                    Giá: <span>đ{product && formatCurrency(product.price)}</span>
                   </p>
                 </div>
                 <div className="share-desc">
@@ -124,7 +130,7 @@ const Detail = (props) => {
               relateProduct && relateProduct.map((item, i) =>
                 <div className='col-lg-3 col-md-4 mt-3'>
                   <Link to={`/detail/${item._id}`}>
-                    <SaleItemCard key={i} img_src={item.image[0].url} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
+                    <SaleItemCard key={i} img_src={item.image} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
                   </Link>                  
                 </div>)
             }
@@ -135,7 +141,7 @@ const Detail = (props) => {
             <ul>
               {
                 categoryList.map((item, index) => (
-                  <Link key={index}>
+                  <Link key={index} to={`/category/${item._id}`}>
                     <li><a>{item.name}</a></li>
                   </Link>
                 ))
