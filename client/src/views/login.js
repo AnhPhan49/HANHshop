@@ -54,7 +54,7 @@ const Login = (props) => {
         <div >        
             <div>
                 <div className='m-5 col-4'>
-                    <h3>Login</h3>
+                    <h3>Đăng nhập</h3>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <FormGroup>
                             <FormControl>                            
@@ -71,7 +71,7 @@ const Login = (props) => {
                                         },                                       
                                     }}                                
                                     required                                    
-                                    label="Email address" />
+                                    label="Số điện thoại" />
                             </FormControl>
                         </FormGroup>
                         <FormGroup>
@@ -90,7 +90,7 @@ const Login = (props) => {
                                     }}
                                     type='password'
                                     required                                    
-                                    label="Password" />                                                        
+                                    label="Mật khẩu" />                                                        
                             </FormControl>
                         </FormGroup>                            
                         <FormGroup className='mt-5'>

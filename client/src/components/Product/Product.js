@@ -5,9 +5,9 @@ import {useDispatch} from 'react-redux'
 import ShopApi from '../../apis/shopApis'
 import AdminApi from '../../apis/adminApis'
 import Button from '@material-ui/core/Button';
-import {saveCategoryData} from '../../reducers/shopReducer'
+import { saveCategoryData } from '../../reducers/shopReducer'
 
-const Product = (props) => {
+const Product = () => {
     let { id } = useParams()
     const dispatch = useDispatch()
     const [page, setPage] = useState(1)
@@ -96,7 +96,7 @@ const Product = (props) => {
                         <div className='row sale-items mt-3'>
                             {
                                 productList && productList.map((item, i) =>
-                                <div className='col-lg-3 col-md-4 mt-3'>
+                                <div key={i} className='col-lg-3 col-md-4 mt-3'>
                                     <Link to={`/detail/${item._id}`}>
                                         <SaleItemCard key={i} img_src={item.image} title={item.name} sale_price={item.price_after_sale} base_price={item.price} discount_percent={item.sale_tag}></SaleItemCard>
                                     </Link>                                

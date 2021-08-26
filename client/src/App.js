@@ -1,8 +1,6 @@
 import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bnb-gallery/dist/style.css'
-// import './css/receipt.css';
-// import './css/style.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,12 +29,12 @@ function App() {
               <AdminPage />
             </PrivateRoute>
             <Route>
-              <div className="App">
+              <div className='App'> 
                 <Header />
                 <NavBar/>
                 <Url/>
-                <Footer/>
-              </div>
+                <Footer/> 
+              </div>                                      
             </Route>
           </Switch>      
       </Router>

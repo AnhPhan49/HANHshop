@@ -4,27 +4,26 @@ import shop from '../../assets/shop.png'
 const Receipt = (props) => {
     
     return(
-
         <div className="main">
         <div className="content">
           <div className="cartoption">		
             <div className="cartpage">
-              <h2>Your Cart Detail</h2>
+              <h2>Lịch sử đơn hàng</h2>
               <table className="tblone">
                 <tbody><tr>
                 <th width="10%">STT</th>
-                    <th width="20%">Product Name</th>
-                    <th width="15%">Image</th>
-                    <th width="10%">Price</th>
-                    <th width="10%">Quantity</th>
-                    <th width="15">Total Price</th>
+                    <th width="20%">Tên sản phẩm</th>
+                    <th width="15%">Hình ảnh</th>
+                    <th width="10%">Giá</th>
+                    <th width="10%">Số lượng</th>
+                    <th width="15">Tổng cộng</th>
                     <th width="10%">Ngày Đặt</th>
                     <th width="10%">Tình Trạng</th>
                   </tr>
                   <tr>
                   <td>1</td>
                     <td>Product Title</td>
-                    <td><img src="images/new-pic3.jpg" alt="" /></td>
+                    <td><img src="https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg" alt="" /></td>
                     <td> 20000</td>
                     <td>
                       <form action method="post">

@@ -7,13 +7,15 @@ import {saveCategoryData} from '../../reducers/shopReducer'
 import {useDispatch} from 'react-redux'
 import Carousel from 'react-material-ui-carousel'
 import {FcNext, FcPrevious} from 'react-icons/fc'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const Detail = (props) => {
   let { id } = useParams()
   const dispatch = useDispatch()
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState()
+  const [open, setOpen] = React.useState(false)
   const [categoryList, setCategoryList] = useState([]) 
-  const [relateProduct, setRelateProduct] = useState([]) 
+  const [relateProduct, setRelateProduct] = useState([])
 
   useEffect(() => {    
     getCategoryList()    
@@ -33,34 +35,32 @@ const Detail = (props) => {
   
   const getCategoryList = async () => {
         try {
-            const res = await ShopApi.getCategoryList()
-            console.log(res)
-            if(res.status === 200) {
-                setCategoryList(res.data)
-                dispatch(saveCategoryData(res.data))
-            }
+          const res = await ShopApi.getCategoryList()          
+          if(res.status === 200) {
+            setCategoryList(res.data)
+            dispatch(saveCategoryData(res.data))
+          }
         }
         catch(e){
-            console.log(e)
+          console.log(e)
         }
-    }
+  }
 
-    const getRelateProduct = async () => {
-      try {
-          const res = await AdminApi.searchProductByCategory(1, product.category)
-          console.log(res)
-          if(res.status === 200) {
-            setRelateProduct(res.data.product)
-          }
+  const getRelateProduct = async () => {
+    try {
+      const res = await AdminApi.searchProductByCategory(1, product.category)          
+        if(res.status === 200) {
+          setRelateProduct(res.data.product)
+        }
       }
       catch (e) {
-          console.log(e)
-      }
+        console.log(e)
+    }
   }
 
   const getProduct = async () => {
     try {
-      const res = await ShopApi.getProductDetail(id);
+      const res = await ShopApi.getProductDetail(id);      
       if (res.status === 200) {
         setProduct(res.data);
       }
@@ -69,8 +69,41 @@ const Detail = (props) => {
     }
   };
 
+  const addToCart = async () => {
+    try {
+      const data = {
+        "id": id,
+        "count": 1
+      }
+      const res = await ShopApi.addToCart(data)
+      if(res.status === 200) {
+        setOpen(open)
+        handleClose()
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const handleClose = (event, reason) => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 3000)
+  };
+
+
   return (
     <div className="main">
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Đã thêm vào giỏ hàng"
+      />
       <div className="content">
         <div className="section group">
           <div className="cont-desc span_1_of_2">
@@ -93,16 +126,33 @@ const Detail = (props) => {
                 </div>
               </div>
               <div className="desc span_3_of_2">
-                <h2>{product && product.name}</h2>
+                <h2>{product && product.name}</h2>                
+                  {
+                    product && product.sale_tag && (
+                      <div>
+                        <span className='percent-sale-detail'>
+                          Giảm {product.sale_tag}%
+                        </span>
+                        <span className='base-price-detal'>
+                          {formatCurrency(product.price)}
+                        </span>
+                      </div>
+                    )
+                  }                                                                           
+                
                 <span dangerouslySetInnerHTML={{__html: product && product.description}}>                      
            			</span> 
                 <div className="price">
-                  <p>
-                    Giá: <span>đ{product && formatCurrency(product.price)}</span>
-                  </p>
+                  {
+                    product && (
+                      <p>
+                        Giá: <span>đ{product.price_after_sale?formatCurrency(product.price_after_sale):formatCurrency(product.price)}</span>
+                      </p>
+                    )
+                  }                  
                 </div>
                 <div className="share-desc">
-                  <div className="button">
+                  <div className="button" onClick={addToCart}>
                     <span>
                       <a>Thêm vào giỏ hàng</a>
                     </span>

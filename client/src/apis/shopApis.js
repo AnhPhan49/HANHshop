@@ -12,6 +12,14 @@ const ShopApi = {
     getProductDetail(id) {
         const url = `/api/product/get/${id}`
         return axiosClient.get(url)
+    },
+    addToCart(data) {
+        const url = '/api/cart/add'
+        return axiosClient.put(url, data)
+    },
+    getCart() {
+        const url = '/api/cart/get'
+        return axiosClient.get(url)
     }
 }
 

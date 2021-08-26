@@ -6,7 +6,7 @@ import {
     Link ,
     NavLink
 } from "react-router-dom";
-const NavBar = (props) => {
+const NavBar = () => {
     return(
         <div className='nav-item'>
             <nav className='nav-menu'>
