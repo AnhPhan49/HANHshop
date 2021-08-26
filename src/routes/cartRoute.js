@@ -4,13 +4,14 @@ const checkLogin = require('../midlewares/loginMidleware')
 const {
     getCart,
     addProduct,
-    removeProduct
+    updateCart
 } = require('../controllers/cartController')
+
 
 cartRoute.route('/get').get(checkLogin, getCart)
 
 cartRoute.route('/add').put(checkLogin, addProduct)
 
-cartRoute.route('/remove').put(checkLogin, removeProduct)
+cartRoute.route('/update').put(checkLogin, updateCart)
 
 module.exports = cartRoute
