@@ -7,7 +7,8 @@ import Modal from '@material-ui/core/Modal';
 import AdminApi from '../apis/adminApis'
 import alert from '../utils/alert'
 import NumberFormat from 'react-number-format';
-import SaleItemCard from '../components/sale-item-card'
+import CallReceivedIcon from '@material-ui/icons/CallReceived';
+import CallMadeIcon from '@material-ui/icons/CallMade';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -55,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],        
          
         marginTop :'5px',     
-        height: 650,
-        minWidth: 440,
+        height: 600,
+        minWidth: 1000,
         // overflowY:'scroll'
     },
     paperContainer: {
@@ -136,7 +137,11 @@ const ProductModal = forwardRef((props, ref) => {
         getProductList()
     
     }, [])
-
+    const convertTime = (unformatTime) => {        
+        let date = new Date(unformatTime)
+        const formatedTime = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();                    
+        return formatedTime
+    }
 
     const getProductList = async () => {
         try {
@@ -157,56 +162,70 @@ const ProductModal = forwardRef((props, ref) => {
             console.log(e)
         }
     }
-    const am=()=>{
-        historyProduct.forEach((item, index) => {
-            if(item.total_add<=0){
-                
-                // console.log(Number(item.total_add));
-                setN1(Number(item.total_add))
-            }
-            // else if(item.total_add>0){
-            //     console.log(item.total_add);
-            // }
-            // console.log(item)
-            
-        })
-    }
+    
     const demo=()=>{
-        {am()}
+     
         if(props.all==true){
          
             return(
                 <Fade in={open}>
             <div className={classes.papernew}>                        
                 <div className={classes.paperContainer}>
+                <div className='production-page'>
                     <h4>{props.title}</h4>
-                
+                 <div className='row m-0 title'>
+                    <div className='col-3 text-center'>
+                        Stt
+                    </div>
+                    <div className='col-3 text-center'>
+                        Số Lượng Nhập
+                    </div>
+                    <div className='col-3 text-center'>
+                        Tên Nhà Cung Cấp
+                    </div>
+                    <div className='col-3 text-center'>
+                        Ngày Nhập
+                    </div>
                     
-                    <div className="col">
-                    <table className="table table-striped table-inverse table-hover ">
-                      <thead className="thead-inverse">
-                        <tr>
-                          <th>Stt</th>
-                          <th>Total_current</th>
-                          <th>Total_add</th>
-                          <th>Producer</th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody>
-            { historyProduct && historyProduct.map((item, i) =>
+                </div>
+                <div className='product-list'>
+                { historyProduct && historyProduct.map((item, i) =>
+                    <div className='row m-0 product-row' style={{background: '#ebebeb'}} key={item._id}>
+                            <div className='col-3 product-item'>
+                           {i+1}
+                            </div>
+                            <div className='col-3 product-item'>
+                            {item.total_add<=0 ? item.total_add : item.total_add }
+                            {item.total_add<=0 ? <CallReceivedIcon/>: <CallMadeIcon/>}
+                            </div>
+                           
+                         
+                            <div className='col-3 product-item'>
+                            {item.producer}
+                            </div>                          
+                            <div className='col-3 product-item'>
+                            {/* <input type="date" value=  {item.createdAt}/> */}
+                            {
+                                    convertTime(item.createdAt)
+                                }  
+                            </div>
+                
+                    </div>
+                )}
+                </div>
+             </div>       
+                   
+            {/* { historyProduct && historyProduct.map((item, i) =>
                       <tr>
             <td>{i+1}</td>
             <td >{item.total_current}</td>
-            <td>{item.total_add} </td>
+           
+            <td>{item.total_add<=0 ? item.total_add+"giam" : item.total_add +"tang"} </td>
             <td>{item.producer}</td> 
            
           
-          </tr>
-          )}
-                      </tbody>
-                    </table>
-                  </div>
+          </tr> */}
+         
                  
                   </div>
             </div>
@@ -304,10 +323,9 @@ const ProductModal = forwardRef((props, ref) => {
             e.preventDefault();
           
                 let formData = {
-                
+                                    
                     "count":Number(editNumber),
-                    "producer":editProducer
-                    
+                    "producer":editProducer                    
                 }
                 console.log(formData)
             

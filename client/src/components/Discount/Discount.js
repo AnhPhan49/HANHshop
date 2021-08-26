@@ -75,10 +75,7 @@ const Discount = (props) => {
                             <div>
                             Đang Giảm Giá
                             </div>                            
-                        </div>                      
-                        <div className='col-6'>
-                            <button type='button'>Xem toàn bộ sản phẩm</button>
-                        </div>                                                          
+                        </div>                                                                                
                     </div>
                     <div className='row sale-items mt-3'>
                         {
