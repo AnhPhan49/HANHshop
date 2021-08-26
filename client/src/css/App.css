@@ -51,10 +51,10 @@ body {
 }
 
 .header-below .logo-session div {
-	margin-top: 10px;	
+	margin-top: 8px;	
 	color: rgba(203,44,49,255);
 	font-weight: 700;
-	font-size: x-large;
+	font-size: 2.8rem;
 }
 
 .header-below .logo-session span {
@@ -65,15 +65,16 @@ body {
 	height: 50px;	
 	border: 1px solid #ebebeb;
 }
-.header-below .search-session .category-btn {	
+
+.header-below .search-session .category-btn {
 	float: left;
 	background: transparent;
 	border: none;
-	padding-left: 23px;
-	padding-top: 15px;
-	padding-bottom: 13px;
-	padding-right: 60px;
-	font-size: 1.6rem;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	/* padding-right: 60px;
+	padding-left: 23px; */
+	font-size: 1.5rem;
 	color: #252525;
 	position: relative;
 }
@@ -129,6 +130,10 @@ body {
 	background: rgb(179, 45, 36);
 }
 
+.header-below .cart-session {
+	height: 50px;
+}
+
 .header-below .cart-session .heart-icon, .header-below .cart-session .cart-icon {
   margin-top: auto;
   margin-bottom: auto;
@@ -176,7 +181,7 @@ body {
 	color: #ffffff;
 	border-right: 2px solid #3b3b3b;
 	text-transform: uppercase;
-	padding: 15px 42px 15px;
+	padding: 15px 40px 15px;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;	
@@ -295,13 +300,13 @@ body {
 	margin-left: 4%;	
 }
 
-.homepage-body .sale-section .sale-control{
+.sale-control{
 	padding-top: 6px;
 	padding-bottom: 6px;
 	border-bottom: 1px solid lightgray;	
 }
 
-.homepage-body .sale-section .sale-control button{
+.sale-control button{
 	background-color: transparent;
 	border: 1px solid rgba(203,44,49,255);
 	color: rgba(203,44,49,255);
@@ -312,13 +317,13 @@ body {
 	margin: 8px;
 }
 
-.homepage-body .sale-section .sale-control .sale-title div {
+.sale-control .sale-title div {
 	font-size: medium;
 	color: rgba(203,44,49,255);
 	margin: 8px;
 }
 
-.homepage-body .sale-section .sale-control button:hover{
+.sale-control button:hover{
 	background-color: rgba(203,44,49,255);	
 	color: white;
 }
@@ -334,7 +339,7 @@ body {
 }
 
 .sale-item-card .sale-price {
-	font-size: 1.6rem;
+	font-size: 1.7rem;
 	font-weight: 700;
 	margin-top: 2px;
 	color: rgba(203,44,49,255);
@@ -351,8 +356,8 @@ body {
 .sale-item-card .percent-sale span {
 	background-color: rgb(246, 145, 19);
 	color: white;
-	padding: 2px;
-	font-size: 1rem;
+	padding: 1px;
+	font-size: 1.1rem;
 	font-weight: 700;
 }
 
@@ -386,21 +391,24 @@ body {
 }
 
 .footer-session {
-	height: 280px;
-	padding-left: 6%;
-	padding-right: 6%;
-	margin-top: 40px;
+	height: 200px;
+	padding-left: 4%;
+	padding-right: 4%;
 	background-color: #3b3b3b;
-	padding-top: 80px;
+}
+
+.footer-session .footer-content {
+	padding-top: 30px;
+	margin-top: 30px;
 }
 
 .footer-session .title, .footer-session .item {
-	font-size: medium;
-	margin: 5px;
+	font-size: 1.4wh;
+	margin: 4px;
 	font-weight: 700;	
 }
 
-.footer-session .title {
+.footer-session .title {	
 	color: white;
 	margin-bottom: 16px;	
 }
@@ -609,7 +617,7 @@ body {
 	background-color: rgb(246, 145, 19);
 	color: white;
 	padding: 2px;
-	font-size: 1.6rem !important;
+	font-size: 1.4rem !important;
 	font-weight: 700;
 }
 
@@ -619,4 +627,13 @@ body {
 	padding: 4px;
 	margin-left: 4px;
 	text-decoration: line-through;
+}
+
+.detail-section {
+	margin-right: 2% !important;
+	margin-left: 2% !important;
+}
+
+.category-section {
+	margin-top: 25px;	
 }

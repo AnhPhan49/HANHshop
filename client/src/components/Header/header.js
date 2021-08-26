@@ -21,17 +21,17 @@ const Header = (props) => {
     return(
         <div>
             <div className='header row'>
-                <div className='hd-left row col-8'>
-                    <div className='header-item col-4'>
+                <div className='hd-left row col-lg-6 col-md-6 hidden-xs'>
+                    <div className='header-item col-6'>
                         <GrMail size='16px' color='black'></GrMail>
                         <span className=''>something@gmail.com</span>
                     </div>
-                    <div className='header-item col-8'>
+                    <div className='header-item col-6'>
                         <FaPhoneAlt size='16px' color='black'></FaPhoneAlt>
                         <span>+123456</span>
                     </div>
                 </div>
-                <div className='hd-right row col-4'>
+                <div className='hd-right row col-lg-6 col-md-6 col-12'>
                     <div className='header-item col-6'>
                         <img src={vnflag} alt=''></img>
                         <span>
@@ -54,17 +54,17 @@ const Header = (props) => {
             </div>
 
             <div className='header header-below row'>
-                <div className='logo-session col-2'>
+                <div className='logo-session col-lg-2 col-md-12'>
                     <div>HANH <span> Shop</span></div>
                 </div>
-                <div className='search-session col-7'>
-                    <button type='button' className='category-btn col-3'>Tìm kiếm</button>
+                <div className='search-session col-lg-7 col-md-12 p-0'>
+                    <div className='category-btn col-3 text-center'>Tìm kiếm</div>
                     <span className="input-group col-9">
                         <input type="text" placeholder="Bạn cần tìm gì?"/>
                         <button type="button"><BsSearch color='white' size='18px'></BsSearch></button>
                     </span>
                 </div>
-                <div className='cart-session col-3 row'>
+                <div className='cart-session col-lg-3 col-md-12 row'>
                     <div className='col-6 heart-icon'>
                         <Badge color='error' badgeContent={4}>
                             <AiOutlineHeart size='26px' color='black'></AiOutlineHeart>

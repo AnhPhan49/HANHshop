@@ -1,7 +1,4 @@
 import React, { Component  } from 'react';
-import { Redirect } from 'react-router-dom';
-
-
 class Contact extends Component {
   constructor(props) {
     super(props);
@@ -10,8 +7,6 @@ class Contact extends Component {
       userName:"",
       userEmail:"",
       userMsg:"",
-     
-    
     }
   }
   isChange=(event)=>{
