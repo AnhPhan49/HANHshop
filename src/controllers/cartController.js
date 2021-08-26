@@ -66,17 +66,6 @@ module.exports.updateCart = async (req, res) =>{
     }
 }
 
-// module.exports.removeProduct = async (req, res) =>{
-//     try {
-//         let {id, count} = req.body
-//         if (!id) throw new Error("Missing id product.")
-//         let updateCart = await cartModel.findOneAndUpdate({customer: req.user.id},{$pull: {product:id}})            
-//         return res.status(200).json({message: 'Success', data: updateCart})
-//     } catch (err) {
-//         return res.status(400).json({message: err.message})
-//     }
-// }
-
 module.exports.getCart = async (req, res) =>{
     try{
         let id = req.user.id
