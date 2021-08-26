@@ -17,7 +17,6 @@ import AdminApi from '../apis/adminApis'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import alert from '../utils/alert';
-
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 const ProductModal = forwardRef((props, ref) => {
@@ -252,7 +251,7 @@ const ProductModal = forwardRef((props, ref) => {
                                         type='number'
                                         label="Giá tiền" />
                                         <FormHelperText id="component-error-text"><h6>Giá tiền không được là giá trị âm (Đơn vị vnđ)</h6></FormHelperText>
-                                </FormGroup>                                
+                                </FormGroup>                               
                                 <FormControl className={classes.formControl}>
                                     <InputLabel id="demo-simple-select-label"><span style={{ fontSize: '1.5rem' }}>Danh mục</span></InputLabel>
                                     <Select

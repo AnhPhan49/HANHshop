@@ -11,6 +11,7 @@ const Discount = () => {
 
     useEffect(() => {
         getSaleProductList(1)
+        window.scrollTo(0, 0)
     }, [])
 
     const getSaleProductList = async (page) => {
@@ -18,7 +19,7 @@ const Discount = () => {
             const res = await ShopApi.getHomePageHotProductData(page, "Sale")                 
             if(res.status === 200) {
                 setPage(page)
-                setSaleProduct(...saleProduct, res.data.product)
+                setSaleProduct(res.data.product)
             }
             if(res.status === 201) {
                 alert({icon:'error', title: res.message})
@@ -28,6 +29,23 @@ const Discount = () => {
             console.log(e)
         }
     }
+
+    const getMoreSaleProductList = async (page) => {
+        try {
+            const res = await ShopApi.getHomePageHotProductData(page, "Sale")                 
+            if(res.status === 200) {
+                setPage(page)
+                setSaleProduct(saleProduct.concat(res.data.product))
+            }
+            if(res.status === 201) {
+                alert({icon:'error', title: res.message})
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
     return(
         <div className='homepage'>
             <div className='homepage-body mt-2'>
@@ -53,7 +71,7 @@ const Discount = () => {
                         }
                     </div>
                     <div className='text-center mt-5'>
-                        <Button variant="outlined" style={{fontSize: '1.4rem'}} onClick={() => getSaleProductList(page+1)}>Xem thêm</Button>
+                        <Button variant="outlined" style={{fontSize: '1.4rem'}} onClick={() => getMoreSaleProductList(page+1)}>Xem thêm</Button>
                     </div>
                 </div>                      
             </div>         
