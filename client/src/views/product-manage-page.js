@@ -280,7 +280,7 @@ const ProductManagePage = () => {
                                         <div className='col-1 product-item'>
                                             {(page - 1)*10 + index + 1}
                                         </div>
-                                        <div className='col-2 product-item'>
+                                        <div className='col-2 product-item item-name'>
                                             {item.name}
                                         </div>
                                         <div className='col-1 product-item'>

@@ -8,7 +8,7 @@ import { Badge } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-const Header = (props) => {
+const Header = () => {
     const history = useHistory()
     const user = useSelector(state => state.user.user)
     const [curruser, setCurrUser] = useState()
@@ -70,12 +70,10 @@ const Header = (props) => {
                             <AiOutlineHeart size='26px' color='black'></AiOutlineHeart>
                         </Badge>
                     </div>
-                    <div className='col-6 cart-icon'>
-                        <a href='/receipt'>
+                    <div className='col-6 cart-icon' onClick={() => {history.push('/receipt')}}>                    
                         <Badge color='error' badgeContent={4}>
                             <AiOutlineShoppingCart size='26px' color='black'></AiOutlineShoppingCart>
-                        </Badge>
-                        </a>
+                        </Badge>                        
                     </div>
                 </div>
             </div>

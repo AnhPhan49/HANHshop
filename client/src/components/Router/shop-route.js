@@ -10,7 +10,7 @@ import Product from '../Product/Product';
 import Booked from '../Receipt/Booked'
 import Receipt from '../Receipt/Receipt'
 import Detail from '../Product/Detail'
-class Url extends Component {
+class ShopRoute extends Component {
     render() {
         return (
             <div>                
@@ -28,4 +28,4 @@ class Url extends Component {
     }
 }
 
-export default Url;
+export default ShopRoute;

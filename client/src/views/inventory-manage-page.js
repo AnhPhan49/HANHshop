@@ -121,11 +121,11 @@ console.log(status);
                             <div className='col-1 product-item'>
                                 {index + 1}
                             </div>
-                            <div className='col-2 product-item'>
+                            <div className='col-2 product-item item-name'>
                                 {item.product.name}
                             </div>
                            
-                            <div className='col-4 product-item' dangerouslySetInnerHTML={{__html: item.product.description}}/>
+                            <div className='col-4 product-item descript' dangerouslySetInnerHTML={{__html: item.product.description}}/>
                             <div className='col-2 product-item'>
                                 {item.product.price}
                             </div>                          
