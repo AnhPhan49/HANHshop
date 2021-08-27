@@ -7,7 +7,7 @@ module.exports.current = async (req, res) => {
   try {
     let data = await accountModel.findById(
       req.user.id,
-      "phone firstname lastname role"
+      "phone firstname lastname role address fullname"
     );
 
     return res.status(200).json({
