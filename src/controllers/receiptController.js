@@ -101,7 +101,7 @@ module.exports.completeReceipt = async (req, res) => {
           throw new Error("Something went wrong with approve receipt")
         }
         updateReceipt.status.present = "Hoàn thành"
-        updateReceipt.status.description = description
+        updateReceipt.status.description = ""
         updateReceipt.in_Process =  false
         await updateReceipt.save()
         return res.status(200).json({message: "Successfully", data: updateReceipt})
@@ -112,7 +112,7 @@ module.exports.completeReceipt = async (req, res) => {
 
 module.exports.search = async (req, res) => {
     try {
-
+        
     } catch (err) {
         return res.status
     }
