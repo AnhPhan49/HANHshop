@@ -20,6 +20,10 @@ const ShopApi = {
     getCart() {
         const url = '/api/cart/get'
         return axiosClient.get(url)
+    },
+    acceptReceipt(id, data) {
+        const url = `/api/receipt/create/${id}`
+        return axiosClient.post(url, data)
     }
 }
 

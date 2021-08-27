@@ -286,7 +286,7 @@ const ProductManagePage = () => {
                                         <div className='col-1 product-item'>
                                             {
                                                 (item.image[0])?(
-                                                    <div className='img-wrapper' onClick={() => openWidePhoto(item.image)}>
+                                                    <div className='fill' onClick={() => openWidePhoto(item.image)}>
                                                         <img src={item.image[0].url} alt=''></img>
                                                     </div>   
                                                 ):(

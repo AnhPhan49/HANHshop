@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import check from '../../assets/check.png'
-import shop from '../../assets/shop.png'
+// import check from '../../assets/check.png'
+// import shop from '../../assets/shop.png'
 const Receipt = (props) => {
     
     return(
@@ -99,12 +99,12 @@ const Receipt = (props) => {
           
             </div>
             <div className="shopping">
-              <div className="shopleft">
+              {/* <div className="shopleft">
                 <a href="index.html"> <img src={shop} alt="" /></a>
               </div>
               <div className="shopright">
                 <a href="login.html"> <img src={check} alt="" /></a>
-              </div>
+              </div> */}
             </div>
           </div>  	
           <div className="clear" />

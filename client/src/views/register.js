@@ -104,7 +104,7 @@ const RegisterPage = () => {
                                             classes: {
                                                 root: classes.resize
                                             }
-                                        }}
+                                        }}                                    
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}                                        
                                         InputProps={{

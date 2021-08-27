@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import AdminApi from '../../apis/adminApis'
 import { GrMail } from 'react-icons/gr'
 import {FaPhoneAlt, FaUserAlt} from 'react-icons/fa'
 import vnflag from '../../assets/flag-2.jpg'
@@ -12,11 +13,28 @@ const Header = () => {
     const history = useHistory()
     const user = useSelector(state => state.user.user)
     const [curruser, setCurrUser] = useState()
+    const [inputSearch, setInputSearch] = useState()
     
     useEffect(() => {
-        setCurrUser(user)
-        console.log(user)
+        setCurrUser(user)        
     }, [user])
+
+    const searchProduct = async () => {
+        try {
+            let res;
+            if (inputSearch) {
+                res = await AdminApi.searchProductByProduct(1, inputSearch);
+                if(res.status === 200) {                
+                    history.push(`/search/${inputSearch}`)
+                }
+            } else {                                           
+                history.push('/product')
+            }
+               
+        } catch (e) {
+
+        }
+    }
 
     return(
         <div>
@@ -60,8 +78,8 @@ const Header = () => {
                 <div className='search-session col-lg-7 col-md-12 p-0'>
                     <div className='category-btn col-3 text-center'>Tìm kiếm</div>
                     <span className="input-group col-9">
-                        <input type="text" placeholder="Bạn cần tìm gì?"/>
-                        <button type="button"><BsSearch color='white' size='18px'></BsSearch></button>
+                        <input type="text" placeholder="Bạn cần tìm gì?" value={inputSearch} onChange={(e) => {setInputSearch(e.target.value)}}/>
+                        <button type="button" onClick={searchProduct}><BsSearch color='white' size='18px'></BsSearch></button>
                     </span>
                 </div>
                 <div className='cart-session col-lg-3 col-md-12 row'>
