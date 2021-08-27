@@ -196,7 +196,7 @@ const ProductModal = forwardRef((props, ref) => {
                             </div>
                             <div className='col-3 product-item'>
                             {item.total_add<=0 ? item.total_add : item.total_add }
-                            {item.total_add<=0 ? <CallReceivedIcon/>: <CallMadeIcon/>}
+                            {item.total_add<=0 ? <CallReceivedIcon style={{ color: 'red',marginTop: -4,fontSize: '20px'  }}/>: <CallMadeIcon style={{ color: 'green',marginTop: -4,fontSize: '20px' }}/>}
                             </div>
                            
                          
