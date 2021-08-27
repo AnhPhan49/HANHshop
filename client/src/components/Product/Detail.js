@@ -84,7 +84,7 @@ const Detail = (props) => {
     try {
       const data = {
         id: id,
-        count: quantity,
+        count: parseInt(quantity),
       };
       console.log(data)
       const res = await ShopApi.addToCart(data);

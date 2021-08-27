@@ -4,16 +4,21 @@ import AuthApis from '../apis/authApis'
 import AdminApi from '../apis/adminApis'
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from 'react-router-dom';
+import bgimg from '../assets/login-background.png'
 import { useDispatch } from 'react-redux';
 import {savecurrentuserdata} from '../reducers/userReducer'
 import {userloginsuccess} from '../reducers/userReducer'
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Footer from '../components/Footer/Footer'
 
-const Login = (props) => {
+const Login = () => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles()
     const history = useHistory()
     const dispatch = useDispatch();
     const [btn, setBtn] = useState(false)
+    const [checked, setChecked] = useState(false)
 
     const onSubmit = async (data) => {
         try{
@@ -29,6 +34,10 @@ const Login = (props) => {
             console.log(e)
         }
         setBtn(false)
+    }
+
+    const handleCheckbox = () => {
+        setChecked(!checked)
     }
 
     const getCurrentUserAndRoute = async () => {
@@ -51,18 +60,28 @@ const Login = (props) => {
       }
 
     return(
-        <div >        
-            <div>
-                <div className='m-5 col-4'>
-                    <h3>Đăng nhập</h3>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='login-page'>
+            <div className='row m-0 login-header'>
+                <div className='col-lg-2 col-md-2 col-sm-6 logo-session'>
+                    <div>HANH<span> Shop</span></div>
+                </div>                
+                <h3 className='col-lg-2 col-md-2 col-sm-6 mt-4'>Đăng nhập</h3>                
+            </div>
+            <div className='login-body row m-0'>
+                <div className='col-lg-6 col-md-6 col-sm-6 hidden-xs'>
+                    <img alt='' src={bgimg}></img>
+                </div>
+                <div className='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                    <div className='login-form'>
+                        <h4>Đăng nhập</h4>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                         <FormGroup>
                             <FormControl>                            
                                 <TextField
                                     {...register("phone")}                                     
                                     InputLabelProps={{
                                         classes: {
-                                            root: classes.labelRoot
+                                            root: classes.resize
                                         }
                                     }}
                                     InputProps={{
@@ -80,7 +99,7 @@ const Login = (props) => {
                                     {...register("password")}                                    
                                     InputLabelProps={{
                                         classes: {
-                                            root: classes.labelRoot
+                                            root: classes.resize
                                         }
                                     }}
                                     InputProps={{
@@ -91,24 +110,27 @@ const Login = (props) => {
                                     type='password'
                                     required                                    
                                     label="Mật khẩu" />                                                        
-                            </FormControl>
-                        </FormGroup>                            
-                        <FormGroup className='mt-5'>
-                            <Button disabled={btn} variant="contained" color="primary" type='submit'>
-                                Login
+                            </FormControl>                            
+                        </FormGroup>       
+                        <FormControlLabel className='mt-3' control={<Checkbox checked={checked} onChange={handleCheckbox} />} label={<h6>Ghi nhớ mật khẩu</h6>} />                 
+                        <FormGroup className='mt-3'>
+                            <Button disabled={btn} variant="contained" type='submit' style={{backgroundColor:'rgba(203,44,49,255)', fontSize:'1.3rem', color:'white'}}>
+                                Đăng nhập
                             </Button>
                         </FormGroup>
+                        <FormGroup className='mt-4'>
+                            <Link to='/register'>Đăng kí tài khoản</Link>
+                        </FormGroup>                        
                     </form>
-                </div>                
+                    </div>
+                </div>
             </div>
+            <Footer></Footer>
         </div>
     )
 }
 
-const useStyles = makeStyles((theme) => ({
-    labelRoot: {
-        fontSize: '1.5rem',
-    },
+const useStyles = makeStyles(() => ({
     resize: {
         fontSize: '1.5rem'
     }

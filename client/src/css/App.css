@@ -9,14 +9,53 @@ body {
 	background-color: white;
 }
 
+.login-page .login-header {	
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.login-page .login-body {
+	background-color: rgba(203,44,49,255);
+	height: 550px;
+}
+
+.login-page .login-body .login-form {
+	background-color: white;
+	margin-top: auto;
+	margin-bottom: auto;
+	border-radius: 5px;
+	padding: 3rem;
+	margin-top: 20%;
+	margin-left: 8%;
+	margin-right: 8%;
+}
+
+.login-page .login-body .register-form {
+	background-color: white;
+	margin-top: auto;
+	margin-bottom: auto;
+	border-radius: 5px;
+	padding: 3rem;
+	margin-top: 5%;
+	margin-left: 8%;
+	margin-right: 8%;
+}
+
+.login-body img {
+	margin-top: 10%;
+	width: 95%;
+}
+
 .header {
   padding-left: 2%;
   padding-right: 2%;
   margin: 0;
 }
+
 .row {
  margin-right :0px !important;
 }
+
 .header .hd-right, .header .hd-left {
   margin-left: 0;
   margin-right: 0;
@@ -50,14 +89,14 @@ body {
 	margin-left: 32px;
 }
 
-.header-below .logo-session div {
+.logo-session div {
 	margin-top: 8px;	
 	color: rgba(203,44,49,255);
 	font-weight: 700;
 	font-size: 2.8rem;
 }
 
-.header-below .logo-session span {
+.logo-session span {
 	color: #252525;
 }
 
@@ -403,7 +442,7 @@ body {
 }
 
 .footer-session .title, .footer-session .item {
-	font-size: 1.4wh;
+	font-size: 1.4rem;
 	margin: 4px;
 	font-weight: 700;	
 }
@@ -636,4 +675,12 @@ body {
 
 .category-section {
 	margin-top: 25px;	
+}
+
+.production-page .product-list .product-row .item-name, .production-page .product-list .product-row .descript {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* number of lines to show */
+	-webkit-box-orient: vertical;	
 }

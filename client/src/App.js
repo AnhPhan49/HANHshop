@@ -10,12 +10,13 @@ import { store } from './store'
 import { Provider } from 'react-redux'
 
 import Login from './views/login'
+import RegisterPage from './views/register'
 import AdminPage from './views/admin-page'
 import PrivateRoute from './components/Router/private-route'
 import Header from './components/Header/header'
 import NavBar from './components/Nav/navbar';
 import Footer from './components/Footer/Footer';
-import Url from'./components/Router/Url'
+import ShopRoute from'./components/Router/shop-route'
 
 function App() {
   return (
@@ -25,17 +26,20 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
+            <Route path="/register">
+              <RegisterPage></RegisterPage>
+            </Route>
             <PrivateRoute path="/admin">
-              <AdminPage />
+              <AdminPage/>
             </PrivateRoute>
             <Route>
               <div className='App'> 
                 <Header />
                 <NavBar/>
-                <Url/>
+                <ShopRoute/>
                 <Footer/> 
               </div>                                      
-            </Route>
+            </Route>                   
           </Switch>      
       </Router>
     </Provider>
