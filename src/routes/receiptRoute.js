@@ -6,9 +6,9 @@ const checkAdmin = require("../midlewares/AdminMidleware");
 const { createReceipt, cancelReceipt, getReceipts } = require("../controllers/receiptController");
 const addReceiptValidator = require("./validators/addReceiptValidator");
     
-receiptRoute.route('/create').post(checkLogin, createReceipt);
+receiptRoute.route('/create').post(checkLogin, addReceiptValidator, createReceipt);
 
-receiptRoute.route('/cancel/:id').delete(checkLogin, addReceiptValidator, cancelReceipt)
+receiptRoute.route('/cancel/:id').delete(checkLogin, cancelReceipt)
 
 receiptRoute.route('/in-proccess').get(checkLogin, getReceipts);
 
