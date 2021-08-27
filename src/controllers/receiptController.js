@@ -92,3 +92,28 @@ module.exports.cancelReceiptByAdmin = async (req, res) => {
         return res.status(400).json({ message: err.message })
     }
 }
+
+module.exports.completeReceipt = async (req, res) => {
+    try {
+        const { id } = req.params
+        let updateReceipt = await receiptModel.findById(id)
+        if (updateReceipt.status.present !== "Đang chờ duyệt" && updateReceipt.status.present !== "Đang vận chuyển") {
+          throw new Error("Something went wrong with approve receipt")
+        }
+        updateReceipt.status.present = "Hoàn thành"
+        updateReceipt.status.description = description
+        updateReceipt.in_Process =  false
+        await updateReceipt.save()
+        return res.status(200).json({message: "Successfully", data: updateReceipt})
+    } catch (err) {
+        return res.status(400).json({message: err.message})
+    }
+}
+
+module.exports.search = async (req, res) => {
+    try {
+
+    } catch (err) {
+        return res.status
+    }
+}
