@@ -6,6 +6,7 @@ module.exports.createReceipt = async(req, res) => {
     try{
         let id = req.user.id
         let {name, phone, address} = req.body
+        let {detail} = req.body ? req.body : ""
         let cart = await cartModel.findOneAndUpdate({customer: id}, {
             product:[],
             total_price: 0
@@ -17,7 +18,8 @@ module.exports.createReceipt = async(req, res) => {
             total_price: cart.total_price,
             name: name,
             phone: phone,
-            address: address
+            address: address,
+            detail: detail
         })
         newReceipt.save()
         return res.status(200).json({message: "Success", data: newReceipt}) 
@@ -112,7 +114,25 @@ module.exports.completeReceipt = async (req, res) => {
 
 module.exports.search = async (req, res) => {
     try {
-        
+        // let { status, in_Process, id_receipt } = req.query
+        let search = req.query
+        let {page} = search
+        page = page - 1
+        if (page < 0) throw new Error("Page not found!!")
+        delete search.page
+        let searchReceipt = await receiptModel.find(search).sort({'createdAt': 'desc'}).populate("product","_id name image")
+        if(Math.ceil(searchReceipt.length/10) < page + 1){
+            return res.status(201).json({message: "Chưa có trang thông báo này"})
+        }
+        let receiptFilter = searchReceipt.slice(page * 10, page * 10 + 10);
+        return res.status(200).json({
+          message: "Success",
+          data: {
+            page: page + 1,
+            total_page: Math.ceil(searchReceipt.length / 10),
+            product: receiptFilter,
+          },
+        })
     } catch (err) {
         return res.status
     }

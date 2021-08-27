@@ -22,6 +22,7 @@ const receiptSchema = new Schema({
     name: String,
     phone: String,
     address: String,
+    detail: String,
     status: {
         description: String,
         present: {
