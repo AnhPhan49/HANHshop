@@ -70,7 +70,7 @@ module.exports.updateCart = async (req, res) =>{
 module.exports.getCart = async (req, res) =>{
     try{
         let id = req.user.id
-        let dataCart = await cartModel.findOne({customer: id},'-customer').populate("product.id","name price image.url")
+        let dataCart = await cartModel.findOne({customer: id},'-customer').populate("product.id","name price price_after_sale image.url")
         return res.status(200).json({message: "Success", data: dataCart})
     }catch(err){
         return res.status(400).json({message: err.message})
