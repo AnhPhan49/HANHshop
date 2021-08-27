@@ -6,7 +6,7 @@ const managerAllow = require("../midlewares/managerAllowMidlleware")
 const { createReceipt, cancelReceipt, getReceipts, approveReceipt, cancelReceiptByAdmin, completeReceipt } = require("../controllers/receiptController");
 const addReceiptValidator = require("./validators/addReceiptValidator");
 
-receiptRoute.route('/create').post(checkLogin, addReceiptValidator, createReceipt);
+receiptRoute.route('/create/:id').post(checkLogin, addReceiptValidator, createReceipt);
 
 receiptRoute.route('/cancel/:id').delete(checkLogin, cancelReceipt)
 
@@ -18,6 +18,6 @@ receiptRoute.route('/admin/cancel/:id').put(checkLogin, managerAllow, cancelRece
 
 receiptRoute.route('/admin/complete/:id').put(checkLogin, managerAllow, completeReceipt)
 
-// receiptRoute.route('/search').get()
+receiptRoute.route("/search").get(checkLogin, managerAllow, );
 
 module.exports = receiptRoute;
