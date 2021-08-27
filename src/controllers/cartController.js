@@ -5,6 +5,7 @@ module.exports.addProduct = async (req, res) =>{
     try{
         let {id, count} = req.body
         let flag = true
+        count = Number(count)
         if (!id) throw new Error("Missing id product.")
         if (!count || count < 0) throw new Error("Something wrong with counter product") 
         let {total, product} = await inventoryModel.findOne({product: id}).populate('product')
