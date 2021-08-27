@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import { saveCategoryData } from "../../reducers/shopReducer";
 
 const Product = () => {
-  let { id } = useParams();
+  let { id, ed } = useParams();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
@@ -41,6 +41,8 @@ const Product = () => {
       let res = null;
       if (id) {
         res = await AdminApi.searchProductByCategory(page, id);
+      } else if(ed) {
+        res = await AdminApi.searchProductByProduct(page, ed)
       } else {
         res = await AdminApi.getProductList(page);
       }
@@ -58,6 +60,8 @@ const Product = () => {
       let res = null;
       if (id) {
         res = await AdminApi.searchProductByCategory(page, id);
+      } else if(ed) {
+        res = await AdminApi.searchProductByProduct(page, ed)
       } else {
         res = await AdminApi.getProductList(page);
       }

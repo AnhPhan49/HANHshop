@@ -464,7 +464,7 @@ body {
 .category-page, .production-page {
 	background-color: white;
 	padding-top: 10px;
-	padding-bottom: 10px;	
+	padding-bottom: 10px;
 }
 
 .category-page h4, .production-page .search-section {
@@ -483,7 +483,7 @@ body {
 	padding-left: 2%;
 	padding-right: 2%;
 	margin-left: 2%;
-	padding-top: 10px;	
+	padding-top: 10px;
 }
 
 .category-page .title div, .production-page .title div{
@@ -515,6 +515,7 @@ body {
 .category-page .category-list .category-row, .production-page .product-list .product-row {
 	padding-top: 10px;
 	padding-bottom: 10px;
+	font-size: 1.5rem;
 	font-weight: 550;
 } 
 
@@ -604,21 +605,10 @@ body {
 	margin-right: 2%;
 }
 
-
-.production-page .product-list .product-row .img-wrapper {
-	background-color: rgb(0, 0, 0);
-	border-radius: 4px;
-}
-
 .production-page .product-list .product-row .img-broke-wrapper {
 	background-color: gray;
 	border-radius: 4px;
 	height: 45px;	
-}
-
-.production-page .product-list .product-row .img-wrapper:hover {
-	cursor: pointer;
-	opacity: 0.8;
 }
 
 .ckeditor, .production-page .search-section .searchInput {
@@ -677,10 +667,47 @@ body {
 	margin-top: 25px;	
 }
 
+.production-page .product-list .product-row .fill {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.production-page .product-list .product-row .fill:hover {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+	cursor: pointer;
+	opacity: 0.8;
+}
+
+.production-page .product-list .product-row .fill img {
+	flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
 .production-page .product-list .product-row .item-name, .production-page .product-list .product-row .descript {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 2; /* number of lines to show */
 	-webkit-box-orient: vertical;	
+}
+
+.production-page .product-list .action:hover {
+	color: rgba(203,44,49,255);
+	cursor: pointer;
+}
+
+.production-page .product-list .price, .production-page .receipt-footer .custom-price span {
+	color: rgba(203,44,49,255);
+}
+
+.production-page .receipt-footer .custom-price {
+	font-size: 1.6rem;
+	font-weight: 550;
+	margin-right: 2%;
 }

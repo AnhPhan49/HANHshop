@@ -355,14 +355,14 @@ const ProductModal = forwardRef((props, ref) => {
                                                             <ImageListItem key={index}>
                                                                 <img src={item} alt='' />
                                                                 <ImageListItemBar
-                                                                classes={{
-                                                                    root: classes.titleBar,                                                        
-                                                                }}
-                                                                actionIcon={
-                                                                    <IconButton onClick={() => handleRemoveMedia(index)}>
-                                                                        <AiOutlineCloseCircle className={classes.title} />
-                                                                    </IconButton>
-                                                                }
+                                                                    classes={{
+                                                                        root: classes.titleBar,                                                        
+                                                                    }}
+                                                                    actionIcon={
+                                                                        <IconButton onClick={() => handleRemoveMedia(index)}>
+                                                                            <AiOutlineCloseCircle className={classes.title} />
+                                                                        </IconButton>
+                                                                    }
                                                                 />
                                                             </ImageListItem>
                                                             ))}

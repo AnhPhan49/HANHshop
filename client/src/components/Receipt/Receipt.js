@@ -1,107 +1,146 @@
 import React, { useState, useEffect } from "react";
-// import check from "../../assets/check.png";
-// import shop from "../../assets/shop.png";
-import ShopApi from '../../apis/shopApis'
+import ShopApi from "../../apis/shopApis";
+import { TextField, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import AuthPaymentModal from '../authencate-payment-modal'
 
 const Receipt = () => {
-  const [cart, setCart] = useState([])
-  const [cartTotal, setCartTotal] = useState()
+  const classes = useStyles();
+  const [cart, setCart] = useState([]);
+  const [cartTotal, setCartTotal] = useState();
+  const [openModal, setOpenModal] = useState()
 
   useEffect(() => {
-    getCart()
-  }, [])
+    getCart();
+  }, []);
 
   const getCart = async () => {
     try {
-      const res = await ShopApi.getCart()
+      const res = await ShopApi.getCart();
       if (res.status === 200) {
-        setCart(res.data.product)
-        setCartTotal(res.data.total_price)
+        setCart(res.data.product);
+        setCartTotal(res.data.total_price);
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   const formatCurrency = (price) => {
-    return price.toLocaleString('it-IT');                
-}
+    return price.toLocaleString("it-IT");
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
 
   return (
-    <div className="main">
-      <div className="content">
-        <div className="cartoption">
-          <div className="cartpage">
-            <h2>Giỏ hàng của bạn</h2>
-            <table className="tblone">
-              <tbody>
-                <tr>
-                  <th width="20%">Tên sản phẩm</th>
-                  <th width="10%">Ảnh</th>
-                  <th width="15%">Giá</th>
-                  <th width="25%">Số lượng</th>
-                  <th width="20%">Thành tiền</th>
-                  <th width="10%">Tùy chọn</th>
-                </tr>
-                {
-                  cart && cart.map((item, i) => (
-                    <tr key={i}>
-                      <td>{item.id.name}</td>
-                      <td>
-                        {
-                          item.id.image[0] && (
-                            <img src={item.id.image[0].url} alt="" />
-                          )
-                        }                        
-                      </td>
-                      <td>{formatCurrency(item.id.price)}đ</td>
-                      <td>
-                        <form action method="post">
-                          <input type="number" name defaultValue={item.total} />
-                          <input
-                            type="submit"
-                            name="submit"
-                            defaultValue="Update"
-                          />
-                        </form>
-                      </td>
-                      <td>{formatCurrency(item.total_price)}đ</td>
-                      <td>
-                        <a href>X</a>
-                      </td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
-            <table style={{ float: "right", textAlign: "left" }} width="40%">
-              <tbody>                
-                <tr>
-                  <th>Tổng cộng:</th>
-                  <td>{cartTotal && formatCurrency(cartTotal)}</td>
-                </tr>
-              </tbody>
-            </table>
+    <div className="production-page">
+      <AuthPaymentModal open={openModal} handleClose={handleCloseModal}></AuthPaymentModal>
+      <div style={{ marginLeft: "20px" }}>
+        <h3>Giỏ hàng</h3>
+      </div>
+      <div className="title row m-0">
+        <div className="col-4">Sản phẩm</div>
+        <div className="col-2 text-center">Đơn giá</div>
+        <div className="col-2 text-center">Số lượng</div>
+        <div className="col-2 text-center">Số tiền</div>
+        <div className="col-2 text-center">Thao tác</div>
+      </div>
+      <div className="body">
+        <div className="product-list">
+          {cart &&
+            cart.map((item, i) => (
+              <div className="row m-0" key={i}>
+                <div className="col-4 product-row row m-0">
+                  <div className="col-lg-3 col-md-5 col-sm-6 col-xs-6 text-center fill">
+                    <img
+                      alt=""
+                      src={item.id.image[0] ? item.id.image[0].url : ""}
+                    ></img>
+                  </div>
+                  <div className="col-lg-9 col-md-7 col-sm-6 col-xs-6 item-name">
+                    {item.id.name}
+                  </div>
+                </div>
+                <div className="col-2 product-row text-center">
+                  {formatCurrency(item.id.price)}đ
+                </div>
+                <div className="col-2 product-row text-center">
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        root: classes.resize,
+                      },
+                    }}
+                    placeholder="Số lượng"
+                    style={{ width: "50%", textAlign: "center" }}
+                    value={item.total}
+                    onWheel={(e) => e.target.blur()}
+                    InputProps={{
+                      classes: {
+                        input: classes.resize,
+                      },
+                      inputProps: {
+                        min: 1,
+                      },
+                    }}
+                    required
+                    type="number"
+                  />
+                </div>
+                <div className="col-2 product-row text-center price">
+                  {formatCurrency(item.total_price)}đ
+                </div>
+                <div className="col-2 product-row text-center">
+                  <span className="action">Xóa</span>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+      <div className="receipt-footer">
+        <div className="row ml-0 mr-0 mt-5">
+          <div className="col-6 text-center">
+            <Button
+              variant="contained"
+              style={{
+                fontSize: "1.4rem",
+                backgroundColor: "rgba(203,44,49,255)",
+                color: "white",
+              }}
+            >
+              Cập nhật danh sách
+            </Button>
           </div>
-          <div className="shopping">
-            {/* <div className="shopleft">
-              <a href="#">
-                {" "}
-                <img src={shop} alt="" />
-              </a>
-            </div>
-            <div className="shopright">
-              <a href="#">
-                {" "}
-                <img src={check} alt="" />
-              </a>
-            </div> */}
+          <div className="col-6 text-center">
+            {cartTotal && (
+              <span className="custom-price">
+                Tổng thanh toán: <span>{formatCurrency(cartTotal)}đ</span>
+              </span>
+            )}
+            <Button
+              variant="contained"
+              onClick={() => setOpenModal(true)}
+              style={{
+                fontSize: "1.4rem",
+                backgroundColor: "rgba(203,44,49,255)",
+                color: "white",
+              }}
+            >
+              Thanh toán
+            </Button>
           </div>
         </div>
-        <div className="clear" />
       </div>
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  resize: {
+    fontSize: "1.4rem",
+  },
+}));
 
 export default Receipt;
