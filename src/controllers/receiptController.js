@@ -53,7 +53,7 @@ module.exports.getReceipts = async (req, res) => {
     try {
         const id = req.user.id
         let {present} = req.query? req.query : false
-        let data = await receiptModel.find({customer: id, in_Process: present})
+        let data = await receiptModel.find({customer: id, in_Process: present},'-product._id').populate('product.id',"name image id_product")
         return res.status(200).json({message: "Successfully", data: data})
     } catch (err) {
         return res.status(400).json({message: err.message})
