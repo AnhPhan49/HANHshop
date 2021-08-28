@@ -4,9 +4,10 @@ const receiptModel = require('../models/receiptModel')
 
 module.exports.createReceipt = async(req, res) => {
     try{
-        let id = req.params
+        let {id} = req.params
         let {name, phone, address} = req.body
         let {detail} = req.body ? req.body : ""
+        
         let cart = await cartModel.findByIdAndUpdate(id, {
             product:[],
             total_price: 0
