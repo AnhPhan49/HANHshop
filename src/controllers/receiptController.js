@@ -81,12 +81,11 @@ module.exports.cancelReceiptByAdmin = async (req, res) => {
     try {
         const { id } = req.params
         const { description } = req.body ? req.body : ""
-        const { status } = req.body ? req.body : "Hủy đơn từ shop" 
         let updateReceipt = await receiptModel.findById(id)
         if (updateReceipt.status.present !== "Đang chờ duyệt" && updateReceipt.status.present !== "Đang vận chuyển") {
           throw new Error("Something went wrong with approve receipt")
         }
-        updateReceipt.status.present = status
+        updateReceipt.status.present = "Hủy đơn từ shop" 
         updateReceipt.status.description = description
         updateReceipt.in_Process =  false
         await updateReceipt.save()
