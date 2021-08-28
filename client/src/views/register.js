@@ -51,7 +51,7 @@ const RegisterPage = () => {
     return(
         <div className='login-page'>
             <div className='row m-0 login-header'>
-                <div className='col-lg-2 col-md-2 col-sm-6 logo-session'>
+                <div className='col-lg-2 col-md-2 col-sm-6 logo-session' onClick={() => history.push('/')}>
                     <div>HANH<span> Shop</span></div>
                 </div>                
                 <h3 className='col-lg-2 col-md-2 col-sm-6 mt-4'>Đăng kí</h3>                

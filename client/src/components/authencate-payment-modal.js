@@ -1,36 +1,77 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { FormGroup, TextField, Button } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import ShopApi from '../apis/shopApis'
+import ShopApi from "../apis/shopApis";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
+import alert from '../utils/alert'
 
 const AuthPaymentModal = (props) => {
   const classes = useStyles();
-  const accountdata = useSelector((state) => state.user.user)
-  const [name, setName] = useState()
-  const [phone, setPhone] = useState()
-  const [address, setAddress] = useState()
-  const [detail, setDetail] = useState()
-const [btn, setBtn] = useState(false)
-  const [receiptInfo, setReceiptInfo] = useState()
+  const user = useSelector((state) => state.user.user);
+  const [cartInfo, setCartInfo] = useState()
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [address, setAddress] = useState();
+  const [detail, setDetail] = useState();
+  const [btn, setBtn] = useState(false);
+
+  useEffect(()=>{
+    getCart()
+    if(user) {
+      setName(user.fullname)
+      setPhone(user.phone)
+      setAddress(user.address)
+    }
+  },[props.open])
+
+  const getCart = async () => {
+    try {
+      const res = await ShopApi.getCart();
+      if (res.status === 200) {        
+        setCartInfo({
+          total_price: res.data.total_price,
+          _id: res.data._id
+        })
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const submitReceipt = async () => {
     try {
-        const data = {
-            "name": name,
-            "phone": phone,
-            "address": address,
-            "detail": detail
-        }
+      if(!cartInfo) {
+        return
+      }
+      
+      setBtn(true)
+      const data = {
+        name: name,
+        phone: phone,
+        address: address,
+        detail: detail,
+      };
 
-        const res = await ShopApi.acceptReceipt()
-    } catch(e) {
-
+      const res = await ShopApi.acceptReceipt(cartInfo._id, data);
+      if (res.status === 200) {
+        alert({icon:'success', title:'Xác nhận đơn hàng thành công'})
+        setBtn(false)
+        props.closeAfterSave()
+        return        
+      }
+    } catch (e) { 
+      console.log(e)     
     }
-  }
+    props.handleClose()
+    setBtn(false)
+  };
+
+  const formatCurrency = (price) => {
+    return price.toLocaleString("it-IT");
+  };
 
   return (
     <Modal
@@ -100,49 +141,52 @@ const [btn, setBtn] = useState(false)
                   },
                 }}
                 required
-                placeholder='Địa chỉ liên lạc'
+                placeholder="Địa chỉ liên lạc"
               />
             </FormGroup>
             <FormGroup className={classes.FormGroup}>
-              <textarea value={detail} onChange={(e) => setDetail(e.target.value)} style={{fontSize:'1.4rem', outline:'none'}} placeholder='Ghi chú (nếu cần)' rows="4" cols="50"></textarea>
+              <textarea
+                value={detail}
+                onChange={(e) => setDetail(e.target.value)}
+                style={{ fontSize: "1.4rem", outline: "none" }}
+                placeholder="Ghi chú (nếu cần)"
+                rows="4"
+                cols="50"
+              ></textarea>
             </FormGroup>
-            
           </form>
-          <h4 className='mt-4'>Chi phí thanh toán</h4>
-          <div style={{fontSize:'1.4rem', borderTop:'1px solid lightgray', borderBottom:'1px solid lightgray', padding:'12px'}}>
-            <div className='row m-0 '>
-              <div className='col-6 p-0'>
-                Tạm tính:
-              </div>
-              <div className='col-6 p-0 text-right'>
-                0đ
-              </div>
+          <h4 className="mt-4">Chi phí thanh toán</h4>
+          <div
+            style={{
+              fontSize: "1.5rem",
+              borderTop: "1px solid lightgray",
+              borderBottom: "1px solid lightgray",
+              padding: "12px",
+            }}
+          >
+            <div className="row m-0 ">
+              <div className="col-6 p-0">Tạm tính:</div>
+              <div className="col-6 p-0 text-right">{cartInfo && formatCurrency(cartInfo.total_price)}</div>
             </div>
-            <div className='row m-0'>
-              <div className='col-6 p-0'>
-              Phí vận chuyển:
-              </div>
-              <div className='col-6 p-0 text-right'>
-                0đ
-              </div>
-            </div>            
+            <div className="row m-0">
+              <div className="col-6 p-0">Phí vận chuyển:</div>
+              <div className="col-6 p-0 text-right">0đ</div>
+            </div>
           </div>
-          <div className='row m-0' style={{fontSize:'1.4rem', padding:'12px', fontWeight:'550'}}>
-              <div className='col-6 p-0'>
-              Tổng cộng:
-              </div>
-              <div className='col-6 p-0 text-right text-danger'>
-                0đ
-              </div>
-            </div>           
+          <div
+            className="row m-0"
+            style={{ fontSize: "1.6rem", padding: "12px", fontWeight: "550" }}
+          >
+            <div className="col-6 p-0">Tổng cộng:</div>
+            <div className="col-6 p-0 text-right text-danger">{cartInfo && formatCurrency(cartInfo.total_price)}</div>
+          </div>
           <div className="mt-3 row modal-action">
             <div className="col-6">
               <Button
                 type="button"
                 onClick={props.handleClose}
-                variant="contained"
-                color="secondary"
-                style={{ fontSize: "1.2rem" }}
+                variant="contained"                
+                style={{ fontSize: "1.3rem" }}                
               >
                 Trở về
               </Button>
@@ -152,8 +196,8 @@ const [btn, setBtn] = useState(false)
                 disabled={btn}
                 type="submit"
                 variant="contained"
-                color="primary"
-                style={{ fontSize: "1.2rem" }}
+                onClick={submitReceipt}             
+                style={{ fontSize: "1.3rem", backgroundColor:'rgba(203,44,49,255)', color:'white' }}
               >
                 Đặt hàng
               </Button>
@@ -177,14 +221,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     borderRadius: 10,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(4, 4, 4),
   },
   FormGroup: {
-    marginTop: 14
+    marginTop: 14,
   },
   resize: {
-    fontSize: '1.5rem'
-},
+    fontSize: "1.5rem",
+  },
 }));
 
 export default AuthPaymentModal;

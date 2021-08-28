@@ -7,6 +7,8 @@ import Modal from '@material-ui/core/Modal';
 import AdminApi from '../apis/adminApis'
 import alert from '../utils/alert'
 import NumberFormat from 'react-number-format';
+import CallReceivedIcon from '@material-ui/icons/CallReceived';
+import CallMadeIcon from '@material-ui/icons/CallMade';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -15,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
           marginTop :'45px',
           marginLeft :'35px',
           fontSize: '1.5rem',
-          transform: 'translate(0, -21.5px) scale(1.5)',         
+          transform: 'translate(0, -21.5px) scale(1.5)',
+         
         },
       },
     formControl: {
@@ -48,9 +51,18 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 300,
         // overflowY:'scroll'
     },
+    papernew: {
+        backgroundColor: theme.palette.background.paper,      
+        boxShadow: theme.shadows[5],        
+         
+        marginTop :'5px',     
+        height: 600,
+        minWidth: 1000,
+        // overflowY:'scroll'
+    },
     paperContainer: {
         padding: theme.spacing(5, 5, 5),
-        fontSize: '23px'
+        fontSize: '22px'
     },
     imageWrapper: {
         flexWrap: 'wrap',
@@ -92,28 +104,139 @@ const useStyles = makeStyles((theme) => ({
                 isNumericString
             />
         );
-    }
+  }
 
-const ProductModal = forwardRef((props, ref) => {
+  
+
+const InventoryModal = forwardRef((props, ref) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false)    
     const [editNumber, setEditNumber] = useState()
     const [editProducer, setEditProducer] = useState()
+    const [historyProduct, setHistoryProduct] = useState([])
     const [buttonstatus, setstatus]=useState(false);
+    const [n1, setN1] = useState([])
     useImperativeHandle(ref, () => ({
         handleOpenModal(){
             setOpen(true)
+            getProductList()
         },        
     }));
  
   
     const handleCloseModal = () => {
         setOpen(false)
+     
     }
+    const clearInput=()=>{
+        setEditNumber();
+        setEditProducer();
+    }
+    useEffect(() => {
+        // console.log(props.page)
+        getProductList()
+    
+    }, [])
+    const convertTime = (unformatTime) => {        
+        let date = new Date(unformatTime)
+        const formatedTime = date.getDate() + " / " + (date.getMonth() + 1) + " / " + date.getFullYear();                    
+        return formatedTime
+    }
+
+    const getProductList = async () => {
+        try {
+            // if(props.all==true){
+                // console.log(props.page);
+                // console.log(props.modalEditFilter);
+                const res = await AdminApi.getHistoryInventory(props.page,props.modalEditFilter)
+                console.log(res)
+                if(res.status === 200) {
+                    console.log(res.data.list)
+                    setHistoryProduct(res.data.list)
+                }
+                
+            
+           
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    
     const demo=()=>{
+     
+        if(props.all==true){
+         
+            return(
+                <Fade in={open}>
+            <div className={classes.papernew}>                        
+                <div className={classes.paperContainer}>
+                <div className='production-page'>
+                    <h4>{props.title}</h4>
+                 <div className='row m-0 title'>
+                    <div className='col-3 text-center'>
+                        Stt
+                    </div>
+                    <div className='col-3 text-center'>
+                        Số Lượng Nhập
+                    </div>
+                    <div className='col-3 text-center'>
+                        Tên Nhà Cung Cấp
+                    </div>
+                    <div className='col-3 text-center'>
+                        Ngày Nhập
+                    </div>
+                    
+                </div>
+                <div className='product-list'>
+                { historyProduct && historyProduct.map((item, i) =>
+                    <div className='row m-0 product-row' style={{background: '#ebebeb'}} key={item._id}>
+                            <div className='col-3 product-item'>
+                           {i+1}
+                            </div>
+                            <div className='col-3 product-item'>
+                            {item.total_add<=0 ? item.total_add : item.total_add }
+                            {item.total_add<=0 ? <CallReceivedIcon style={{ color: 'red',marginTop: -4,fontSize: '20px'  }}/>: <CallMadeIcon style={{ color: 'green',marginTop: -4,fontSize: '20px' }}/>}
+                            </div>
+                           
+                         
+                            <div className='col-3 product-item'>
+                            {item.producer}
+                            </div>                          
+                            <div className='col-3 product-item'>
+                            {/* <input type="date" value=  {item.createdAt}/> */}
+                            {
+                                    convertTime(item.createdAt)
+                                }  
+                            </div>
+                
+                    </div>
+                )}
+                </div>
+             </div>       
+                   
+            {/* { historyProduct && historyProduct.map((item, i) =>
+                      <tr>
+            <td>{i+1}</td>
+            <td >{item.total_current}</td>
+           
+            <td>{item.total_add<=0 ? item.total_add+"giam" : item.total_add +"tang"} </td>
+            <td>{item.producer}</td> 
+           
+          
+          </tr> */}
+         
+                 
+                  </div>
+            </div>
+        </Fade>     
+            
+            )
+         
+        }
+    if(props.all==false){
       if(props.status===true){
-          return(
-          <Fade in={open}>
+          return( <Fade in={open}>
             <div className={classes.paper}>                        
                 <div className={classes.paperContainer}>
                     <h4>{props.title}</h4>
@@ -179,19 +302,7 @@ const ProductModal = forwardRef((props, ref) => {
         
         
         </div>
-        {/* <FormGroup>
-            <TextField
-                id="standard-basic"
-                label="Nhà Cung Cấp"
-                value={editProducer}
-                InputLabelProps={{
-                    classes: {
-                      root: classes.labelRoot,                              
-                    }
-                }}
-                onChange={(e) => setEditProducer(e.target.value)}
-                />
-        </FormGroup> */}
+        
                         <FormGroup className='mt-5'>
                             <Button disabled={buttonstatus} type='submit' variant="contained" color="primary" id='material-button-label'>
                                 Lưu
@@ -204,6 +315,7 @@ const ProductModal = forwardRef((props, ref) => {
             )
       }
     }
+    }
     
     const handleSubmitFormImport = async(e) => {
        try{
@@ -211,10 +323,9 @@ const ProductModal = forwardRef((props, ref) => {
             e.preventDefault();
           
                 let formData = {
-                
+                                    
                     "count":Number(editNumber),
-                    "producer":editProducer
-                    
+                    "producer":editProducer                    
                 }
                 console.log(formData)
             
@@ -225,7 +336,8 @@ const ProductModal = forwardRef((props, ref) => {
                 console.log(res);
             }          
             if(res.status === 200) {              
-                alert({icon : 'success',title : 'Updated', msg : res.message})                                                    
+                alert({icon : 'success',title : 'Updated', msg : res.message})      
+                clearInput();                                              
             } 
        
                  
@@ -257,7 +369,8 @@ const ProductModal = forwardRef((props, ref) => {
                  console.log(res);
              }          
              if(res.status === 200) {              
-                 alert({icon : 'success',title : 'Updated', msg : res.message})                                                    
+                 alert({icon : 'success',title : 'Updated', msg : res.message})   
+                 clearInput();                                                 
              } 
          }
                   
@@ -272,9 +385,10 @@ const ProductModal = forwardRef((props, ref) => {
  
      }
     
+//    console.log(n1)
+// console.log(historyProduct);
 
-// console.log(props.modalEditFilter.total);
-// console.log(Number(editNumber));
+
     return(
         <div className='product-modal'>    
         
@@ -291,10 +405,11 @@ const ProductModal = forwardRef((props, ref) => {
                 }}
             >
                  {demo()} 
+                
               
             </Modal>
         </div>
     )
 })
 
-export default ProductModal
+export default InventoryModal

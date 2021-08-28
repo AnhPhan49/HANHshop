@@ -60,7 +60,7 @@ const Homepage = () => {
     <div className="homepage">
       <Carousel
         NextIcon={<FcNext className="arrow-icon" />}
-        PrevIcon={<FcPrevious className="arrow-icon" />}
+        PrevIcon={<FcPrevious className="arrow-icon" />}        
       >
         {items.map((ele, i) => (
           <BannerItem

@@ -7,11 +7,13 @@ import {BsSearch} from 'react-icons/bs'
 import {AiOutlineHeart, AiOutlineShoppingCart} from 'react-icons/ai'
 import { Badge } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { userlogoutsuccess, deletecurrentuserdata } from "../../reducers/userReducer";
 
 const Header = () => {
     const history = useHistory()
     const user = useSelector(state => state.user.user)
+    const dispatch = useDispatch();
     const [curruser, setCurrUser] = useState()
     const [inputSearch, setInputSearch] = useState()
     
@@ -36,6 +38,13 @@ const Header = () => {
         }
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        dispatch(userlogoutsuccess());
+        dispatch(deletecurrentuserdata());
+        return history.push("/login");
+    };
+
     return(
         <div>
             <div className='header row'>
@@ -57,14 +66,20 @@ const Header = () => {
                         </span>
                     </div>
                     <div className='header-item col-6'>
-                        <FaUserAlt className='user-icon' size='16px'></FaUserAlt>
+                    <FaUserAlt className='user-icon' size='16px'></FaUserAlt>
                         {
                             curruser?(
-                                <span onClick={() => history.push('/login')}>
+                                <span>
+                                    
                                     {curruser.lastname + " " + curruser.firstname}
+                                    <span className='ml-3 link' onClick={handleLogout}>
+                                        Đăng xuất
+                                    </span>
                                 </span>
+                               
+                                
                             ):(
-                                <span onClick={() => history.push('/login')}>Đăng nhập</span>
+                                <span className='link' onClick={() => history.push('/login')}>Đăng nhập</span>                                               
                             )
                         }                        
                     </div>

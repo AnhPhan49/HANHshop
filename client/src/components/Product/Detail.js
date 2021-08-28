@@ -83,10 +83,10 @@ const Detail = (props) => {
     e.preventDefault();
     try {
       const data = {
-        id: id,
-        count: parseInt(quantity),
+        "id": id,
+        "count": quantity,
       };
-      console.log(data)
+
       const res = await ShopApi.addToCart(data);
       if (res.status === 200) {
         setOpen(true);
