@@ -15,7 +15,11 @@ module.exports.addProduct = async (req, res) =>{
         updateCart.product.forEach(element => {
             if (String(element.id) === id) {
                 element.total = element.total + count
-                element.total_price = element.total_price + product.price*count
+                if ( product.status === "Sale" ){
+                    element.total_price = element.total_price + product.price_after_sale*count
+                } else {
+                    element.total_price = element.total_price + product.price*count
+                }
                 flag = false
                 return
             }
@@ -47,7 +51,12 @@ module.exports.updateCart = async (req, res) =>{
             if (total < count){ 
                 flag.push(product.name)
             } else {
-                const total_price = product.price * element.total
+                if ( product.status === "Sale" ){
+                    const total_price = product.price_after_sale * element.total
+                } else {
+                    const total_price = product.price * element.total;
+                }
+                
                 Object.assign(element, {total_price: total_price})
                 billPrice = billPrice + total_price
             }
@@ -60,7 +69,7 @@ module.exports.updateCart = async (req, res) =>{
 
         return res
           .status(200)
-          .json({ message: "Successfully", data: updatedCart });
+          .json({ message: "Successfully", data: updatedCart, error: flag });
 
     } catch (err) {
         return res.status(400).json({message: err.message})
