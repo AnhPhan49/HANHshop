@@ -121,7 +121,7 @@ module.exports.search = async (req, res) => {
         page = page - 1
         if (page < 0) throw new Error("Page not found!!")
         delete search.page
-        let searchReceipt = await receiptModel.find(search).sort({'createdAt': 'desc'}).populate("product","_id name image")
+        let searchReceipt = await receiptModel.find(search,'-product._id').sort({'createdAt': 'desc'}).populate("product.id","-_id name image")
         if(Math.ceil(searchReceipt.length/10) < page + 1){
             return res.status(201).json({message: "Chưa có trang thông báo này"})
         }
@@ -131,7 +131,7 @@ module.exports.search = async (req, res) => {
           data: {
             page: page + 1,
             total_page: Math.ceil(searchReceipt.length / 10),
-            product: receiptFilter,
+            receipts: receiptFilter,
           },
         })
     } catch (err) {
