@@ -9,6 +9,7 @@ import { HiMenu } from "react-icons/hi";
 import useWindowDimensions from "../GetScreenWidthHeight/useWindowDimensions";
 import Drawer from "@material-ui/core/Drawer";
 import ShopApi from "../../apis/shopApis";
+import img from '../../assets/sidebar-logo.png'
 
 const NavBar = () => {
   const { width } = useWindowDimensions();
@@ -38,21 +39,40 @@ const NavBar = () => {
       onKeyDown={() => setDrawner(false)}
       className={classes.list}
     >
-      <NavLink to="/">
+      <div className='sidebar-logo'>
+        <img alt='' src={img}></img>
+      </div>
+      <Link to="/" style={{ padding: 0 }}>
         <div className="sidebar-item">Trang chủ</div>
-      </NavLink>
-      <NavLink to="/product">
+      </Link>
+      <Link to="/product">
         <div className="sidebar-item">Sản phẩm</div>
-      </NavLink>
-      <NavLink to="/discount">
+      </Link>
+      <div className='sidebar-child-item'>
+        <ul>
+        {cateList.length ? (
+          cateList.map((ele, index) => (
+            <li key={index}>
+              <Link to={`/category/${ele._id}`}>
+                <div>{ele.name}</div>
+              </Link>
+            </li>
+          ))
+        ) : (
+          <></>
+        )}
+        </ul>
+        
+      </div>
+      <Link to="/discount">
         <div className="sidebar-item">Ưu đãi</div>
-      </NavLink>
-      <NavLink to="/contact">
+      </Link>
+      <Link to="/contact">
         <div className="sidebar-item">Liên Hệ</div>
-      </NavLink>
-      <NavLink to="/booked">
+      </Link>
+      <Link to="/booked">
         <div className="sidebar-item">Đơn hàng</div>
-      </NavLink>
+      </Link>
     </div>
   );
 
@@ -82,9 +102,9 @@ const NavBar = () => {
                   {cateList.length ? (
                     cateList.map((ele, index) => (
                       <li key={index}>
-                        <NavLink to={`/category/${ele._id}`}>
+                        <Link to={`/category/${ele._id}`}>
                           <a>{ele.name}</a>
-                        </NavLink>
+                        </Link>
                       </li>
                     ))
                   ) : (
@@ -112,7 +132,7 @@ const NavBar = () => {
         </div>
       ) : (
         <div className={classes.root}>
-          <AppBar position="static" style={{ backgroundColor: "#252525" }}>
+          <AppBar position="static" style={{ backgroundColor: "#ff6f64" }}>
             <Toolbar className={classes.customizeToolbar}>
               <IconButton
                 edge="start"
@@ -135,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 36,
   },
   paper: {
-    background: "#252525",
+    background: "#ff6f64",
   },
   list: {
     width: 250,

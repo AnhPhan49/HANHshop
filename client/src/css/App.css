@@ -15,7 +15,7 @@ body {
 }
 
 .login-page .login-body {
-	background-color: rgba(203,44,49,255);
+	background-color: #F5A9BC;
 	height: 550px;
 }
 
@@ -69,9 +69,9 @@ body {
 }
 
 .header .hd-right .header-item .link:hover {
-	border-bottom: 2px solid rgba(203,44,49,255);
+	border-bottom: 2px solid #F5A9BC;
 	cursor: pointer;
-	color: rgba(203,44,49,255);	
+	color: #F5A9BC;	
 }
 
 .header .header-item span {
@@ -91,14 +91,23 @@ body {
 
 .logo-session div {
 	margin-top: 8px;	
-	color: rgba(203,44,49,255);
+	color: #F5A9BC;
 	font-weight: 700;
 	font-size: 2.8rem;
 	cursor: pointer;
 }
 
 .logo-session span {
-	color: #252525;
+	color: #ff6f64;
+}
+
+.logo-session img {
+	height: auto;
+	width: 200px;
+}
+
+.logo-session img:hover {
+	cursor: pointer;
 }
 
 .header-below .search-session {
@@ -112,10 +121,8 @@ body {
 	border: none;
 	padding-top: 14px;
 	padding-bottom: 14px;
-	/* padding-right: 60px;
-	padding-left: 23px; */
 	font-size: 1.5rem;
-	color: #252525;
+	color: #ff6f64;
 	position: relative;
 }
 
@@ -160,14 +167,15 @@ body {
 	position: absolute;
 	right: -3px;
 	top: -1px;
-	border: 1px solid rgba(203,44,49,255);
-	background: rgba(203,44,49,255);
+	border: 1px solid #ff6f64;
+	background: #ff6f64;
 	padding: 12px 16px 12px;
 	cursor: pointer;
 }
 
 .header-below .search-session .input-group button:hover{
-	background: rgb(179, 45, 36);
+	background: #F5A9BC;
+	border: 1px solid #F5A9BC;
 }
 
 .header-below .cart-session {
@@ -187,7 +195,7 @@ body {
 
 .nav-item {
 	margin-top: 36px;
-	background: #252525;
+	background: #ff6f64;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -219,7 +227,7 @@ body {
 	font-weight: 700;
 	display: block;
 	color: #ffffff;
-	border-right: 2px solid #3b3b3b;
+	border-right: 2px solid #F5A9BC;
 	text-transform: uppercase;
 	padding: 15px 40px 15px;
 	-webkit-transition: all 0.3s;
@@ -228,7 +236,7 @@ body {
 }
 
 .nav-item .nav-menu li a:hover{
-	background-color: rgba(203,44,49,255);
+	background-color: #F5A9BC;
 	color: #ffffff;
 	cursor: pointer;
 }
@@ -242,13 +250,13 @@ body {
 }
 
 .nav-item .nav-menu li .active a {
-	background: rgba(203,44,49,255);
+	background: #F5A9BC;
 }
 
 .nav-item .nav-menu li .dropdown {
 	visibility: hidden;
 	position: absolute;
-	background: #252525;
+	background: #ff6f64;
 	top: 86px;
 	width: 248px;
 	right: 0;
@@ -273,12 +281,12 @@ body {
 
 .nav-item .nav-menu li .dropdown li:hover>a {
 	background: transparent;
-	color: rgba(203,44,49,255);
+	color: #F5A9BC;	
 }
 
 .nav-item .nav-menu li .dropdown li a {
 	border-right: 0;
-	padding: 13px 20px 12px 30px;
+	padding: 8px;	
 	text-transform: capitalize;
 }
 
@@ -300,12 +308,13 @@ body {
 }
 
 .banner-item img {
-	position: absolute;
-	width: 100%;
+	position: absolute;	
+    min-width: 100%;
+    min-height: 100%
 }
 
 .banner-item span {
-	color: rgba(203,44,49,255);
+	color: #F5A9BC;
 	font-size: 1.5rem;
 	font-weight: 700;
 	animation-name: float;
@@ -354,8 +363,8 @@ body {
 
 .sale-control button{
 	background-color: transparent;
-	border: 1px solid rgba(203,44,49,255);
-	color: rgba(203,44,49,255);
+	border: 1px solid #ff6f64;
+	color: #ff6f64;
 	text-transform: uppercase;
 	font-size: 1.4rem;
 	padding: 6px;
@@ -365,12 +374,12 @@ body {
 
 .sale-control .sale-title div {
 	font-size: medium;
-	color: rgba(203,44,49,255);
+	color: #ff6f64;
 	margin: 8px;
 }
 
 .sale-control button:hover{
-	background-color: rgba(203,44,49,255);	
+	background-color: #ff6f64;	
 	color: white;
 }
 
@@ -379,7 +388,7 @@ body {
 	font-size: 1.5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: -webkit-box;
+	display: -webkit-box;	
 	-webkit-line-clamp: 2; /* number of lines to show */
 	-webkit-box-orient: vertical;
 }
@@ -388,7 +397,7 @@ body {
 	font-size: 1.7rem;
 	font-weight: 700;
 	margin-top: 2px;
-	color: rgba(203,44,49,255);
+	color: #ff6f64;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 1; /* number of lines to show */
@@ -705,12 +714,12 @@ body {
 }
 
 .production-page .product-list .action:hover {
-	color: rgba(203,44,49,255);
+	color: #F5A9BC;
 	cursor: pointer;
 }
 
 .production-page .product-list .price, .production-page .receipt-footer .custom-price span {
-	color: rgba(203,44,49,255);
+	color: #F5A9BC;
 }
 
 .production-page .receipt-footer .custom-price {
@@ -721,13 +730,31 @@ body {
 
 .sidebar-item {
 	color: white;
-	font-size: 1.5rem;
-	padding: 16px;
+	font-size: 1.6rem;	
 	font-weight: 550;
-	border-bottom: 1px solid gray;
+	border-top: 1px solid #F5A9BC;
+	border-bottom: 1px solid #F5A9BC;
+	padding: 14px;	
 }
 
 .sidebar-item:hover {
-	background-color: rgba(203,44,49,255);
+	background-color: #F5A9BC;
 	cursor: pointer;
+}
+
+.sidebar-child-item ul {
+	margin: 10px;	
+}
+
+.sidebar-logo {
+	font-size: 2.6rem;
+	padding: 10px;
+}
+
+.sidebar-logo div {
+	color: #F5A9BC;
+}
+
+.sidebar-logo div span, .sidebar-child-item ul li div {
+	color: lightgray;
 }

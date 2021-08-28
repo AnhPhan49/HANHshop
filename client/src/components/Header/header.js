@@ -9,6 +9,7 @@ import { Badge } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { userlogoutsuccess, deletecurrentuserdata } from "../../reducers/userReducer";
+import logo from '../../assets/logo.png'
 
 const Header = () => {
     const history = useHistory()
@@ -86,9 +87,9 @@ const Header = () => {
                 </div>                
             </div>
 
-            <div className='header header-below row'>
-                <div className='logo-session col-lg-2 col-md-12'>
-                    <div>HANH <span> Shop</span></div>
+            <div className='header header-below row'>                
+                <div className='logo-session col-lg-2 col-md-12' onClick={()=>history.push('/')}>
+                    <img src={logo} alt=''></img>
                 </div>
                 <div className='search-session col-lg-7 col-md-12 p-0'>
                     <div className='category-btn col-3 text-center'>Tìm kiếm</div>

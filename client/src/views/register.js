@@ -5,6 +5,7 @@ import AuthApis from '../apis/authApis'
 import { Link, useHistory } from 'react-router-dom';
 import alert from '../utils/alert'
 import Footer from '../components/Footer/Footer'
+import img from '../assets/logo.png'
 
 const RegisterPage = () => {
     const classes = useStyles();
@@ -52,7 +53,7 @@ const RegisterPage = () => {
         <div className='login-page'>
             <div className='row m-0 login-header'>
                 <div className='col-lg-2 col-md-2 col-sm-6 logo-session' onClick={() => history.push('/')}>
-                    <div>HANH<span> Shop</span></div>
+                <img alt='' src={img}></img>
                 </div>                
                 <h3 className='col-lg-2 col-md-2 col-sm-6 mt-4'>Đăng kí</h3>                
             </div>
@@ -172,7 +173,7 @@ const RegisterPage = () => {
                                         label="Nhập lại mật khẩu"/>
                                 </FormGroup>
                                 <FormGroup className='mt-5'>
-                            <Button disabled={btn} variant="contained" type='submit' style={{backgroundColor:'rgba(203,44,49,255)', fontSize:'1.3rem', color:'white'}}>
+                            <Button disabled={btn} variant="contained" type='submit' style={{backgroundColor:'#ff6f64', fontSize:'1.3rem', color:'white'}}>
                                 Đăng kí 
                             </Button>
                         </FormGroup>
