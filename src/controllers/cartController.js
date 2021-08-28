@@ -51,10 +51,12 @@ module.exports.updateCart = async (req, res) =>{
             if (total < count){ 
                 flag.push(product.name)
             } else {
+               console.log(product.status);
+               let total_price = 0
                 if ( product.status === "Sale" ){
-                    const total_price = product.price_after_sale * element.total
+                    total_price = product.price_after_sale * element.total
                 } else {
-                    const total_price = product.price * element.total;
+                    total_price = product.price * element.total;
                 }
                 
                 Object.assign(element, {total_price: total_price})
