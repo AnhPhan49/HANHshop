@@ -6,7 +6,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { store } from './store'
+import store from './store'
 import { Provider } from 'react-redux'
 
 import Login from './views/login'
@@ -17,10 +17,15 @@ import Header from './components/Header/header'
 import NavBar from './components/Nav/navbar';
 import Footer from './components/Footer/Footer';
 import ShopRoute from'./components/Router/shop-route'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+
+let persistor = persistStore(store);
 
 function App() {
   return (
-    <Provider store={store}>      
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>  
       <Router>
         <Switch>
             <Route path="/login">
@@ -42,6 +47,7 @@ function App() {
             </Route>                   
           </Switch>      
       </Router>
+      </PersistGate> 
     </Provider>
   );
 }

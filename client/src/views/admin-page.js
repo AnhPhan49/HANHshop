@@ -63,7 +63,7 @@ const AdminPage = () => {
     }
   }, [view]);
 
-  var AdminSidebar = [
+  const AdminSidebar = [
     {
       title: <h5 className={classes.sidebarText}>Danh mục</h5>,
       icon: (
@@ -111,7 +111,7 @@ const AdminPage = () => {
     },
   ];
 
-  var ManagerSidebar = [
+  const ManagerSidebar = [
     {
       title: <h5 className={classes.sidebarText}>Danh mục</h5>,
       icon: (
@@ -171,7 +171,7 @@ const AdminPage = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("token");    
     dispatch(userlogoutsuccess());
     setAnchorEl(null);
     return history.push("/login");

@@ -25,7 +25,7 @@ const Login = () => {
             setBtn(true)
             const res = await AuthApis.login(data);                  
             if(res.status === 200) {             
-                localStorage.setItem("token", res.data)                           
+                localStorage.setItem("token", res.data)                         
                 AuthApis.setHeaderAxios(res.data)
                 getCurrentUserAndRoute()
             }
@@ -44,7 +44,7 @@ const Login = () => {
         try {
           const res = await AdminApi.getCurrentUser();      
           if (res.status === 200) {
-            dispatch(savecurrentuserdata(res.data))
+            dispatch(savecurrentuserdata(res.data))        
             if(res.data.role === 'admin' || res.data.role === 'manager') {        
                 dispatch(userloginsuccess())
                 history.push('/admin')

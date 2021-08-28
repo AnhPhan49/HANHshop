@@ -249,7 +249,7 @@ body {
 	position: absolute;
 	background: #252525;
 	top: 86px;
-	width: 200px;
+	width: 248px;
 	right: 0;
 	z-index: 99;	
 	opacity: 0;
@@ -282,13 +282,20 @@ body {
 }
 
 .banner-item {
-	top: 0;
-	height: 500px;
+	margin-top: 0;
 	user-select: unset;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
 }
 
 .banner-item .banner-info {
-	margin-top: 160px;
+	margin-top: 5%;
+	flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+	height: 300px
 }
 
 .banner-item img {
@@ -298,7 +305,7 @@ body {
 
 .banner-item span {
 	color: rgba(203,44,49,255);
-	font-size: medium;
+	font-size: 1.5rem;
 	font-weight: 700;
 	animation-name: float;
   	animation-duration: 1s;
@@ -308,14 +315,13 @@ body {
 	font-weight: 500;
 	padding-bottom: 15px;
 	font-weight: bold;
-	letter-spacing: 5px;
 	animation-name: float;
   	animation-duration: 2s;
 }
 
 .banner-item p {
-	color: gray;
-	font-size: medium;
+	color: rgb(87, 87, 87);
+	font-size: 1.4rem;
 	animation-name: float;
   	animation-duration: 3s;
 }
@@ -710,4 +716,17 @@ body {
 	font-size: 1.6rem;
 	font-weight: 550;
 	margin-right: 2%;
+}
+
+.sidebar-item {
+	color: white;
+	font-size: 1.5rem;
+	padding: 16px;
+	font-weight: 550;
+	border-bottom: 1px solid gray;
+}
+
+.sidebar-item:hover {
+	background-color: rgba(203,44,49,255);
+	cursor: pointer;
 }
