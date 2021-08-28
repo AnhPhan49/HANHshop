@@ -6,11 +6,12 @@ const {
     updateInventory,
     listHistoryInventory
 } = require('../controllers/inventoryController')
+const managerAllowMidlleware = require('../midlewares/managerAllowMidlleware')
 
-inventoryRoute.route('/search').get(search)
+inventoryRoute.route('/search').get(checkLogin, managerAllowMidlleware , search)
 
-inventoryRoute.route('/update/:id').put(checkLogin, updateInventory)
+inventoryRoute.route('/update/:id').put(checkLogin, managerAllowMidlleware, updateInventory)
 
-inventoryRoute.route('/history').get(listHistoryInventory)
+inventoryRoute.route('/history').get(checkLogin, managerAllowMidlleware, listHistoryInventory)
 
 module.exports = inventoryRoute
