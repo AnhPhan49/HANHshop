@@ -711,3 +711,10 @@ body {
 	font-weight: 550;
 	margin-right: 2%;
 }
+@media only screen and (max-width: 800px) {
+	.nav-item {
+    margin-top: 36px;
+    background: #252525;
+    display: flex;
+    height: 110px;
+}}

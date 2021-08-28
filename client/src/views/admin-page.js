@@ -33,7 +33,7 @@ import CategoryManagePage from "./category-manage-page";
 import ProductManagePage from "./product-manage-page";
 import InventoryManagePage from "./inventory-manage-page";
 import AccountManagePage from "./account-manage-page";
-
+import ReceiptManagePage from "./receipt-manage-page";
 const drawerWidth = 240;
 
 const AdminPage = () => {
@@ -187,6 +187,8 @@ const AdminPage = () => {
         return <ProductManagePage></ProductManagePage>;
       case 2:
         return <InventoryManagePage></InventoryManagePage>;
+      case 3 :
+        return <ReceiptManagePage></ReceiptManagePage>
       default:
     }
   };

@@ -27,6 +27,21 @@ const AdminApi = {
         return axiosClient.get(url)
     },
     // End_Inventory
+    //Receipt
+    getReceiptList(page){
+        const url=`/api/receipt/search?page=${page}`;
+        return axiosClient.get(url)
+    },
+    cancelReceipt(receiptId) {
+        const url = `/api/receipt/admin/cancel/${receiptId}`;
+        return axiosClient.put(url)
+    },
+    approveReceipt(receiptId) {
+        const url = `/api/receipt/approve-receipt/${receiptId}`;
+        return axiosClient.put(url)
+    },
+    
+    // end Receipt
     getProductList(page) {
         const url = `/api/product/search?page=${page}`
         return axiosClient.get(url)
