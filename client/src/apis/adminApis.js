@@ -74,7 +74,25 @@ const AdminApi = {
     getCurrentUser() {
         const url = `/api/user/current`
         return axiosClient.get(url)
-    }
+    },
+    getHistoryInventory(page,id){
+        const url = `/api/inventory/history?page=${page}&id=${id}`;
+        return axiosClient.get(url)
+    },
+    // End_Inventory
+    //Receipt
+    getReceiptList(page){
+        const url=`/api/receipt/search?page=${page}`;
+        return axiosClient.get(url)
+    },
+    cancelReceipt(receiptId) {
+        const url = `/api/receipt/admin/cancel/${receiptId}`;
+        return axiosClient.put(url)
+    },
+    approveReceipt(receiptId) {
+        const url = `/api/receipt/approve-receipt/${receiptId}`;
+        return axiosClient.put(url)
+    },
 }
 
 export default AdminApi

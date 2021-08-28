@@ -94,6 +94,7 @@ body {
 	color: rgba(203,44,49,255);
 	font-weight: 700;
 	font-size: 2.8rem;
+	cursor: pointer;
 }
 
 .logo-session span {

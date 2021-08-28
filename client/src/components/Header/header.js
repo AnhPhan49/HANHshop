@@ -8,7 +8,7 @@ import {AiOutlineHeart, AiOutlineShoppingCart} from 'react-icons/ai'
 import { Badge } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { userlogoutsuccess } from "../../reducers/userReducer";
+import { userlogoutsuccess, deletecurrentuserdata } from "../../reducers/userReducer";
 
 const Header = () => {
     const history = useHistory()
@@ -40,9 +40,10 @@ const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        dispatch(userlogoutsuccess());        
+        dispatch(userlogoutsuccess());
+        dispatch(deletecurrentuserdata());
         return history.push("/login");
-      };
+    };
 
     return(
         <div>

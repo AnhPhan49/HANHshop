@@ -26,13 +26,14 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { userlogoutsuccess } from "../reducers/userReducer";
+import { userlogoutsuccess, deletecurrentuserdata } from "../reducers/userReducer";
 import clsx from "clsx";
 
 import CategoryManagePage from "./category-manage-page";
 import ProductManagePage from "./product-manage-page";
 import InventoryManagePage from "./inventory-manage-page";
 import AccountManagePage from "./account-manage-page";
+import ReceiptManagePage from './receipt-manage-page'
 
 const drawerWidth = 240;
 
@@ -173,6 +174,7 @@ const AdminPage = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");    
     dispatch(userlogoutsuccess());
+    dispatch(deletecurrentuserdata());
     setAnchorEl(null);
     return history.push("/login");
   };
@@ -187,6 +189,8 @@ const AdminPage = () => {
         return <ProductManagePage></ProductManagePage>;
       case 2:
         return <InventoryManagePage></InventoryManagePage>;
+      case 3:
+        return <ReceiptManagePage></ReceiptManagePage>
       default:
     }
   };

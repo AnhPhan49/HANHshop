@@ -17,9 +17,12 @@ export const userSlice = createSlice({
         },
         savecurrentuserdata: (state, action) => {
           state.user = action.payload
+        },
+        deletecurrentuserdata: (state) => {
+          state.user = ''
         }
       },
 })
 
-export const {userloginsuccess, userlogoutsuccess, savecurrentuserdata} = userSlice.actions
+export const {userloginsuccess, userlogoutsuccess, savecurrentuserdata, deletecurrentuserdata} = userSlice.actions
 export default userSlice.reducer
