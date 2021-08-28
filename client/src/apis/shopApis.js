@@ -17,6 +17,10 @@ const ShopApi = {
         const url = '/api/cart/add'
         return axiosClient.put(url, data)
     },
+    updateCart(data) {
+        const url = '/api/cart/update'
+        return axiosClient.put(url, data)
+    },
     getCart() {
         const url = '/api/cart/get'
         return axiosClient.get(url)
@@ -24,6 +28,10 @@ const ShopApi = {
     acceptReceipt(id, data) {
         const url = `/api/receipt/create/${id}`
         return axiosClient.post(url, data)
+    },
+    getReceipt(state) {
+        const url = `/api/receipt/user?present=${state}`
+        return axiosClient.get(url)
     }
 }
 

@@ -28,6 +28,7 @@
     "react-scripts": "4.0.3",
     "react-swipeable-views": "^0.14.0",
     "react-text-mask": "^5.4.3",
+    "redux-persist": "^6.0.0",
     "sweetalert2": "^11.1.2",
     "web-vitals": "^1.1.2",
     "yarn": "^1.22.11",

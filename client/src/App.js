@@ -20,7 +20,7 @@ import ShopRoute from'./components/Router/shop-route'
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store}>      
       <Router>
         <Switch>
             <Route path="/login">

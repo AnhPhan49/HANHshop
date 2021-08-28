@@ -68,7 +68,7 @@ body {
   width: auto;
 }
 
-.header .hd-right .header-item span:hover {
+.header .hd-right .header-item .link:hover {
 	border-bottom: 2px solid rgba(203,44,49,255);
 	cursor: pointer;
 	color: rgba(203,44,49,255);	
