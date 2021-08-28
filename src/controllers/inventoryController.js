@@ -73,7 +73,7 @@ module.exports.listHistoryInventory = async (req, res) => {
         if (!id) throw new Error("Something went wrong with ID inventory")
         page= page - 1
         if(page < 0) throw new Error("Page not found!!")
-        let history = await historyInventoryModel.find().sort({'createdAt': 'desc'}).populate('user','fullname')
+        let history = await historyInventoryModel.find({inventory: id}).sort({'createdAt': 'desc'}).populate('user','fullname')
         if(Math.ceil(history.length/10) < page + 1){
             return res.status(201).json({message: "Chưa có trang thông báo này"})
         }
