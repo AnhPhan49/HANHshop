@@ -64,7 +64,7 @@ module.exports.registerController = async (req, res) =>{
         let fullname = firstname + " " + lastname
         let checkExist = await AccountModel.findOne({phone: phone})
         if (checkExist) {
-            throw new Error ('This email has already registered')
+            throw new Error ('Số điện thoại này đã được xử dụng')
         }
         let password_hash = await bcrypt.hash(password,10)
         let account = new AccountModel({
@@ -79,6 +79,7 @@ module.exports.registerController = async (req, res) =>{
     
         let newCart = new cartModel({
             customer: account._id,
+            product:[]
         })
         newCart.save()
         res.status(200).json({message:"Register success."})

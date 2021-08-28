@@ -91,7 +91,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  }
  
  /**** Cart ****/
- .cart{
+ /* .cart{
 	 float:right;
 	  position: relative;
 	  padding-right:40px;
@@ -165,9 +165,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  .wrapper-dropdown-2.active .dropdown {
 	 opacity: 1;
 	 pointer-events: auto;
- }
+ } */
 	/**** End Cart ****/
- .header_bottom {
+ /* .header_bottom {
 	 background: #383838;
 	 border-radius: 6px;
 	 -webkit-border-radius: 6px;
@@ -242,7 +242,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 margin-left: 85px;
 	 width: 20% !important;
 	 margin-top: 24px;
-	}
+	} */
  .categories{
 	 border:1px solid #EEE;
  }
@@ -973,7 +973,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  /**** End Preview Page ******/
  
  /*  About  ============================================================================= */
- .col_1_of_3 {
+ /* .col_1_of_3 {
 	 display: block;
 	 float: left;
 	 margin: 0% 0 0% 1.6%;
@@ -1032,7 +1032,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 text-decoration:underline;
  }
  /* Delivery  ============================================================================= */
- .section {
+ /* .section {
 	 clear: both;
 	 padding: 0px;
 	 margin: 0px;
@@ -1077,9 +1077,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 padding:5px 0;
 	 color:#727272;
 	 line-height: 1.8em;
- }
+ } */ */
  /* FAQ  ============================================================================= */
- .ui-accordion .bar{ cursor:pointer;
+ /* .ui-accordion .bar{ cursor:pointer;
 	   margin:15px 0;
   }
  #posts .tab .post-title{
@@ -1104,9 +1104,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 font-size:0.95em;
 	 line-height: 1.8em;
 	 padding:5px 20px;
- }
+ } */
  /****** News **************************/
- .image {
+ /* .image {
 	 clear: both;
 	 padding: 0px;
 	 margin: 0px;
@@ -1171,7 +1171,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 color:#B81D22;
  }
  /*** Page numbers ***/
- .content-pagenation{
+ /* .content-pagenation{
 	 padding:35px 0;
 	 text-align:right;
  }
@@ -1197,7 +1197,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  .content-pagenation li a:hover,.content-pagenation li.active a{
 	 background:#303030;
 	 color:#FFF;
- }
+ }  */
  
  
  
@@ -1599,4 +1599,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  }
 		a.v1 img {
 			height: 28px !important;
+		}
+		.col-3.product-item {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
 		}

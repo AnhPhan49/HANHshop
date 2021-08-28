@@ -19,14 +19,21 @@ const receiptSchema = new Schema({
         total: Number,
         total_price: Number
     }],
+    name: String,
+    phone: String,
     address: String,
+    detail: String,
     status: {
         description: String,
         present: {
             type: String,
-            enum: ["Đang chờ duyệt", "Đang vận chuyển", "Hủy đơn từ khách", "Hủy đơn từ shop"],
+            enum: ["Đang chờ duyệt", "Đang vận chuyển", "Hủy đơn từ khách", "Hủy đơn từ shop", "Hoàn thành"],
             default: "Đang chờ duyệt"
         }
+    },
+    in_Process: {
+        type: Boolean,
+        default: true
     },
     total_price: Number
 },{timestamps:true})
