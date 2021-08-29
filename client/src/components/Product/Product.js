@@ -6,6 +6,7 @@ import ShopApi from "../../apis/shopApis";
 import AdminApi from "../../apis/adminApis";
 import Button from "@material-ui/core/Button";
 import { saveCategoryData } from "../../reducers/shopReducer";
+import LoadingPage from "../../views/loading-page";
 
 const Product = () => {
   let { id, ed } = useParams();
@@ -13,6 +14,7 @@ const Product = () => {
   const [page, setPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
   const [productList, setProductList] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     getCategoryList();
@@ -38,11 +40,12 @@ const Product = () => {
 
   const getNewProductList = async (page) => {
     try {
+      setLoader(true);
       let res = null;
       if (id) {
         res = await AdminApi.searchProductByCategory(page, id);
-      } else if(ed) {
-        res = await AdminApi.searchProductByProduct(page, ed)
+      } else if (ed) {
+        res = await AdminApi.searchProductByProduct(page, ed);
       } else {
         res = await AdminApi.getProductList(page);
       }
@@ -53,6 +56,7 @@ const Product = () => {
     } catch (e) {
       console.log(e);
     }
+    setLoader(false);
   };
 
   const getMoreProductList = async (page) => {
@@ -60,8 +64,8 @@ const Product = () => {
       let res = null;
       if (id) {
         res = await AdminApi.searchProductByCategory(page, id);
-      } else if(ed) {
-        res = await AdminApi.searchProductByProduct(page, ed)
+      } else if (ed) {
+        res = await AdminApi.searchProductByProduct(page, ed);
       } else {
         res = await AdminApi.getProductList(page);
       }
@@ -76,55 +80,61 @@ const Product = () => {
 
   return (
     <div className="row m-0">
-      <div className="col-lg-2 mt-5">
-        <div className="categories">
-          <ul>
-            {categoryList.map((item, index) => (
-              <Link key={index} to={`/category/${item._id}`}>
-                <li>
-                  <a>{item.name}</a>
-                </li>
-              </Link>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="header_bottom_right col-10">
-        <div className="homepage">
-          <div className="homepage-body mt-2">
-            <div className="sale-section">
-              <h3>Danh sách sản phẩm</h3>
-              <div className="row sale-items mt-3">
-                {productList &&
-                  productList.map((item, i) => (
-                    <div key={i} className="col-lg-3 col-md-4 mt-3">
-                      <Link to={`/detail/${item._id}`}>
-                        <SaleItemCard
-                          key={i}
-                          img_src={item.image}
-                          title={item.name}
-                          sale_price={item.price_after_sale}
-                          base_price={item.price}
-                          discount_percent={item.sale_tag}
-                        ></SaleItemCard>
-                      </Link>
-                    </div>
-                  ))}
-              </div>
+      {loader ? (
+        <LoadingPage></LoadingPage>
+      ) : (
+        <div>
+          <div className="col-lg-2 mt-5">
+            <div className="categories">
+              <ul>
+                {categoryList.map((item, index) => (
+                  <Link key={index} to={`/category/${item._id}`}>
+                    <li>
+                      <a>{item.name}</a>
+                    </li>
+                  </Link>
+                ))}
+              </ul>
             </div>
           </div>
+          <div className="header_bottom_right col-10">
+            <div className="homepage">
+              <div className="homepage-body mt-2">
+                <div className="sale-section">
+                  <h3>Danh sách sản phẩm</h3>
+                  <div className="row sale-items mt-3">
+                    {productList &&
+                      productList.map((item, i) => (
+                        <div key={i} className="col-lg-3 col-md-4 mt-3">
+                          <Link to={`/detail/${item._id}`}>
+                            <SaleItemCard
+                              key={i}
+                              img_src={item.image}
+                              title={item.name}
+                              sale_price={item.price_after_sale}
+                              base_price={item.price}
+                              discount_percent={item.sale_tag}
+                            ></SaleItemCard>
+                          </Link>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="text-center mt-5">
+              <Button
+                variant="outlined"
+                style={{ fontSize: "1.4rem" }}
+                onClick={() => getMoreProductList(page + 1)}
+              >
+                Xem thêm
+              </Button>
+            </div>
+          </div>
+          <div className="clear" />
         </div>
-        <div className="text-center mt-5">
-          <Button
-            variant="outlined"
-            style={{ fontSize: "1.4rem" }}
-            onClick={() => getMoreProductList(page + 1)}
-          >
-            Xem thêm
-          </Button>
-        </div>
-      </div>
-      <div className="clear" />
+      )}
     </div>
   );
 };
