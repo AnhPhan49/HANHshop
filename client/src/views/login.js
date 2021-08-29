@@ -11,6 +11,7 @@ import {userloginsuccess} from '../reducers/userReducer'
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Footer from '../components/Footer/Footer'
+import img from '../assets/logo.png'
 
 const Login = () => {
     const { register, handleSubmit } = useForm();
@@ -63,7 +64,7 @@ const Login = () => {
         <div className='login-page'>
             <div className='row m-0 login-header'>
                 <div className='col-lg-2 col-md-2 col-sm-6 logo-session' onClick={() => history.push('/')}>
-                    <div>HANH<span> Shop</span></div>
+                    <img alt='' src={img}></img>
                 </div>                
                 <h3 className='col-lg-2 col-md-2 col-sm-6 mt-4'>Đăng nhập</h3>                
             </div>
@@ -114,7 +115,7 @@ const Login = () => {
                         </FormGroup>       
                         <FormControlLabel className='mt-3' control={<Checkbox checked={checked} onChange={handleCheckbox} />} label={<h6>Ghi nhớ mật khẩu</h6>} />                 
                         <FormGroup className='mt-3'>
-                            <Button disabled={btn} variant="contained" type='submit' style={{backgroundColor:'rgba(203,44,49,255)', fontSize:'1.3rem', color:'white'}}>
+                            <Button disabled={btn} variant="contained" type='submit' style={{backgroundColor:'#ff6f64', fontSize:'1.3rem', color:'white'}}>
                                 Đăng nhập
                             </Button>
                         </FormGroup>
