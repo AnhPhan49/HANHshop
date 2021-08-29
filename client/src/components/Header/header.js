@@ -99,15 +99,16 @@ const Header = () => {
                     </span>
                 </div>
                 <div className='cart-session col-lg-3 col-md-12 row'>
-                    <div className='col-6 heart-icon'>
+                    {/* <div className='col-6 heart-icon'>
                         <Badge color='error' badgeContent={4}>
                             <AiOutlineHeart size='26px' color='black'></AiOutlineHeart>
                         </Badge>
-                    </div>
-                    <div className='col-6 cart-icon' onClick={() => {history.push('/receipt')}}>                    
-                        <Badge color='error' badgeContent={4}>
+                    </div> */}
+                    <div className='cart-icon text-center' onClick={() => {history.push('/receipt')}}>                    
+                        {/* <Badge color='error' badgeContent={4}> */}
                             <AiOutlineShoppingCart size='26px' color='black'></AiOutlineShoppingCart>
-                        </Badge>                        
+                            <span>Giỏ hàng</span>
+                        {/* </Badge>                         */}
                     </div>
                 </div>
             </div>

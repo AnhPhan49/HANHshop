@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   TextField,
@@ -11,7 +11,7 @@ import AdminApi from "../apis/adminApis";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import bgimg from "../assets/login-background.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { savecurrentuserdata } from "../reducers/userReducer";
 import { userloginsuccess } from "../reducers/userReducer";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -23,16 +23,9 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
-  const isLogged = useSelector((state) => state.user.loggedIn)
+  const dispatch = useDispatch();  
   const [btn, setBtn] = useState(false);
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    if (isLogged) {
-      history.push('/')
-    }
-  }, [])
+  const [checked, setChecked] = useState(false);  
 
   const onSubmit = async (data) => {
     try {

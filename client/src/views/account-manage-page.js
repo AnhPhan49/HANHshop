@@ -5,7 +5,6 @@ import { IoAddCircle } from "react-icons/io5";
 import {setCustomerData, setManagerData} from '../reducers/accountManagementReducer'
 import { useDispatch } from 'react-redux'
 import AdminApi from '../apis/adminApis'
-
 import UserManagement from '../components/AccountManagement/user-management'
 import ManagerManagement from '../components/AccountManagement/manager-management'
 
@@ -62,8 +61,7 @@ const AccountManagePage = () => {
     const getManagerList = async () => {
         try {
             const res = await AdminApi.getManagerAccountList();            
-            if(res.status === 200) {
-                console.log(res)
+            if(res.status === 200) {            
                 dispatch(setManagerData(res.data))                
             }
         } catch(e) {
@@ -97,7 +95,7 @@ const AccountManagePage = () => {
                     index={value}
                     onChangeIndex={handleChangeIndex}
                 >
-                    <UserManagement value={value} index={0} dir={theme.direction}></UserManagement>
+                    <UserManagement value={value} index={0} dir={theme.direction} reloadData={getCustomerList}></UserManagement>
                     <ManagerManagement value={value} index={1} dir={theme.direction} open={open} handleCloseAddModal={handleCloseAddModal} closeAfterSave={closeAfterSave} reloadData={getManagerList}></ManagerManagement>
                 </SwipeableViews>               
         </div>
