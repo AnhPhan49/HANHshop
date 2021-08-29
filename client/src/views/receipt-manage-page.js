@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Button, IconButton } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { IconButton } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
 import Pagination from "@material-ui/lab/Pagination";
 import AdminApi from "../apis/adminApis";
-import ReactBnbGallery from "react-bnb-gallery";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ConfirmModal from "../components/confirm-modal";
 import CheckIcon from "@material-ui/icons/Check";
@@ -13,24 +12,20 @@ import CloseIcon from "@material-ui/icons/Close";
 import alert from "../utils/alert";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
-const ReceiptManagePage = (props) => {
-  const childRef = useRef();
-  const [loading, setLoader] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [status, setStatus] = useState(false);
-  const [allStatus, settAllStatus] = useState(false);
-  const [photoData, setPhotoData] = useState([]);
+const ReceiptManagePage = () => {
+  const [loading, setLoader] = useState(true);  
   const [totalPage, setTotalPage] = useState(1);
   const [inventoryList, setInventoryList] = useState([]);
-  const [alertState, setAlertState] = useState(false) 
+  const [alertState, setAlertState] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [page, setPage] = useState(1);
   const [pageDetail, setPageDetail] = useState();
   const [btnState, setBtnState] = useState(false);
   const [deleteItem, setDeleteItem] = useState();
+
   useEffect(() => {
     getReceiptList(1);
   }, []);
@@ -39,11 +34,9 @@ const ReceiptManagePage = (props) => {
     try {
       setLoader(true);
       const res = await AdminApi.getReceiptList(page);
-      console.log(res);
       setPageDetail(res.data.page);
-      // console.log(res.data.page);
       if (res.status === 200) {
-        formatCurrency(res.data.receipts);
+        setInventoryList(res.data.receipts);
         setTotalPage(res.data.total_page);
       }
     } catch (e) {
@@ -51,6 +44,7 @@ const ReceiptManagePage = (props) => {
     }
     setLoader(false);
   };
+
   const handleDelete = async (id) => {
     try {
       setBtnState(true);
@@ -81,21 +75,11 @@ const ReceiptManagePage = (props) => {
 
   const handleAcceptConfirmModal = () => {
     handleDelete(deleteItem._id);
-    // console.log(deleteItem._id)
   };
 
-  const formatCurrency = (data) => {
-    console.log(data);
-    // data.forEach((item, index) => {
-    //     // if(item.total<=0){
-    //     //     console.log("ok");
-    //     // }
-
-    //     data[index].product.price = item.product.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-    // })
-    console.log(data);
-    setInventoryList(data);
-  };
+  const formatCurrency = (price) => {
+    return price.toLocaleString('it-IT');                
+}
 
   const pageChange = (event, page) => {
     getReceiptList(page);
@@ -115,26 +99,25 @@ const ReceiptManagePage = (props) => {
 
   const approveReceipt = async (id) => {
     try {
-        const res = AdminApi.approveReceipt(id)
-        if(res.status === 200) {
-            setAlertState(true)
-            getReceiptList(page)
-        }
-    } catch(e) {
-        console.log(e)
+      const res = AdminApi.approveReceipt(id);
+      if (res.status === 200) {
+        setAlertState(true);
+        getReceiptList(page);
+      }
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   const closeAlert = () => {
-    setAlertState(false)
-  }
+    setAlertState(false);
+  };
 
-  // console.log(inventoryList);
   return (
     <div className="production-page">
-        <Snackbar open={alertState} autoHideDuration={3000} onClose={closeAlert}>
+      <Snackbar open={alertState} autoHideDuration={3000} onClose={closeAlert}>
         <Alert onClose={closeAlert} severity="success">
-          <div style={{fontSize: '1.4rem'}}>Đã xác nhận đơn hàng</div>
+          <div style={{ fontSize: "1.4rem" }}>Đã xác nhận đơn hàng</div>
         </Alert>
       </Snackbar>
       <ConfirmModal
@@ -144,13 +127,6 @@ const ReceiptManagePage = (props) => {
         accept={handleAcceptConfirmModal}
         buttonState={btnState}
       ></ConfirmModal>
-      <ReactBnbGallery
-        opacity={0.8}
-        show={isOpen}
-        photos={photoData}
-        onClose={() => setIsOpen(false)}
-      />
-      {/* <InventoryModal all={allStatus} ref={childRef} status={status} title={modalTitle}  page={pageDetail} modalEditFilter={editObj} reloadNewData={handleCloseModalAfterSave}></InventoryModal>                 */}
       <h4>Đơn Hàng</h4>
       <div className="row m-0 title">
         <div className="col-1 text-center">ID</div>
@@ -165,7 +141,7 @@ const ReceiptManagePage = (props) => {
       </div>
       <div className="product-list">
         {loading ? <LinearProgress></LinearProgress> : <></>}
-        {inventoryList &&
+        {inventoryList.length?(
           inventoryList.map((item, index) => (
             <div
               className="row m-0 product-row"
@@ -182,12 +158,15 @@ const ReceiptManagePage = (props) => {
               <div className="col-2 product-item">
                 {convertTime(item.createdAt)}
               </div>
-              <div className="col-1 product-item">{item.total_price}</div>
+              <div className="col-1 product-item price">{formatCurrency(item.total_price)}đ</div>
               <div className="col-1 product-item">{item.id_receipt}</div>
               <div className="col-2 product-item">{item.status.present}</div>
               <div className="col-1 product-item">
-                <IconButton color="primary" onClick={() => approveReceipt(item._id)}>
-                  <CheckIcon style={{ fontSize: 20 }} ></CheckIcon>
+                <IconButton
+                  color="primary"
+                  onClick={() => approveReceipt(item._id)}
+                >
+                  <CheckIcon style={{ fontSize: 20 }}></CheckIcon>
                 </IconButton>
                 <IconButton
                   className="text-danger"
@@ -199,11 +178,14 @@ const ReceiptManagePage = (props) => {
                 </IconButton>
               </div>
             </div>
-          ))}
+          ))):(
+            <></>
+          )}
       </div>
       <div className="mt-4 paging">
         <Pagination
           count={totalPage}
+          page={page}
           onChange={pageChange}
           variant="outlined"
           shape="rounded"
