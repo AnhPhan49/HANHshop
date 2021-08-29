@@ -11,6 +11,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
+import LoadingPage from "../../views/loading-page";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -25,21 +26,28 @@ const Detail = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
   const [relateProduct, setRelateProduct] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     getCategoryList();
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    getProduct();
-    setQuantity(1);
-    window.scrollTo(0, 0)
+    getAllData();
+    window.scrollTo(0, 0);
   }, [id]);
 
   useEffect(() => {
-    getRelateProduct();    
+    getRelateProduct();
   }, [product]);
+
+  const getAllData = async () => {
+    setLoader(true);
+    await getProduct();
+    await setQuantity(1);
+    setLoader(false);
+  };
 
   const formatCurrency = (price) => {
     return price.toLocaleString("it-IT");
@@ -83,8 +91,8 @@ const Detail = (props) => {
     e.preventDefault();
     try {
       const data = {
-        "id": id,
-        "count": quantity,
+        id: id,
+        count: quantity,
       };
 
       const res = await ShopApi.addToCart(data);
@@ -104,164 +112,170 @@ const Detail = (props) => {
   };
 
   return (
-    <div >
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          <div style={{fontSize: '1.4rem'}}>Đã thêm vào giỏ hàng</div>
-        </Alert>
-      </Snackbar>
-      <div className="content">
-        <div className="section group row m-0 detail-section">
-          <div className="col-lg-9 col-sm-12">
-            <div className="product-details">
-              <div className="images_3_of_2">
-                <div id="container">
-                  <div id="products_example">
-                    <div id="products">
-                      <Carousel
-                        NextIcon={<FcNext size={20} />}
-                        PrevIcon={<FcPrevious size={20} />}
-                      >
-                        {product &&
-                          product.image.map((item, index) => (
-                            <img alt="" key={index} src={item.url}></img>
-                          ))}
-                      </Carousel>
+    <div>
+      {loader ? (
+        <LoadingPage></LoadingPage>
+      ) : (
+        <div>
+          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              <div style={{ fontSize: "1.4rem" }}>Đã thêm vào giỏ hàng</div>
+            </Alert>
+          </Snackbar>
+          <div className="content">
+            <div className="section group row m-0 detail-section">
+              <div className="col-lg-9 col-sm-12">
+                <div className="product-details">
+                  <div className="images_3_of_2">
+                    <div id="container">
+                      <div id="products_example">
+                        <div id="products">
+                          <Carousel
+                            NextIcon={<FcNext size={20} />}
+                            PrevIcon={<FcPrevious size={20} />}
+                          >
+                            {product &&
+                              product.image.map((item, index) => (
+                                <img alt="" key={index} src={item.url}></img>
+                              ))}
+                          </Carousel>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="desc span_3_of_2">
-                <h2>{product && product.name}</h2>
-                {product && product.sale_tag ? (
-                  <div>
-                    <span className="percent-sale-detail">
-                      Giảm {product.sale_tag}%
-                    </span>
-                    <span className="base-price-detal">
-                      {formatCurrency(product.price)}
-                    </span>
-                  </div>
-                ):(
-                  <></>
-                )}
-                <div className="price">
-                  {product && (
-                    <p>
-                      Giá:{" "}
-                      <span>
-                        đ
-                        {product.price_after_sale
-                          ? formatCurrency(product.price_after_sale)
-                          : formatCurrency(product.price)}
-                      </span>
-                    </p>
-                  )}
-                </div>
-                <div className="share-desc">
-                  <form onSubmit={addToCart}>
-                    <div className="row m-0">
-                      <div className="col-6">
-                        <TextField
-                          InputLabelProps={{
-                            classes: {
-                              root: classes.resize,
-                            },
-                          }}
-                          value={quantity}
-                          onWheel={(e) => e.target.blur()}
-                          onChange={(e) => {
-                            setQuantity(e.target.value);
-                          }}
-                          InputProps={{
-                            classes: {
-                              input: classes.resize,
-                            },
-                            inputProps: {
-                              min: 1,
-                            },
-                          }}
-                          required
-                          type="number"
-                          label="Số lượng"
-                        />
+                  <div className="desc span_3_of_2">
+                    <h2>{product && product.name}</h2>
+                    {product && product.sale_tag ? (
+                      <div>
+                        <span className="percent-sale-detail">
+                          Giảm {product.sale_tag}%
+                        </span>
+                        <span className="base-price-detal">
+                          {formatCurrency(product.price)}
+                        </span>
                       </div>
-                      <div className="col-6">
-                        <button
-                          className="button"
-                          type="submit"
-                          style={{
-                            border: 0,
-                            backgroundColor: "transparent",
-                            marginTop: "16px",
-                          }}
-                        >
+                    ) : (
+                      <></>
+                    )}
+                    <div className="price">
+                      {product && (
+                        <p>
+                          Giá:{" "}
                           <span>
-                            <a>Thêm vào giỏ hàng</a>
+                            đ
+                            {product.price_after_sale
+                              ? formatCurrency(product.price_after_sale)
+                              : formatCurrency(product.price)}
                           </span>
-                        </button>
-                      </div>
+                        </p>
+                      )}
                     </div>
-                  </form>
+                    <div className="share-desc">
+                      <form onSubmit={addToCart}>
+                        <div className="row m-0">
+                          <div className="col-6">
+                            <TextField
+                              InputLabelProps={{
+                                classes: {
+                                  root: classes.resize,
+                                },
+                              }}
+                              value={quantity}
+                              onWheel={(e) => e.target.blur()}
+                              onChange={(e) => {
+                                setQuantity(e.target.value);
+                              }}
+                              InputProps={{
+                                classes: {
+                                  input: classes.resize,
+                                },
+                                inputProps: {
+                                  min: 1,
+                                },
+                              }}
+                              required
+                              type="number"
+                              label="Số lượng"
+                            />
+                          </div>
+                          <div className="col-6">
+                            <button
+                              className="button"
+                              type="submit"
+                              style={{
+                                border: 0,
+                                backgroundColor: "transparent",
+                                marginTop: "16px",
+                              }}
+                            >
+                              <span>
+                                <a>Thêm vào giỏ hàng</a>
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      <div className="clear" />
+                    </div>
+                  </div>
                   <div className="clear" />
                 </div>
-              </div>
-              <div className="clear" />
-            </div>
-            <div>
-              <h3 style={{ color: "gray" }}>Mô tả sản phẩm</h3>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: product && product.description,
-                }}
-              ></span>
-            </div>
-            <div className="content_bottom">
-              <div className="heading">
-                <h3>Sản phẩm liên quan</h3>
-              </div>
-              <div className="see">
-                <p>
-                  {product && (
-                    <Link to={`/category/${product.category}`}>
-                      <h5>Xem tất cả sản phẩm</h5>
-                    </Link>
-                  )}
-                </p>
-              </div>
-              <div className="clear" />
-            </div>
-            <div>
-              {relateProduct &&
-                relateProduct.map((item, i) => (
-                  <div className="col-lg-3 col-md-4 col-sm-4 mt-3" key={i}>
-                    <Link to={`/detail/${item._id}`}>
-                      <SaleItemCard
-                        img_src={item.image}
-                        title={item.name}
-                        sale_price={item.price_after_sale}
-                        base_price={item.price}
-                        discount_percent={item.sale_tag}
-                      ></SaleItemCard>
-                    </Link>
+                <div>
+                  <h3 style={{ color: "gray" }}>Mô tả sản phẩm</h3>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: product && product.description,
+                    }}
+                  ></span>
+                </div>
+                <div className="content_bottom">
+                  <div className="heading">
+                    <h3>Sản phẩm liên quan</h3>
                   </div>
-                ))}
+                  <div className="see">
+                    <p>
+                      {product && (
+                        <Link to={`/category/${product.category}`}>
+                          <h5>Xem tất cả sản phẩm</h5>
+                        </Link>
+                      )}
+                    </p>
+                  </div>
+                  <div className="clear" />
+                </div>
+                <div>
+                  {relateProduct &&
+                    relateProduct.map((item, i) => (
+                      <div className="col-lg-3 col-md-4 col-sm-4 mt-3" key={i}>
+                        <Link to={`/detail/${item._id}`}>
+                          <SaleItemCard
+                            img_src={item.image}
+                            title={item.name}
+                            sale_price={item.price_after_sale}
+                            base_price={item.price}
+                            discount_percent={item.sale_tag}
+                          ></SaleItemCard>
+                        </Link>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div className="col-lg-3 col-sm-12 span_3_of_1">
+                <h2>Danh mục</h2>
+                <ul>
+                  {categoryList.map((item, index) => (
+                    <Link key={index} to={`/category/${item._id}`}>
+                      <li>
+                        <a>{item.name}</a>
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-          <div className="col-lg-3 col-sm-12 span_3_of_1">
-            <h2>Danh mục</h2>
-            <ul>
-              {categoryList.map((item, index) => (
-                <Link key={index} to={`/category/${item._id}`}>
-                  <li>
-                    <a>{item.name}</a>
-                  </li>
-                </Link>
-              ))}
-            </ul>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

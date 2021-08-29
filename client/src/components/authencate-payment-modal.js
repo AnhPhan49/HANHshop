@@ -178,7 +178,7 @@ const AuthPaymentModal = (props) => {
             style={{ fontSize: "1.6rem", padding: "12px", fontWeight: "550" }}
           >
             <div className="col-6 p-0">Tổng cộng:</div>
-            <div className="col-6 p-0 text-right text-danger">{cartInfo && formatCurrency(cartInfo.total_price)}</div>
+            <div className="col-6 p-0 text-right" style={{color: '#ff6f64'}}>{cartInfo && formatCurrency(cartInfo.total_price)}đ</div>
           </div>
           <div className="mt-3 row modal-action">
             <div className="col-6">
@@ -197,7 +197,7 @@ const AuthPaymentModal = (props) => {
                 type="submit"
                 variant="contained"
                 onClick={submitReceipt}             
-                style={{ fontSize: "1.3rem", backgroundColor:'rgba(203,44,49,255)', color:'white' }}
+                style={{ fontSize: "1.3rem", backgroundColor:'#ff6f64', color:'white' }}
               >
                 Đặt hàng
               </Button>
@@ -217,7 +217,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: "absolute",
-    width: 450,
+    minWidth: 300,
+    width: 480,
     backgroundColor: theme.palette.background.paper,
     borderRadius: 10,
     boxShadow: theme.shadows[5],

@@ -39,7 +39,7 @@ const NavBar = () => {
       onKeyDown={() => setDrawner(false)}
       className={classes.list}
     >
-      <div className='sidebar-logo'>
+      <div className='sidebar-logo text-center'>
         <img alt='' src={img}></img>
       </div>
       <Link to="/" style={{ padding: 0 }}>

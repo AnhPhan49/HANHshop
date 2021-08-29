@@ -88,7 +88,7 @@ const Header = () => {
             </div>
 
             <div className='header header-below row'>                
-                <div className='logo-session col-lg-2 col-md-12' onClick={()=>history.push('/')}>
+                <div className='logo-session col-lg-2 col-md-12 text-center' onClick={()=>history.push('/')}>
                     <img src={logo} alt=''></img>
                 </div>
                 <div className='search-session col-lg-7 col-md-12 p-0'>

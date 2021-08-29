@@ -69,9 +69,9 @@ body {
 }
 
 .header .hd-right .header-item .link:hover {
-	border-bottom: 2px solid #F5A9BC;
+	border-bottom: 2px solid #ff6f64;
 	cursor: pointer;
-	color: #F5A9BC;	
+	color: #ff6f64;	
 }
 
 .header .header-item span {
@@ -186,11 +186,12 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   cursor: pointer;
+  padding-left: 4%;
 }
 
 .header-below .cart-session .heart-icon {
   text-align: right;
-  padding-right: 10%;
+  /* padding-right: 10%; */
 }
 
 .nav-item {
@@ -314,7 +315,7 @@ body {
 }
 
 .banner-item span {
-	color: #F5A9BC;
+	color: #ff6f64;
 	font-size: 1.5rem;
 	font-weight: 700;
 	animation-name: float;
@@ -714,12 +715,12 @@ body {
 }
 
 .production-page .product-list .action:hover {
-	color: #F5A9BC;
+	color: #ff6f64;
 	cursor: pointer;
 }
 
 .production-page .product-list .price, .production-page .receipt-footer .custom-price span {
-	color: #F5A9BC;
+	color: #ff6f64;
 }
 
 .production-page .receipt-footer .custom-price {
@@ -756,5 +757,9 @@ body {
 }
 
 .sidebar-logo div span, .sidebar-child-item ul li div {
-	color: lightgray;
+	color: white;
+}
+
+.sidebar-logo img {
+	width: 160px;
 }
