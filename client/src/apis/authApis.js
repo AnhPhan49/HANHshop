@@ -11,7 +11,8 @@ const AuthApis = {
     },
     setHeaderAxios(token) {
         axiosClient.defaults.headers.common['Authorization'] = 'Bearer ' + token
-    }
+    },
+    
 }
 
 export default AuthApis
