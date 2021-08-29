@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormGroup, TextField, makeStyles, Button } from "@material-ui/core";
 import bgimg from "../assets/login-background.png";
 import AuthApis from "../apis/authApis";
@@ -6,17 +6,30 @@ import { Link, useHistory } from "react-router-dom";
 import alert from "../utils/alert";
 import Footer from "../components/Footer/Footer";
 import img from "../assets/logo.png";
+import { useSelector } from "react-redux";
+
+//Firebase
+// import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const RegisterPage = () => {
   const classes = useStyles();
   const history = useHistory();
+  const isLogged = useSelector((state) => state.user.loggedIn)
+  // const auth = getAuth();
   const [lastname, setLastname] = useState();
   const [firstname, setFirstname] = useState();
   const [phone, setPhone] = useState();
+  // const [otp, setOtp] = useState();
   const [address, setAddress] = useState();
   const [password, setPassword] = useState();
   const [repassword, setRepassword] = useState();
   const [btn, setBtn] = useState(false);
+
+  useEffect(() => {
+    if (isLogged) {
+      history.push('/')
+    }
+  }, [])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +64,50 @@ const RegisterPage = () => {
     }
     setBtn(false);
   };
+
+//   const configureCaptcha = () => {
+//     window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+//       'size': 'invisible',
+//       'callback': (response) => {
+//         // reCAPTCHA solved, allow signInWithPhoneNumber.
+//         onSignInSubmit();
+//         console.log('recaptcha')
+//       },
+//       defaultCountry: 'VN'
+//     }, auth);
+//   }
+
+// const onSignInSubmit = () => {
+//   configureCaptcha()
+//   const phoneNumber = "+84" + phone;
+//   const appVerifier = window.recaptchaVerifier;
+
+//   const auth = getAuth();
+//   signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+//       .then((confirmationResult) => {
+//         // SMS sent. Prompt user to type the code from the message, then sign the
+//         // user in with confirmationResult.confirm(code).
+//         window.confirmationResult = confirmationResult;
+//         console.log('OTP has been sent')
+//         // ...
+//       }).catch((error) => {
+//         // Error; SMS not sent
+//         // ...
+//         console.log(error)
+//       });
+// }
+
+// const getOTPCode = () => {
+//     const code = getCodeFromUserInput();
+//     confirmationResult.confirm(code).then((result) => {
+//     // User signed in successfully.
+//     const user = result.user;
+//     // ...
+//   }).catch((error) => {
+//     // User couldn't sign in (bad verification code?)
+//     // ...
+//   });
+// }
 
   return (
     <div className="login-page">
@@ -124,6 +181,7 @@ const RegisterPage = () => {
                   required
                   label="Số điện thoại"
                 />
+                
               </FormGroup>
 
               <FormGroup className={classes.FormGroup}>
