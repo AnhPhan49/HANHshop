@@ -96,7 +96,7 @@ module.exports.listAccount = async (req, res) => {
 
 module.exports.changePassword = async (req, res) => {
   try {
-    let { id } = req.params;
+    let { id } = req.user;
     let { password, newPassword } = req.body;
 
     if (!password) throw new Error("Vui lòng cung cấp mật khẩu hiện tại");

@@ -26,7 +26,7 @@ accountRoute.route('/block/:id').delete(checkLogin, checkAdmin, blockAccount)
 
 accountRoute.route('/admin/change-password/:id').put(checkLogin, checkAdmin, changePasswordAdmin)
 
-accountRoute.route('/change-password/:id').put(checkLogin, changePassword)
+accountRoute.route('/change-password').put(checkLogin, changePassword)
 
 accountRoute.route('/update-account').put(checkLogin, updateAccountValidator, updateAccount)
 
