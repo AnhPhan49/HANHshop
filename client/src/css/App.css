@@ -186,7 +186,13 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   cursor: pointer;
-  padding-left: 4%;
+}
+
+.header-below .cart-session .heart-icon, .header-below .cart-session .cart-icon span {
+	margin-left: 6px;
+	font-size: 1.5rem;
+	font-weight: 550;
+
 }
 
 .header-below .cart-session .heart-icon {

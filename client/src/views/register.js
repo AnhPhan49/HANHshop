@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormGroup, TextField, makeStyles, Button } from "@material-ui/core";
 import bgimg from "../assets/login-background.png";
 import AuthApis from "../apis/authApis";
@@ -6,15 +6,13 @@ import { Link, useHistory } from "react-router-dom";
 import alert from "../utils/alert";
 import Footer from "../components/Footer/Footer";
 import img from "../assets/logo.png";
-import { useSelector } from "react-redux";
 
 //Firebase
 // import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const RegisterPage = () => {
   const classes = useStyles();
-  const history = useHistory();
-  const isLogged = useSelector((state) => state.user.loggedIn)
+  const history = useHistory();  
   // const auth = getAuth();
   const [lastname, setLastname] = useState();
   const [firstname, setFirstname] = useState();
@@ -23,13 +21,7 @@ const RegisterPage = () => {
   const [address, setAddress] = useState();
   const [password, setPassword] = useState();
   const [repassword, setRepassword] = useState();
-  const [btn, setBtn] = useState(false);
-
-  useEffect(() => {
-    if (isLogged) {
-      history.push('/')
-    }
-  }, [])
+  const [btn, setBtn] = useState(false);  
 
   const onSubmit = async (e) => {
     e.preventDefault();

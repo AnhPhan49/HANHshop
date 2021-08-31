@@ -49,12 +49,11 @@ const ReceiptManagePage = () => {
     try {
       setBtnState(true);
       const res = await AdminApi.cancelReceipt(id);
-      if (res.status === 200) {
-        console.log(res);
+      if (res.status === 200) {        
         alert({
           icon: "success",
           title: res.message,
-          msg: "Xóa sản phẩm thành công",
+          msg: "Đã hủy đơn hàng",
         });
         getReceiptList(page);
       }
@@ -99,14 +98,14 @@ const ReceiptManagePage = () => {
 
   const approveReceipt = async (id) => {
     try {
-      const res = AdminApi.approveReceipt(id);
+      const res = await AdminApi.approveReceipt(id);
       if (res.status === 200) {
-        setAlertState(true);
-        getReceiptList(page);
+        setAlertState(true);    
+        getReceiptList(page);    
       }
     } catch (e) {
       console.log(e);
-    }
+    }    
   };
 
   const closeAlert = () => {
