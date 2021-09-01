@@ -5,44 +5,26 @@ import Button from '@material-ui/core/Button';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { TextField, FormGroup, FormHelperText } from '@material-ui/core'
-import AdminApi from '../../apis/adminApis'
-import alert from '../../utils/alert'
 
 const ChangePasswordModal = (props) => {
     const classes = useStyles();    
-    const [password,setPassword] = useState()
-    const [repassword,setRePassword] = useState()
+    const [password, setPassword] = useState()
+    const [repassword, setRePassword] = useState()
     const [warning, setWarning] = useState(false)
-
-    const onSubmit = async (e) => {
-        e.preventDefault()
-        if(password !== repassword) {
-            setWarning(true)
-            return
-        }
-
-        const data = {
-            "password": password
-        }        
-        try {
-            const res = await AdminApi.adminChangeManagerPassword(props.accountId, data)
-
-            if(res.status === 200) {
-                alert({icon:'success', title: res.message, msg: 'Đổi mật khẩu thành công'})
-                props.closeAfterSave()
-            }
-        }
-        catch(e) {
-            console.log(e)
-        }
-        closeModal()
-    }
 
     const closeModal = () => {
         setPassword()
         setRePassword()
         setWarning(false)
         props.handleClose()
+    }
+
+    const onSubmit = () => {
+        if(password !== repassword) {
+            setWarning(true)
+            return
+        }
+        props.onSubmit(password)
     }
 
     return(
@@ -61,7 +43,7 @@ const ChangePasswordModal = (props) => {
                 <Fade in={props.open}>
                     <div className={classes.paper}>
                         <h4>Đổi mật khẩu quản lý</h4>
-                        <form onSubmit={onSubmit}>
+                        <form>
                         <FormGroup className={classes.FormGroup}>
                                 <TextField                                        
                                     InputLabelProps={{
@@ -106,7 +88,7 @@ const ChangePasswordModal = (props) => {
                                 </Button>
                             </div>
                             <div className='col-6 text-center'>
-                                <Button variant="contained" type='submit' color="primary" style={{fontSize: '1.2rem'}}>
+                                <Button variant="contained" type='button' onClick={onSubmit} color="primary" style={{fontSize: '1.2rem'}}>
                                     Đồng ý
                                 </Button>
                             </div>

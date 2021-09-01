@@ -28,6 +28,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { userlogoutsuccess, deletecurrentuserdata } from "../reducers/userReducer";
 import clsx from "clsx";
+import ChangePasswordModal from '../components/ChangePasswordModal/index'
+import AdminApi from '../apis/adminApis'
 
 import CategoryManagePage from "./category-manage-page";
 import ProductManagePage from "./product-manage-page";
@@ -46,7 +48,7 @@ const AdminPage = () => {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [currentSidebar, setCurrentSidebar] = useState();
+  const [currentSidebar, setCurrentSidebar] = useState();  
 
   useEffect(() => {
     if (user.role === "admin") {
@@ -172,7 +174,7 @@ const AdminPage = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");    
+    localStorage.removeItem("token");
     dispatch(userlogoutsuccess());
     dispatch(deletecurrentuserdata());
     setAnchorEl(null);
@@ -195,8 +197,25 @@ const AdminPage = () => {
     }
   };
 
+  // const changeManagerPassword = async () => {
+  //   try {
+  //     const data = {
+        
+  //     }
+
+  //     const res = await AdminApi.changePassword()
+  //   } catch(e) {
+  //     console.log(e)
+  //   }
+  // }
+
+//   const handleCloseModal = () => {    
+//     setOpenChangePwd(false)
+// }
+
   return (
     <div className={classes.root}>
+      {/* <ChangePasswordModal open={open} handleClose={handleCloseModal} onSubmit={changeManagerPassword}></ChangePasswordModal> */}
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -229,12 +248,12 @@ const AdminPage = () => {
               open={Boolean(anchorEl)}
               onClose={handleCloseSettingMenu}
             >
-              <MenuItem onClick={handleCloseSettingMenu}>
+              {/* <MenuItem onClick={handleCloseSettingMenu}>
                 <h5>
                   <RiLockPasswordFill size="18px"></RiLockPasswordFill>{" "}
                   <span>Đổi mật khẩu</span>
                 </h5>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem onClick={handleLogout}>
                 <h5>
                   <RiUserReceivedFill size="18px"></RiUserReceivedFill>{" "}
