@@ -42,6 +42,23 @@ const ManagerManagement = (props) => {
         props.reloadData()
     }
 
+    const adminChangeManagerPassword = async (password) => {
+        const data = {
+            "password": password
+        }        
+        try {
+            const res = await AdminApi.adminChangeManagerPassword(actionAccountId, data)
+            if(res.status === 200) {
+                alert({icon:'success', title: res.message, msg: 'Đổi mật khẩu thành công'})
+                handleCloseModal()
+                props.closeAfterSave()
+            }
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+
     const handleOpenConfirmModal = (id) => {
         setActionAccountId(id)
         setOpenConfirmModal(true)
@@ -68,9 +85,9 @@ const ManagerManagement = (props) => {
             hidden={props.value !== props.index}
             id={`full-width-tabpanel-${props.index}`}
             aria-labelledby={`full-width-tab-${props.index}`}
-            className='production-page'>            
+            className='production-page'>
             <AdminCreateAccountModal open={props.open} handleClose={props.handleCloseAddModal} closeAfterSave={props.closeAfterSave}></AdminCreateAccountModal>
-            <ChangePasswordModal open={open} handleClose={handleCloseModal} accountId={actionAccountId}></ChangePasswordModal>
+            <ChangePasswordModal open={open} handleClose={handleCloseModal} onSubmit={adminChangeManagerPassword}></ChangePasswordModal>
             <ConfirmModal open={openConfirmModal} handleClose={()=> setOpenConfirmModal(false)} accept={blockUser} buttonState={btnState}></ConfirmModal>
             <div className='row m-0 title'>
                 <div className='col-1 text-center'>

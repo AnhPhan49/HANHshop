@@ -93,6 +93,10 @@ const AdminApi = {
         const url = `/api/receipt/approve-receipt/${receiptId}`;
         return axiosClient.put(url)
     },
+    changePassword(data) {
+        const url = `/api/user/change-password`;
+        return axiosClient.put(url, data)
+    }
 }
 
 export default AdminApi
