@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    Route,     
+    Route,
+    Switch  
 } from "react-router-dom";
 
 import Homepage from '../../views/homepage';
@@ -14,7 +15,7 @@ import PageNotFound from '../../views/page-not-found'
 class ShopRoute extends Component {
     render() {
         return (
-            <div>                
+            <Switch> 
                 <Route exact path="/"  component={Homepage}/>
                 <Route path="/product"  component={Product}/>
                 <Route path="/search/:ed"  component={Product}/>
@@ -25,8 +26,8 @@ class ShopRoute extends Component {
                 <Route path="/booked"  component={Booked}/>
                 <Route path="/receipt"  component={Receipt}/>
                 <Route path="/detail/:id"  component={Detail}/> 
-                <Route component={PageNotFound}></Route>           
-            </div>
+                <Route path="*" component={PageNotFound}></Route>       
+            </Switch>
         );
     }
 }

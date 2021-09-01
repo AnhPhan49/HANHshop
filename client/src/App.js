@@ -37,13 +37,11 @@ function App() {
             <PrivateRoute path="/admin">
               <AdminPage/>
             </PrivateRoute>
-            <Route>
-              <div className='App'> 
+            <Route route="/">              
                 <Header />
                 <NavBar/>
                 <ShopRoute/>
-                <Footer/> 
-              </div>                                      
+                <Footer/>                                           
             </Route>                   
           </Switch>      
       </Router>
