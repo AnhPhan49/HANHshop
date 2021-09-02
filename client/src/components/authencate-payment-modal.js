@@ -168,10 +168,10 @@ const AuthPaymentModal = (props) => {
               <div className="col-6 p-0">Tạm tính:</div>
               <div className="col-6 p-0 text-right">{cartInfo && formatCurrency(cartInfo.total_price)}</div>
             </div>
-            <div className="row m-0">
+            {/* <div className="row m-0">
               <div className="col-6 p-0">Phí vận chuyển:</div>
               <div className="col-6 p-0 text-right">0đ</div>
-            </div>
+            </div> */}
           </div>
           <div
             className="row m-0"
