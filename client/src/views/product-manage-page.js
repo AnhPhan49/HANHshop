@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { IconButton, InputAdornment, InputLabel, Input, Button, Select, MenuItem } from '@material-ui/core'
+import { IconButton, InputAdornment, InputLabel, Input, Button, Select, MenuItem, CardMedia } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { IoTrashBin, IoAddCircle } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
@@ -287,7 +287,7 @@ const ProductManagePage = () => {
                                             {
                                                 (item.image[0])?(
                                                     <div className='fill' onClick={() => openWidePhoto(item.image)}>
-                                                        <img src={item.image[0].url} alt=''></img>
+                                                        <CardMedia component="img" image={item.image[0].url}></CardMedia>
                                                     </div>   
                                                 ):(
                                                     <div className='img-broke-wrapper'>

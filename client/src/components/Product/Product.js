@@ -79,13 +79,13 @@ const Product = () => {
   };
 
   return (
-    <div className="row m-0">
+    <div>
       {loader ? (
         <LoadingPage></LoadingPage>
       ) : (
-        <div>
-          <div className="col-lg-2 mt-5">
-            <div className="categories">
+        <div className="content">
+          <div className="row m-0 section group detail-section">
+            <div className="span_3_of_1 col-lg-3 col-sm-12">
               <ul>
                 {categoryList.map((item, index) => (
                   <Link key={index} to={`/category/${item._id}`}>
@@ -96,43 +96,46 @@ const Product = () => {
                 ))}
               </ul>
             </div>
-          </div>
-          <div className="header_bottom_right col-10">
-            <div className="homepage">
-              <div className="homepage-body mt-2">
-                <div className="sale-section">
-                  <h3>Danh sách sản phẩm</h3>
-                  <div className="row sale-items mt-3">
-                    {productList &&
-                      productList.map((item, i) => (
-                        <div key={i} className="col-lg-3 col-md-4 mt-3">
-                          <Link to={`/detail/${item._id}`}>
-                            <SaleItemCard
-                              key={i}
-                              img_src={item.image}
-                              title={item.name}
-                              sale_price={item.price_after_sale}
-                              base_price={item.price}
-                              discount_percent={item.sale_tag}
-                            ></SaleItemCard>
-                          </Link>
-                        </div>
-                      ))}
+            <div className="header_bottom_right col-lg-9 col-sm-12">
+              <div className="homepage">
+                <div className="homepage-body mt-2">
+                  <div className="sale-section">
+                    <h3>Danh sách sản phẩm</h3>
+                    <div className="row sale-items mt-3">
+                      {productList &&
+                        productList.map((item, i) => (
+                          <div key={i} className="col-lg-3 col-md-4 mt-5">
+                            <Link
+                              to={`/detail/${item._id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <SaleItemCard
+                                key={i}
+                                img_src={item.image}
+                                title={item.name}
+                                sale_price={item.price_after_sale}
+                                base_price={item.price}
+                                discount_percent={item.sale_tag}
+                              ></SaleItemCard>
+                            </Link>
+                          </div>
+                        ))}
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="text-center mt-5">
+                <Button
+                  variant="outlined"
+                  style={{ fontSize: "1.4rem" }}
+                  onClick={() => getMoreProductList(page + 1)}
+                >
+                  Xem thêm
+                </Button>
+              </div>
             </div>
-            <div className="text-center mt-5">
-              <Button
-                variant="outlined"
-                style={{ fontSize: "1.4rem" }}
-                onClick={() => getMoreProductList(page + 1)}
-              >
-                Xem thêm
-              </Button>
-            </div>
+            <div className="clear" />
           </div>
-          <div className="clear" />
         </div>
       )}
     </div>

@@ -483,7 +483,7 @@ p.note{
   width: 90px;
 }
 .list_2_of_1  h2 {
-	color:#CC3636;
+	color:#ff6f64;
 	font-size:1.2em;
 	font-family: 'Monda', sans-serif;
 	font-weight : normal;
@@ -630,7 +630,7 @@ p.note{
 	line-height: 40px;
 }
 .images_1_of_4  h2 {
-	color: #CC3636;
+	color: #ff6f64;
 	font-family: 'Monda', sans-serif;
 	font-size:0.9em;
 	font-weight : normal;
@@ -649,7 +649,7 @@ p.note{
 .images_1_of_4  p span.price{
 	font-size:18px;
 	font-family: 'Monda', sans-serif;
-	color: #CC3636;
+	color: #ff6f64;
 	margin-left:15px;
 }
 .images_1_of_4 .button {
@@ -932,7 +932,7 @@ p.note{
 .span_3_of_2  h2 {
 	font-family: 'Monda', sans-serif;
 	font-size:1.6em;
-	color: #CC3636;
+	color: #ff6f64;
 	font-weight : normal;
 	margin-top: 0px;
 	text-transform:uppercase;
@@ -951,14 +951,14 @@ p.note{
 }
 .price p{
 	font-size: 1.4rem;
-	padding:1.5% 1%;
+	padding:1.2% 1%;
 	color: #666;
 	vertical-align:top;
 }
 .price p span{
 	font-size:1.5em;
 	font-family: 'Monda', sans-serif;
-	color: #CC3636;
+	color: #ff6f64;
 }
 .available{
 	padding:10px 0;

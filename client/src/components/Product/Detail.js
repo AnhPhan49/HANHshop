@@ -12,6 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 import LoadingPage from "../../views/loading-page";
+import CardMedia from "@material-ui/core/CardMedia";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -124,6 +125,17 @@ const Detail = (props) => {
           </Snackbar>
           <div className="content">
             <div className="section group row m-0 detail-section">
+              <div className="col-lg-3 col-sm-12 span_3_of_1">
+                <ul>
+                  {categoryList.map((item, index) => (
+                    <Link key={index} to={`/category/${item._id}`}>
+                      <li>
+                        <a>{item.name}</a>
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
+              </div>
               <div className="col-lg-9 col-sm-12">
                 <div className="product-details">
                   <div className="images_3_of_2">
@@ -136,7 +148,11 @@ const Detail = (props) => {
                           >
                             {product &&
                               product.image.map((item, index) => (
-                                <img alt="" key={index} src={item.url}></img>
+                                <CardMedia
+                                  key={index}
+                                  component="img"
+                                  image={item.url}
+                                />
                               ))}
                           </Carousel>
                         </div>
@@ -151,26 +167,31 @@ const Detail = (props) => {
                           Giảm {product.sale_tag}%
                         </span>
                         <span className="base-price-detal">
-                          {formatCurrency(product.price)}
+                          {formatCurrency(product.price)}đ
                         </span>
                       </div>
                     ) : (
                       <></>
                     )}
                     <div className="price">
+                      <p>
+                        Mã sản phẩm: <span>{product.id_product}</span>
+                      </p>
+                    </div>
+                    <div className="price">
                       {product && (
                         <p>
                           Giá:{" "}
                           <span>
-                            đ
                             {product.price_after_sale
                               ? formatCurrency(product.price_after_sale)
                               : formatCurrency(product.price)}
+                            đ
                           </span>
                         </p>
                       )}
                     </div>
-                    <div className="share-desc">
+                    <div className="share-desc mt-5">
                       <form onSubmit={addToCart}>
                         <div className="row m-0">
                           <div className="col-6">
@@ -246,8 +267,11 @@ const Detail = (props) => {
                 <div>
                   {relateProduct &&
                     relateProduct.map((item, i) => (
-                      <div className="col-lg-3 col-md-4 col-sm-4 mt-3" key={i}>
-                        <Link to={`/detail/${item._id}`}>
+                      <div className="col-lg-3 col-md-4 col-sm-4 mt-5" key={i}>
+                        <Link
+                          to={`/detail/${item._id}`}
+                          style={{ textDecoration: "none" }}
+                        >
                           <SaleItemCard
                             img_src={item.image}
                             title={item.name}
@@ -259,18 +283,6 @@ const Detail = (props) => {
                       </div>
                     ))}
                 </div>
-              </div>
-              <div className="col-lg-3 col-sm-12 span_3_of_1">
-                <h2>Danh mục</h2>
-                <ul>
-                  {categoryList.map((item, index) => (
-                    <Link key={index} to={`/category/${item._id}`}>
-                      <li>
-                        <a>{item.name}</a>
-                      </li>
-                    </Link>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>

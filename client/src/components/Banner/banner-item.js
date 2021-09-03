@@ -2,9 +2,9 @@ import React from 'react'
 
 const BannerItem = (props) => {
     return(
-        <div className='banner-item'>
+        <div className='banner-item'>        
             <img alt='' src={props.banner_img}></img>
-            <div className='container'>
+            <div>
                 <div className='row'>
                     <div className='banner-info col-lg-5'>
                         <span>

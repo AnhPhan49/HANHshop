@@ -17,7 +17,7 @@ var items = [
     img: "https://tgroup.vn/uploads/images/service/top-thuong-hieu-do-gia-dung-han-quoc-duoc-yeu-thich-nhat-tgroup-travel-2.jpg",
   },
   {
-    name: "",
+    name: "Sản phẩm hot nhất",
     title: "Máy xay đa năng Kangaroo KG2B3",
     desc: "Máy xay đa năng Kangaroo xay hoa quả, rau củ, ngũ cốc, thực phẩm khô với 2 cối xay",
     img: "https://mekoong.com/wp-content/uploads/2021/06/phillip.jpg",
@@ -102,8 +102,8 @@ const Homepage = () => {
               <div className="row sale-items m-0">
                 {saleProduct &&
                   saleProduct.map((item, i) => (
-                    <div className="col-lg-2 col-md-3 col-sm-4 mt-3" key={i}>
-                      <Link to={`/detail/${item._id}`}>
+                    <div className="col-lg-2 col-md-3 col-sm-4 mt-5" key={i}>
+                      <Link to={`/detail/${item._id}`} style={{ textDecoration: 'none' }}>
                         <SaleItemCard
                           img_src={item.image}
                           title={item.name}
@@ -130,9 +130,9 @@ const Homepage = () => {
               </div>
               <div className="row sale-items m-0">
                 {productList &&
-                  productList.map((item, i) => (
-                    <div className="col-lg-2 col-md-3 col-sm-4 mt-3" key={i}>
-                      <Link to={`/detail/${item._id}`}>
+                  productList.map((item, i) => (                       
+                    <div className="col-lg-2 col-md-3 col-sm-4 mt-5" key={i}>
+                      <Link to={`/detail/${item._id}`} style={{ textDecoration: 'none' }}>
                         <SaleItemCard
                           img_src={item.image}
                           title={item.name}

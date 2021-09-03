@@ -65,8 +65,8 @@ const Discount = () => {
               <div className="row sale-items m-0">
                 {saleProduct &&
                   saleProduct.map((item, i) => (
-                    <div className="col-lg-2 col-md-3 mt-3" key={i}>
-                      <Link to={`/detail/${item._id}`}>
+                    <div className="col-lg-2 col-md-3 mt-5" key={i}>
+                      <Link to={`/detail/${item._id}`} style={{ textDecoration: 'none' }}>
                         <SaleItemCard
                           img_src={item.image}
                           title={item.name}

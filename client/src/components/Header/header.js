@@ -106,7 +106,7 @@ const Header = () => {
                     </div> */}
                     <div className='cart-icon text-center' onClick={() => {history.push('/receipt')}}>                    
                         {/* <Badge color='error' badgeContent={4}> */}
-                            <AiOutlineShoppingCart size='26px' color='black'></AiOutlineShoppingCart>
+                            <AiOutlineShoppingCart size='26px'></AiOutlineShoppingCart>
                             <span>Giỏ hàng</span>
                         {/* </Badge>                         */}
                     </div>
