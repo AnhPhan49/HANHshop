@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ShopApi from "../../apis/shopApis";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, CardMedia, IconButton } from "@material-ui/core";
+import { IoTrashBin } from "react-icons/io5";
 import { makeStyles } from "@material-ui/core/styles";
 import AuthPaymentModal from "../authencate-payment-modal";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import ConfirmModal from "../confirm-modal";
 import alert from "../../utils/alert";
 import LoadingPage from "../../views/loading-page";
@@ -176,11 +177,11 @@ const Receipt = () => {
             <h3>Giỏ hàng</h3>
           </div>
           <div className="title row m-0">
-            <div className="col-4">Sản phẩm</div>
+            <div className="col-4 text-center">Sản phẩm</div>
             <div className="col-2 text-center">Đơn giá</div>
             <div className="col-2 text-center">Số lượng</div>
             <div className="col-2 text-center">Số tiền</div>
-            <div className="col-2 text-center">Thao tác</div>
+            <div className="col-2 text-center">Xóa</div>
           </div>
           <div className="body">
             <div className="product-list">
@@ -188,14 +189,14 @@ const Receipt = () => {
                 cart.map((item, i) => (
                   <div className="row m-0" key={i}>
                     <div className="col-4 product-row row m-0">
-                      <div className="col-lg-3 col-md-5 col-sm-6 col-xs-6 text-center fill">
-                        <img
-                          alt=""
-                          src={item.image[0] ? item.image[0].url : ""}
-                        ></img>
+                      <div className="col-lg-3 col-md-5 col-sm-6 col-xs-6 text-center">
+                        <CardMedia
+                          component="img"
+                          image={item.image[0] ? item.image[0].url : ""}
+                        />
                       </div>
                       <div className="col-lg-9 col-md-7 col-sm-6 col-xs-6 item-name">
-                        {item.name}
+                        <Link to={`/detail/${item._id}`}>{item.name}</Link>
                       </div>
                     </div>
                     <div className="col-2 product-row text-center">
@@ -229,12 +230,12 @@ const Receipt = () => {
                       {formatCurrency(item.total_price)}đ
                     </div>
                     <div className="col-2 product-row text-center">
-                      <span
+                      <IconButton
                         className="action"
                         onClick={() => handleOpenConfirmModal(item._id)}
                       >
-                        Xóa
-                      </span>
+                        <IoTrashBin size="20px"></IoTrashBin>
+                      </IconButton>
                     </div>
                   </div>
                 ))
