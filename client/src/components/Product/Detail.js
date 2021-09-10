@@ -18,7 +18,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Detail = (props) => {
+const Detail = () => {
   const classes = useStyles();
   let { id } = useParams();
   const dispatch = useDispatch();
@@ -27,7 +27,9 @@ const Detail = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
   const [relateProduct, setRelateProduct] = useState([]);
+  const [specify, setSpecify] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [btnState, setBtnState] = useState(false);
 
   useEffect(() => {
     getCategoryList();
@@ -82,10 +84,26 @@ const Detail = (props) => {
       const res = await ShopApi.getProductDetail(id);
       if (res.status === 200) {
         setProduct(res.data);
+        const temp = await formatSpecifyData(res.data.specifications);
+        setSpecify([...temp]);
+
+        if (res.data.available === false) {
+          setBtnState(true);
+        } else {
+          setBtnState(false);
+        }
       }
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const formatSpecifyData = (arrayData) => {
+    const temp = [];
+    arrayData.forEach((ele, i) => {
+      temp.push(JSON.parse(ele));
+    });
+    return temp;
   };
 
   const addToCart = async (e) => {
@@ -126,7 +144,26 @@ const Detail = (props) => {
           <div className="content">
             <div className="section group row m-0 detail-section">
               <div className="col-lg-3 col-sm-12 span_3_of_1">
-                <ul>
+                <h3>Thông số kỹ thuật</h3>
+                {specify.length &&
+                  specify.map((ele, ind) => (
+                    <div
+                      className="row m-0 p-0"
+                      key={ind}
+                      style={{
+                        backgroundColor:
+                          ind % 2 === 0 ? "rgba(245,245,245,255)" : "white",
+                        fontSize: "1.5rem",
+                        padding: "1.7rem",
+                      }}
+                    >
+                      <div className="col-5" style={{ fontWeight: "550" }}>
+                        {ele.key}:
+                      </div>
+                      <div className="col-7">{ele.value}</div>
+                    </div>
+                  ))}
+                {/* <ul>
                   {categoryList.map((item, index) => (
                     <Link key={index} to={`/category/${item._id}`}>
                       <li>
@@ -134,7 +171,7 @@ const Detail = (props) => {
                       </li>
                     </Link>
                   ))}
-                </ul>
+                </ul> */}
               </div>
               <div className="col-lg-9 col-sm-12">
                 <div className="product-details">
@@ -191,50 +228,57 @@ const Detail = (props) => {
                         </p>
                       )}
                     </div>
+                    <div>
+                      {product && product.available === false && (
+                        <h4 className="text-danger">Sản phẩm đã hết hàng</h4>
+                      )}
+                    </div>
                     <div className="share-desc mt-5">
                       <form onSubmit={addToCart}>
-                        <div className="row m-0">
-                          <div className="col-6">
-                            <TextField
-                              InputLabelProps={{
-                                classes: {
-                                  root: classes.resize,
-                                },
-                              }}
-                              value={quantity}
-                              onWheel={(e) => e.target.blur()}
-                              onChange={(e) => {
-                                setQuantity(e.target.value);
-                              }}
-                              InputProps={{
-                                classes: {
-                                  input: classes.resize,
-                                },
-                                inputProps: {
-                                  min: 1,
-                                },
-                              }}
-                              required
-                              type="number"
-                              label="Số lượng"
-                            />
+                        {btnState === false && (
+                          <div className="row m-0">
+                            <div className="col-6">
+                              <TextField
+                                InputLabelProps={{
+                                  classes: {
+                                    root: classes.resize,
+                                  },
+                                }}
+                                value={quantity}
+                                onWheel={(e) => e.target.blur()}
+                                onChange={(e) => {
+                                  setQuantity(e.target.value);
+                                }}
+                                InputProps={{
+                                  classes: {
+                                    input: classes.resize,
+                                  },
+                                  inputProps: {
+                                    min: 1,
+                                  },
+                                }}
+                                required
+                                type="number"
+                                label="Số lượng"
+                              />
+                            </div>
+                            <div className="col-6">
+                              <button
+                                className="button"
+                                type="submit"
+                                style={{
+                                  border: 0,
+                                  backgroundColor: "transparent",
+                                  marginTop: "16px",
+                                }}
+                              >
+                                <span>
+                                  <a>Thêm vào giỏ hàng</a>
+                                </span>
+                              </button>
+                            </div>
                           </div>
-                          <div className="col-6">
-                            <button
-                              className="button"
-                              type="submit"
-                              style={{
-                                border: 0,
-                                backgroundColor: "transparent",
-                                marginTop: "16px",
-                              }}
-                            >
-                              <span>
-                                <a>Thêm vào giỏ hàng</a>
-                              </span>
-                            </button>
-                          </div>
-                        </div>
+                        )}
                       </form>
                       <div className="clear" />
                     </div>

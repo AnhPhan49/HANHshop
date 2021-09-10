@@ -20,6 +20,7 @@ const InventoryManagePage = (props) => {
   const [modalTitle, setModalTitle] = useState();
   const [page, setPage] = useState(1);
   const [pageDetail, setPageDetail] = useState();
+
   useEffect(() => {
     getInventoryList(1);
   }, []);
@@ -80,7 +81,6 @@ const InventoryManagePage = (props) => {
     setPage(1);
   };
 
-  console.log(editObj);
   return (
     <div className="production-page">
       <InventoryModal
@@ -113,7 +113,9 @@ const InventoryManagePage = (props) => {
               <div className="col-1 product-item">
                 {(pageDetail - 1) * 10 + index + 1}
               </div>
-              <div className="col-2 product-item item-name">{item.product.name}</div>
+              <div className="col-2 product-item item-name">
+                {item.product.name}
+              </div>
 
               <div
                 className="col-3 product-item descript"
