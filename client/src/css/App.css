@@ -105,7 +105,7 @@ body {
 .logo-session img {
   height: auto;
   width: 160px;
-  margin-top: 8px;
+  margin: 8px 0px 8px;
 }
 
 .logo-session img:hover {
@@ -184,16 +184,16 @@ body {
   height: 50px;
 }
 
-.header-below .cart-session .heart-icon,
-.header-below .cart-session .cart-icon {
+/* .header-below .cart-session .heart-icon, */
+.header-below .cart-session .cart-icon-wrapper {
   margin-top: auto;
   margin-bottom: auto;
-  cursor: pointer;
 }
 
-.header-below .cart-session .heart-icon,
+/* .header-below .cart-session .heart-icon, */
 .header-below .cart-session .cart-icon:hover {
   color: #ff6f64;
+  cursor: pointer;
 }
 
 .header-below .cart-session .heart-icon,

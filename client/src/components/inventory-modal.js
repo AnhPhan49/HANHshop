@@ -118,7 +118,6 @@ const InventoryModal = forwardRef((props, ref) => {
     handleOpenModal() {
       setOpen(true);
       getProductList();
-      console.log(props.modalEditFilter);
     },
   }));
 
@@ -154,9 +153,7 @@ const InventoryModal = forwardRef((props, ref) => {
           props.page,
           props.modalEditFilter._id
         );
-        console.log(res);
         if (res.status === 200) {
-          console.log(res.data.list);
           setHistoryProduct(res.data.list);
         }
       }
@@ -342,7 +339,6 @@ const InventoryModal = forwardRef((props, ref) => {
         count: Number(editNumber),
         producer: editProducer,
       };
-      console.log(formData);
 
       let res = null;
       if (props.modalEditFilter) {
@@ -350,7 +346,6 @@ const InventoryModal = forwardRef((props, ref) => {
           props.modalEditFilter._id,
           formData
         );
-        console.log(res);
       }
       if (res.status === 200) {
         alert({ icon: "success", title: "Updated", msg: res.message });
@@ -372,7 +367,6 @@ const InventoryModal = forwardRef((props, ref) => {
       let formData = {
         count: Number(editNumber) * -1,
       };
-      console.log(formData);
 
       let res = null;
 
@@ -381,7 +375,6 @@ const InventoryModal = forwardRef((props, ref) => {
           props.modalEditFilter._id,
           formData
         );
-        console.log(res);
       }
       if (res.status === 200) {
         alert({ icon: "success", title: "Updated", msg: res.message });
@@ -395,8 +388,6 @@ const InventoryModal = forwardRef((props, ref) => {
     props.reloadNewData();
     return;
   };
-
-  console.log(props.modalEditFilter);
 
   return (
     <div className="product-modal">
