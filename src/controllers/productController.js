@@ -19,7 +19,7 @@ module.exports.createProduct = async (req, res) => {
             throw new Error (message)
         }
 
-        let {name, category, description, price, status, sale_tag} = req.body
+        let {name, category, description, price, status, sale_tag, specifications} = req.body
         let {file} = req.files
        
         let promiseArr = []
@@ -84,6 +84,7 @@ module.exports.createProduct = async (req, res) => {
             price_after_sale: price_after_sale,
             image: productMedia,
             status: status,
+            specifications: specifications
         })
         await newProduct.save()
 
@@ -111,7 +112,7 @@ module.exports.updateProduct = async (req, res) => {
             throw new Error (message)
         }
         let {id} = req.params
-        let {name, category, description, price, status, sale_tag, delete_image} = req.body
+        let {name, category, description, price, status, sale_tag, delete_image, specifications} = req.body
         let {file} = req.files
         if(!delete_image)
             delete_image = []
@@ -182,6 +183,7 @@ module.exports.updateProduct = async (req, res) => {
             sale_tag: sale_tag,
             price_after_sale: price_after_sale,
             status: status,
+            specifications: specifications,
             $pull: {image:{ id_image: {$in: delete_image}}}
         }, {new: true})
         if (productMedia.length)

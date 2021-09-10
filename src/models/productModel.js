@@ -26,6 +26,7 @@ const productSchema = new Schema({
         type: String,
         enum: ["Sale","Hot","Phổ biến","N/A"]
     },
+    specifications: Object,
     sale_tag: Number
 },{timestamps:true})
 

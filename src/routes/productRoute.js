@@ -3,6 +3,7 @@ const productRoute = express.Router();
 const checkLogin = require("../midlewares/loginMidleware");
 const addProductValidator = require("./validators/addProductValidator");
 const checkAdmin = require("../midlewares/AdminMidleware");
+const managerAllowMiddleware = require('../midlewares/managerAllowMidlleware')
 var multipart = require("connect-multiparty");
 var multipartMiddleware = multipart();
 
@@ -23,7 +24,7 @@ productRoute
 
 productRoute.route("/search").get(search);
 
-productRoute.route("/delete/:id").delete(checkLogin, checkAdmin, deleteProduct);
+productRoute.route("/delete/:id").delete(checkLogin, managerAllowMiddleware, deleteProduct);
 
 productRoute.route("/get/:id").get(getProduct);
 
