@@ -11,14 +11,6 @@ const axiosClient = axios.create({
 });
 
 //handle access token
-<<<<<<< HEAD
-axiosClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token')
-    if(token)        
-        config.headers.Authorization = `Bearer ${token}`
-    return config
-},(error) => Promise.reject(error));
-=======
 axiosClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -28,7 +20,6 @@ axiosClient.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
->>>>>>> e9a4de5132713fa14fbfe616e5bf8f5452fa9113
 
 //handle error
 const handleError = (error) => {
